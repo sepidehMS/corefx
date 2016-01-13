@@ -79,6 +79,7 @@ namespace CoreXml.Test.XLinq
         {
             string file = Path.Combine("TestData", "XmlReader", "API", pGenericXml);
             Stream s = FilePathUtil.getStream(file);
+
             if (s == null)
             {
                 TestLog.WriteLine("getStream returned null");
@@ -87,6 +88,24 @@ namespace CoreXml.Test.XLinq
             {
                 XDocument doc = XDocument.Load(r, LoadOptions.PreserveWhitespace);
                 return doc.CreateReader();
+            }
+        }
+
+        public XmlReader GetReaderFromFile()
+        {
+            string file = Path.Combine("TestData", "XmlReader", "API", pGenericXml);
+            {
+                Stream s = FilePathUtil.getStreamFromFile(file);
+
+                if (s == null)
+                {
+                    TestLog.WriteLine("getStream returned null");
+                }
+                using (XmlReader r = XmlReader.Create(s, _rsx))
+                {
+                    XDocument doc = XDocument.Load(r, LoadOptions.PreserveWhitespace);
+                    return doc.CreateReader();
+                }
             }
         }
 
