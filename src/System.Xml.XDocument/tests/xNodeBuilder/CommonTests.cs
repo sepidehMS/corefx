@@ -4964,8 +4964,63 @@ namespace CoreXml.Test.XLinq
                 //[Variation(Id = 2, Desc = "WriteValue(DateTime)", Priority = 1)]
                 public void writeValue_2()
                 {
-                    Calendar myCal = CultureInfo.InvariantCulture.Calendar;
                     DateTime myDT = new DateTime(2002, 4, 3);
+                    XDocument doc = new XDocument();
+                    XmlWriter w = CreateWriter(doc);
+                    w.WriteStartElement("Root");
+                    w.WriteValue(myDT);
+                    w.WriteEndElement();
+                    w.Dispose();
+
+                    if (!CompareReader(doc, "<Root>2002-04-03T00:00:00</Root>")) throw new TestException(TestResult.Failed, "");
+                }
+
+                //[Variation(Id = 2, Desc = "WriteValue(DateTime), with time", Priority = 1)]
+                public void writeValue_2_WithTime()
+                {
+                    DateTime myDT = new DateTime(2002, 4, 3, 0, 0, 0);
+                    XDocument doc = new XDocument();
+                    XmlWriter w = CreateWriter(doc);
+                    w.WriteStartElement("Root");
+                    w.WriteValue(myDT);
+                    w.WriteEndElement();
+                    w.Dispose();
+
+                    if (!CompareReader(doc, "<Root>2002-04-03T00:00:00</Root>")) throw new TestException(TestResult.Failed, "");
+                }
+
+                //[Variation(Id = 2, Desc = "WriteValue(DateTime), UTC Timezone", Priority = 1)]
+                public void writeValue_2_Utc()
+                {
+                    DateTime myDT = new DateTime(2002, 4, 3, 0, 0, 0, DateTimeKind.Utc);
+                    XDocument doc = new XDocument();
+                    XmlWriter w = CreateWriter(doc);
+                    w.WriteStartElement("Root");
+                    w.WriteValue(myDT);
+                    w.WriteEndElement();
+                    w.Dispose();
+
+                    if (!CompareReader(doc, "<Root>2002-04-03T00:00:00Z</Root>")) throw new TestException(TestResult.Failed, "");
+                }
+
+                //[Variation(Id = 2, Desc = "WriteValue(DateTime), Unspecified Timezone", Priority = 1)]
+                public void writeValue_2_Unspecified()
+                {
+                    DateTime myDT = new DateTime(2002, 4, 3, 0, 0, 0, DateTimeKind.Unspecified);
+                    XDocument doc = new XDocument();
+                    XmlWriter w = CreateWriter(doc);
+                    w.WriteStartElement("Root");
+                    w.WriteValue(myDT);
+                    w.WriteEndElement();
+                    w.Dispose();
+
+                    if (!CompareReader(doc, "<Root>2002-04-03T00:00:00</Root>")) throw new TestException(TestResult.Failed, "");
+                }
+
+                //[Variation(Id = 2, Desc = "WriteValue(DateTime), Local Timezone", Priority = 1)]
+                public void writeValue_2_local()
+                {
+                    DateTime myDT = new DateTime(2002, 4, 3, 0, 0, 0, DateTimeKind.Local);
                     XDocument doc = new XDocument();
                     XmlWriter w = CreateWriter(doc);
                     w.WriteStartElement("Root");
