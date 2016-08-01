@@ -32,8 +32,9 @@
   <ItemGroup Condition="'$(TargetGroup)' != 'net46'">
     <Compile Include="System.Xml.XmlSerializer.Forwards.cs" />
     <Compile Include="System\Xml\XmlReservedNs.cs" />
-    <Compile Include="System\Xml\BinHexEncoder.cs" />
-    <Compile Include="System\Xml\BinHexDecoder.cs" />
+    <Compile Include="$(CommonPath)\System\Xml\BinHexEncoder.cs" />
+    <Compile Include="$(CommonPath)\System\Xml\BinHexDecoder.cs" />
+    <Compile Include="$(CommonPath)\System\Xml\IncrementalReadDecoders.cs" />
     <Compile Include="System\Xml\XmlCharType.cs" />
     <Compile Include="System\Xml\schema\XmlSchemaType.cs" />
     <Compile Include="System\Xml\schema\XmlSchemaSet.cs" />
