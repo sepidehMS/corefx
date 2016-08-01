@@ -25,12 +25,14 @@
       <Link>Common\System\ValueTuple.cs</Link>
     </Compile>
     <Compile Include="System\Xml\AsyncHelper.cs" />
-    <Compile Include="System\Xml\Base64Decoder.cs" />
-    <Compile Include="System\Xml\Base64Encoder.cs" />
+    <Compile Include="$(CommonPath)\System\Xml\Base64Decoder.cs" />
+    <Compile Include="$(CommonPath)\System\Xml\Base64Encoder.cs" />
     <Compile Include="System\Xml\Base64EncoderAsync.cs" />
-    <Compile Include="System\Xml\BinHexDecoder.cs" />
-    <Compile Include="System\Xml\BinHexEncoder.cs" />
+    <Compile Include="$(CommonPath)\System\Xml\BinHexDecoder.cs" />
+    <Compile Include="$(CommonPath)\System\Xml\BinHexEncoder.cs" />
     <Compile Include="System\Xml\BinHexEncoderAsync.cs" />
+    <Compile Include="$(CommonPath)\System\Xml\XmlRawWriterBase64Encoder.cs" />
+    <Compile Include="$(CommonPath)\System\Xml\XmlTextWriterBase64Encoder.cs" />
     <Compile Include="System\Xml\Bits.cs" />
     <Compile Include="System\Xml\BitStack.cs" />
     <Compile Include="System\Xml\BufferBuilder.cs" />
@@ -58,7 +60,7 @@
     <Compile Include="System\Xml\Core\IDtdInfo.cs" />
     <Compile Include="System\Xml\Core\IDtdParser.cs" />
     <Compile Include="System\Xml\Core\IDtdParserAdapter.cs" />
-    <Compile Include="System\Xml\Core\IncrementalReadDecoders.cs" />
+    <Compile Include="$(CommonPath)\System\Xml\IncrementalReadDecoders.cs" />
     <Compile Include="System\Xml\Core\NewLineHandling.cs" />
     <Compile Include="System\Xml\Core\NamespaceHandling.cs" />
     <Compile Include="System\Xml\Core\ReadContentAsBinaryHelper.cs" />

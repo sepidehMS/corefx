@@ -176,7 +176,7 @@ namespace System.Xml
                 pChar++;
 
                 // ignore white space
-                if ((xmlCharType.charProperties[ch] & XmlCharType.fWhitespace) != 0)
+                if (xmlCharType.IsWhiteSpace(ch))
                 {
                     continue;
                 }
@@ -217,7 +217,7 @@ namespace System.Xml
                 {
                     do
                     {
-                        if (!((xmlCharType.charProperties[*pChar++] & XmlCharType.fWhitespace) != 0))
+                        if (!xmlCharType.IsWhiteSpace(*pChar++))
                         {
                             throw new XmlException(SR.Format(SR.Xml_InvalidBase64Value, new string(pChars, 0, (int)(pCharsEndPos - pChars))));
                         }

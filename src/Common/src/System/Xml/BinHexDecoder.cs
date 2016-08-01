@@ -129,6 +129,47 @@ namespace System.Xml
             this.endIndex = index + count;
         }
 
+        public static unsafe byte[] Decode(char[] chars, bool allowOddChars)
+        {
+            if (chars == null)
+            {
+                throw new ArgumentNullException(nameof(chars));
+            }
+
+            int len = chars.Length;
+            if (len == 0)
+            {
+                return Array.Empty<byte>();
+            }
+
+            byte[] bytes = new byte[(len + 1) / 2];
+            int bytesDecoded, charsDecoded;
+            bool hasHalfByteCached = false;
+            byte cachedHalfByte = 0;
+
+            fixed (char* pChars = &chars[0])
+            {
+                fixed (byte* pBytes = &bytes[0])
+                {
+                    Decode(pChars, pChars + len, pBytes, pBytes + bytes.Length, ref hasHalfByteCached, ref cachedHalfByte, out charsDecoded, out bytesDecoded);
+                }
+            }
+
+            if (hasHalfByteCached && !allowOddChars)
+            {
+                throw new XmlException(SR.Format(SR.Xml_InvalidBinHexValueOddCount, new string(chars)));
+            }
+
+            if (bytesDecoded < bytes.Length)
+            {
+                byte[] tmp = new byte[bytesDecoded];
+                Buffer.BlockCopy(bytes, 0, tmp, 0, bytesDecoded);
+                bytes = tmp;
+            }
+
+            return bytes;
+        }
+
         //
         // Private methods
         //
@@ -163,7 +204,7 @@ namespace System.Xml
                 {
                     halfByte = (byte)(ch - '0');
                 }
-                else if ((xmlCharType.charProperties[ch] & XmlCharType.fWhitespace) != 0)
+                else if (xmlCharType.IsWhiteSpace(ch))
                 {
                     continue;
                 }

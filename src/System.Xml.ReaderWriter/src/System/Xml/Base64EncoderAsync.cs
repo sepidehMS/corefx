@@ -33,39 +33,39 @@ namespace System.Xml
             }
 
             // encode left-over buffer
-            if (_leftOverBytesCount > 0)
+            if (leftOverBytesCount > 0)
             {
-                int i = _leftOverBytesCount;
+                int i = leftOverBytesCount;
                 while (i < 3 && count > 0)
                 {
-                    _leftOverBytes[i++] = buffer[index++];
+                    leftOverBytes[i++] = buffer[index++];
                     count--;
                 }
 
                 // the total number of buffer we have is less than 3 -> return
                 if (count == 0 && i < 3)
                 {
-                    _leftOverBytesCount = i;
+                    leftOverBytesCount = i;
                     return;
                 }
 
                 // encode the left-over buffer and write out
-                int leftOverChars = Convert.ToBase64CharArray(_leftOverBytes, 0, 3, _charsLine, 0);
-                await WriteCharsAsync(_charsLine, 0, leftOverChars).ConfigureAwait(false);
+                int leftOverChars = Convert.ToBase64CharArray(leftOverBytes, 0, 3, charsLine, 0);
+                await WriteCharsAsync(charsLine, 0, leftOverChars).ConfigureAwait(false);
             }
 
             // store new left-over buffer
-            _leftOverBytesCount = count % 3;
-            if (_leftOverBytesCount > 0)
+            leftOverBytesCount = count % 3;
+            if (leftOverBytesCount > 0)
             {
-                count -= _leftOverBytesCount;
-                if (_leftOverBytes == null)
+                count -= leftOverBytesCount;
+                if (leftOverBytes == null)
                 {
-                    _leftOverBytes = new byte[3];
+                    leftOverBytes = new byte[3];
                 }
-                for (int i = 0; i < _leftOverBytesCount; i++)
+                for (int i = 0; i < leftOverBytesCount; i++)
                 {
-                    _leftOverBytes[i] = buffer[index + count + i];
+                    leftOverBytes[i] = buffer[index + count + i];
                 }
             }
 
@@ -78,8 +78,8 @@ namespace System.Xml
                 {
                     chunkSize = endIndex - index;
                 }
-                int charCount = Convert.ToBase64CharArray(buffer, index, chunkSize, _charsLine, 0);
-                await WriteCharsAsync(_charsLine, 0, charCount).ConfigureAwait(false);
+                int charCount = Convert.ToBase64CharArray(buffer, index, chunkSize, charsLine, 0);
+                await WriteCharsAsync(charsLine, 0, charCount).ConfigureAwait(false);
 
                 index += chunkSize;
             }
@@ -87,11 +87,11 @@ namespace System.Xml
 
         internal async Task FlushAsync()
         {
-            if (_leftOverBytesCount > 0)
+            if (leftOverBytesCount > 0)
             {
-                int leftOverChars = Convert.ToBase64CharArray(_leftOverBytes, 0, _leftOverBytesCount, _charsLine, 0);
-                await WriteCharsAsync(_charsLine, 0, leftOverChars).ConfigureAwait(false);
-                _leftOverBytesCount = 0;
+                int leftOverChars = Convert.ToBase64CharArray(leftOverBytes, 0, leftOverBytesCount, charsLine, 0);
+                await WriteCharsAsync(charsLine, 0, leftOverChars).ConfigureAwait(false);
+                leftOverBytesCount = 0;
             }
         }
     }
@@ -108,7 +108,7 @@ namespace System.Xml
     {
         internal override Task WriteCharsAsync(char[] chars, int index, int count)
         {
-            return _rawWriter.WriteRawAsync(chars, index, count);
+            return rawWriter.WriteRawAsync(chars, index, count);
         }
     }
 }
