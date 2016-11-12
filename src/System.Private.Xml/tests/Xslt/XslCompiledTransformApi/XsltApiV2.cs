@@ -53,7 +53,7 @@ namespace System.Xml.Tests
             // These steps use to be part of javascript files and these were copied and executed as test setup step.
             // I belive this to be a much better way of accomplishing the same task.
             // Logic from CreateApiTestFiles.js
-            string sourceFile = Path.Combine(FilePathUtil.GetTestDataPath(), @"XsltApiV2\xmlResolver_document_function.xml");
+            string sourceFile = Path.Combine(FilePathUtil.GetTestDataPath(), "XsltApiV2" + Path.DirectorySeparatorChar + "xmlResolver_document_function.xml");
             string targetFile = @"c:\temp\xmlResolver_document_function.xml";
             if (!Directory.Exists(@"c:\temp"))
                 Directory.CreateDirectory(@"c:\temp");
@@ -232,9 +232,9 @@ namespace System.Xml.Tests
             _readerType = GetReaderType(InitStringValue("readertype"));
 
             //This is a temporary fix to restore the baselines. Refer to Test bug #
-            _strPath = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"XsltApiV2\");
-            _httpPath = FilePathUtil.GetHttpTestDataPath() + @"/XsltApiV2/";
-            _standardTests = Path.Combine(@"TestFiles\", FilePathUtil.GetHttpStandardPath() + @"/xslt10/Current/");
+            _strPath = Path.Combine(@"TestFiles" + Path.DirectorySeparatorChar, FilePathUtil.GetTestDataPath(), @"XsltApiV2" + Path.DirectorySeparatorChar);
+            _httpPath = FilePathUtil.GetHttpTestDataPath() + Path.DirectorySeparatorChar + @"XsltApiV2" + Path.DirectorySeparatorChar;
+            _standardTests = Path.Combine(@"TestFiles" + Path.DirectorySeparatorChar, FilePathUtil.GetHttpStandardPath() + Path.DirectorySeparatorChar + @"xslt10" + Path.DirectorySeparatorChar + "Current" + Path.DirectorySeparatorChar);
 
             return;
         }
@@ -274,7 +274,7 @@ namespace System.Xml.Tests
         //  -------------------------------------------------------------------------------------------------------------
         public void CheckExpectedError(Exception ex, string assembly)
         {
-            CExceptionHandler handler = new CExceptionHandler(_strPath + "exceptions.xml", assembly, _output);
+            CExceptionHandler handler = new CExceptionHandler(_strPath + "Exceptions.xml", assembly, _output);
             bool result = handler.VerifyException(ex);
             if (handler.res != _expectedErrorCode)
             {
@@ -294,7 +294,7 @@ namespace System.Xml.Tests
         //  -------------------------------------------------------------------------------------------------------------
         public void CheckExpectedError(Exception ex, string assembly, string res, string[] strParams)
         {
-            CExceptionHandler handler = new CExceptionHandler(_strPath + "exceptions.xml", assembly, _output);
+            CExceptionHandler handler = new CExceptionHandler(_strPath + "Exceptions.xml", assembly, _output);
             if (!handler.VerifyException(ex, res, strParams))
             {
                 Assert.True(false);
