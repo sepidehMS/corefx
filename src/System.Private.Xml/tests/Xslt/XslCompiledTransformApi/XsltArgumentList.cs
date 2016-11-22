@@ -32,7 +32,7 @@ namespace System.Xml.Tests
 
         //[Variation(Desc = "Basic Verification Test", Pri = 0)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam1()
         {
             m_xsltArg = new XsltArgumentList();
@@ -81,7 +81,7 @@ namespace System.Xml.Tests
         [InlineData(3)]
         //[Variation(Desc = "Dictionary.XsltArgumentList.AddParam/AddExtensionObject", Param = 4)]
         [InlineData(4)]
-        [Theory]
+        ////[Theory]
         public void GetParam_Tuple(object param)
         {
             WriteXmlAndXslFiles();
@@ -125,7 +125,7 @@ namespace System.Xml.Tests
 
         //[Variation("Param name is null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam2()
         {
             m_xsltArg = new XsltArgumentList();
@@ -142,7 +142,7 @@ namespace System.Xml.Tests
 
         //[Variation("Param name is empty string")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam3()
         {
             m_xsltArg = new XsltArgumentList();
@@ -158,7 +158,7 @@ namespace System.Xml.Tests
 
         //[Variation("Param name is non existent")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam4()
         {
             m_xsltArg = new XsltArgumentList();
@@ -174,7 +174,7 @@ namespace System.Xml.Tests
 
         //[Variation("Invalid Param name")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam5()
         {
             m_xsltArg = new XsltArgumentList();
@@ -190,7 +190,7 @@ namespace System.Xml.Tests
 
         //[Variation("Very Long Param")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam6()
         {
             m_xsltArg = new XsltArgumentList();
@@ -205,7 +205,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI = null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam7()
         {
             m_xsltArg = new XsltArgumentList();
@@ -221,7 +221,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI is empty string")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam8()
         {
             m_xsltArg = new XsltArgumentList();
@@ -236,7 +236,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI non-existent")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam9()
         {
             m_xsltArg = new XsltArgumentList();
@@ -268,7 +268,7 @@ namespace System.Xml.Tests
 
         //[Variation("Very long namespace System.Xml.Tests")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam10()
         {
             m_xsltArg = new XsltArgumentList();
@@ -283,7 +283,7 @@ namespace System.Xml.Tests
 
         //[Variation("Invalid Namespace URI")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam11()
         {
             m_xsltArg = new XsltArgumentList();
@@ -296,7 +296,7 @@ namespace System.Xml.Tests
 
         //[Variation("Different Data Types")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam12()
         {
             m_xsltArg = new XsltArgumentList();
@@ -358,7 +358,7 @@ namespace System.Xml.Tests
 
         //[Variation("Case Sensitivity")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam13()
         {
             m_xsltArg = new XsltArgumentList();
@@ -379,7 +379,7 @@ namespace System.Xml.Tests
 
         //[Variation("Whitespace")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam14()
         {
             int i = 1;
@@ -413,7 +413,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call After Param has been removed")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam15()
         {
             m_xsltArg = new XsltArgumentList();
@@ -429,7 +429,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call multiple Times")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam16()
         {
             m_xsltArg = new XsltArgumentList();
@@ -453,7 +453,7 @@ namespace System.Xml.Tests
 
         //[Variation("Using XSL namespace")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam17()
         {
             m_xsltArg = new XsltArgumentList();
@@ -471,7 +471,7 @@ namespace System.Xml.Tests
 
         //[Variation("Resolving conflicts with variables with different namespaces")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam18()
         {
             m_xsltArg = new XsltArgumentList();
@@ -497,7 +497,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace AND param = null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam19()
         {
             m_xsltArg = new XsltArgumentList();
@@ -513,7 +513,7 @@ namespace System.Xml.Tests
 
         //[Variation("Data Types - Of type Double ")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParamDoubles()
         {
             double d1 = double.PositiveInfinity;
@@ -601,7 +601,7 @@ namespace System.Xml.Tests
         //DCR : 298350 - XsltArgumentList no longer reports the same type on the GetParam methods
         //[Variation(id = 20, Desc = "Add Parameter other than XSLT Data Type and verify the type, expected same as added", Pri = 0)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetParam20()
         {
             m_xsltArg = new XsltArgumentList();
@@ -636,7 +636,7 @@ namespace System.Xml.Tests
 
         //[Variation(Desc = "Basic Verification Test", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetExtObject1()
         {
             MyObject obj = new MyObject(1, _output);
@@ -662,7 +662,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI = null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetExtObject2()
         {
             m_xsltArg = new XsltArgumentList();
@@ -681,7 +681,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI is empty string", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void GetExtObject3(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -708,7 +708,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI non-existent")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetExtObject4()
         {
             m_xsltArg = new XsltArgumentList();
@@ -735,7 +735,7 @@ namespace System.Xml.Tests
 
         //[Variation("Very long namespace System.Xml.Tests")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetExtObject5()
         {
             m_xsltArg = new XsltArgumentList();
@@ -760,7 +760,7 @@ namespace System.Xml.Tests
 
         //[Variation("Invalid namespace System.Xml.Tests")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetExtObject6()
         {
             m_xsltArg = new XsltArgumentList();
@@ -774,7 +774,7 @@ namespace System.Xml.Tests
 
         //[Variation("Different Data Types")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetExtObject7()
         {
             m_xsltArg = new XsltArgumentList();
@@ -835,7 +835,7 @@ namespace System.Xml.Tests
 
         //[Variation("Case sensitivity")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetExtObject8()
         {
             MyObject obj = new MyObject(8, _output);
@@ -881,7 +881,7 @@ namespace System.Xml.Tests
 
         //[Variation("Whitespace")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetExtObject9()
         {
             int i = 1;
@@ -916,7 +916,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call after object has been removed")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetExtObject10()
         {
             MyObject obj = new MyObject(10, _output);
@@ -947,7 +947,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call multiple times")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetExtObject11()
         {
             MyObject obj = new MyObject(11, _output);
@@ -974,7 +974,7 @@ namespace System.Xml.Tests
 
         //[Variation("Using XSL Namespace")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void GetExtObject12()
         {
             m_xsltArg = new XsltArgumentList();
@@ -1015,7 +1015,7 @@ namespace System.Xml.Tests
 
         //[Variation(Desc = "Basic Verification Test", Pri = 1, Param = "showParam1.txt")]
         [InlineData("showParam1.txt")]
-        [Theory]
+        ////[Theory]
         public void AddParam1(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1038,7 +1038,7 @@ namespace System.Xml.Tests
 
         //[Variation("Param  = null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddParam2()
         {
             m_xsltArg = new XsltArgumentList();
@@ -1057,7 +1057,7 @@ namespace System.Xml.Tests
 
         //[Variation("Param name is empty string")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddParam3()
         {
             m_xsltArg = new XsltArgumentList();
@@ -1076,7 +1076,7 @@ namespace System.Xml.Tests
 
         //[Variation("Very Long Param Name", Param = "LongParam.txt")]
         [InlineData("LongParam.txt")]
-        [Theory]
+        ////[Theory]
         public void AddParam4(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1099,7 +1099,7 @@ namespace System.Xml.Tests
 
         //[Variation("Invalid Param name")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddParam5()
         {
             m_xsltArg = new XsltArgumentList();
@@ -1118,7 +1118,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI = null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddParam6()
         {
             m_xsltArg = new XsltArgumentList();
@@ -1137,7 +1137,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI is empty string", Param = "showParam7.txt")]
         [InlineData("showParam7.txt")]
-        [Theory]
+        ////[Theory]
         public void AddParam7(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1161,7 +1161,7 @@ namespace System.Xml.Tests
 
         //[Variation("Very long namespace System.Xml.Tests", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void AddParam8(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1184,7 +1184,7 @@ namespace System.Xml.Tests
 
         //[Variation("Invalid Namespace URI")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddParam9()
         {
             m_xsltArg = new XsltArgumentList();
@@ -1195,7 +1195,7 @@ namespace System.Xml.Tests
 
         //[Variation("Setting a param that already exists")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddParam11()
         {
             m_xsltArg = new XsltArgumentList();
@@ -1215,7 +1215,7 @@ namespace System.Xml.Tests
 
         //[Variation("Object with same name, different namespace System.Xml.Tests", Param = "AddParam12.txt")]
         [InlineData("AddParam12.txt")]
-        [Theory]
+        ////[Theory]
         public void AddParam12(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1252,7 +1252,7 @@ namespace System.Xml.Tests
 
         //[Variation("Object with same namespace System.Xml.Tests, different name", Param = "AddParam13.txt")]
         [InlineData("AddParam13.txt")]
-        [Theory]
+        ////[Theory]
         public void AddParam13(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1288,7 +1288,7 @@ namespace System.Xml.Tests
 
         //[Variation("Case Sensitivity", Param = "AddParam14.txt")]
         [InlineData("AddParam14.txt")]
-        [Theory]
+        ////[Theory]
         public void AddParam14(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1329,7 +1329,7 @@ namespace System.Xml.Tests
 
         //[Variation("Object is null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddParam15()
         {
             m_xsltArg = new XsltArgumentList();
@@ -1348,7 +1348,7 @@ namespace System.Xml.Tests
 
         //[Variation("Add/remove object many times", Param = "AddParam16.txt")]
         [InlineData("AddParam16.txt")]
-        [Theory]
+        ////[Theory]
         public void AddParam16(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1399,7 +1399,7 @@ namespace System.Xml.Tests
 
         //[Variation("Whitespace in URI and param", Param = "AddParam17.txt")]
         [InlineData("AddParam17.txt")]
-        [Theory]
+        ////[Theory]
         public void AddParam17(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1454,7 +1454,7 @@ namespace System.Xml.Tests
 
         //[Variation("Adding many objects", Param = "AddParam18.txt")]
         [InlineData("AddParam18.txt")]
-        [Theory]
+        ////[Theory]
         public void AddParam18(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1480,7 +1480,7 @@ namespace System.Xml.Tests
 
         //[Variation("Add same object many times", Param = "AddParam19.txt")]
         [InlineData("AddParam19.txt")]
-        [Theory]
+        ////[Theory]
         public void AddParam19(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1514,7 +1514,7 @@ namespace System.Xml.Tests
 
         //[Variation("Using Different XSLT namespace", Param = "AddParam20.txt")]
         [InlineData("AddParam20.txt")]
-        [Theory]
+        ////[Theory]
         public void AddParam20(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1556,7 +1556,7 @@ namespace System.Xml.Tests
 
         //[Variation("Using Default XSLT namespace")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddParam21()
         {
             m_xsltArg = new XsltArgumentList();
@@ -1568,7 +1568,7 @@ namespace System.Xml.Tests
 
         //[Variation("Parameters should not be cached")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject32()
         {
             if (LoadXSL("test_Param.xsl") == 1)
@@ -1679,7 +1679,7 @@ namespace System.Xml.Tests
         [InlineData("AddParameterFA6.xsl", "default global")]
         //[Variation(id = 28, Pri = 2, Desc = "No param sent, global variable used, local variable doesn't exist, reference to param, with-param sends no value", Params = new object[] { "AddParameterFA7.xsl", "default global" })]
         [InlineData("AddParameterFA7.xsl", "default global")]
-        [Theory]
+        ////[Theory]
         public void AddParam1(object param0, object param1)
         {
             m_xsltArg = new XsltArgumentList();
@@ -1760,7 +1760,7 @@ namespace System.Xml.Tests
         [InlineData("AddParameterFB6.xsl", "default global")]
         //[Variation(id = 56, Pri = 2, Desc = "Param sent, global variable used, local variable doesn't exist, reference to param, with-param sends no value", Params = new object[] { "AddParameterFB7.xsl", "default global" })]
         [InlineData("AddParameterFB7.xsl", "default global")]
-        [Theory]
+        ////[Theory]
         public void AddParam2(object param0, object param1)
         {
             string xslFile = param0.ToString();
@@ -1794,7 +1794,7 @@ namespace System.Xml.Tests
         [InlineData("AddParameterB6.xsl", "")]
         //[Variation(id = 63, Pri = 2, Desc = "Param sent, global param used, local param doesn't exist, reference to param, with-param sends no value", Params = new object[] { "AddParameterB7.xsl", "" })]
         [InlineData("AddParameterB7.xsl", "")]
-        [Theory]
+        ////[Theory]
         public void AddParam3(object param0, object param1)
         {
             string xslFile = param0.ToString();
@@ -1841,7 +1841,7 @@ namespace System.Xml.Tests
 
         //[Variation(Desc = "Basic Verification Test", Pri = 1, Param = "myObjectDef.txt")]
         [InlineData("myObjectDef.txt")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject1(object param)
         {
             MyObject obj = new MyObject(1, _output);
@@ -1861,7 +1861,7 @@ namespace System.Xml.Tests
 
         //[Variation("namespace System.Xml.Tests = null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject2()
         {
             MyObject obj = new MyObject(2, _output);
@@ -1883,7 +1883,7 @@ namespace System.Xml.Tests
 
         //[Variation("namespace System.Xml.Tests is empty string")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject3()
         {
             MyObject obj = new MyObject(3, _output);
@@ -1897,7 +1897,7 @@ namespace System.Xml.Tests
 
         //[Variation("Very long namespace System.Xml.Tests", Param = "myObjectLongNs.txt")]
         [InlineData("myObjectLongNS.txt")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject4(object param)
         {
             m_xsltArg = new XsltArgumentList();
@@ -1918,7 +1918,7 @@ namespace System.Xml.Tests
 
         //[Variation("Invalid namespace System.Xml.Tests")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject5()
         {
             MyObject obj = new MyObject(5, _output);
@@ -1931,7 +1931,7 @@ namespace System.Xml.Tests
 
         //[Variation("Same Namespace different objects")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject7()
         {
             MyObject obj1 = new MyObject(1, _output);
@@ -1954,7 +1954,7 @@ namespace System.Xml.Tests
 
         //[Variation("Case sensitivity", Param = "myObjectDef.txt")]
         [InlineData("myObjectDef.txt")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject8(object param)
         {
             MyObject obj = new MyObject(1, _output);
@@ -1984,7 +1984,7 @@ namespace System.Xml.Tests
 
         //[Variation("Set a null object")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject9()
         {
             MyObject obj = new MyObject(9, _output);
@@ -2006,7 +2006,7 @@ namespace System.Xml.Tests
 
         //[Variation("Unitialized and NULL return values from the methods in the extension object")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject10()
         {
             MyObject obj = new MyObject(10, _output);
@@ -2023,7 +2023,7 @@ namespace System.Xml.Tests
 
         //[Variation("Add many objects", Param = "myObjectDef.txt")]
         [InlineData("myObjectDef.txt")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject11(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2051,7 +2051,7 @@ namespace System.Xml.Tests
 
         //[Variation("Whitespace")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject12()
         {
             int i = 1;
@@ -2081,7 +2081,7 @@ namespace System.Xml.Tests
 
         //[Variation("Add object many times")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject13()
         {
             MyObject obj = new MyObject(13, _output);
@@ -2103,7 +2103,7 @@ namespace System.Xml.Tests
 
         //[Variation("Add and Remove multiple times", Param = "myObjectDef.txt")]
         [InlineData("myObjectDef.txt")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject14(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2128,7 +2128,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI non-existent")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject15()
         {
             MyObject obj = new MyObject(15, _output);
@@ -2151,7 +2151,7 @@ namespace System.Xml.Tests
 
         //[Variation("Accessing Private and protected Items")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject16()
         {
             MyObject obj = new MyObject(1, _output);
@@ -2189,7 +2189,7 @@ namespace System.Xml.Tests
 
         //[Variation("Writing To Output")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject17()
         {
             MyObject obj = new MyObject(17, _output);
@@ -2206,7 +2206,7 @@ namespace System.Xml.Tests
 
         //[Variation("Recursive Functions", Param = "myObject_Recursion.txt")]
         [InlineData("MyObject_Recursion.txt")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject18(object param)
         {
             MyObject obj = new MyObject(18, _output);
@@ -2226,7 +2226,7 @@ namespace System.Xml.Tests
 
         //[Variation("Function-exists tests", Param = "MyObject_FnExists.txt")]
         [InlineData("MyObject_FnExists.txt")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject20(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2246,7 +2246,7 @@ namespace System.Xml.Tests
 
         //[Variation("Argument Tests", Param = "MyObject_Arguments.txt")]
         [InlineData("MyObject_Arguments.txt")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject21(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2266,7 +2266,7 @@ namespace System.Xml.Tests
 
         //[Variation("Multiple Objects in same NameSpace")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject24()
         {
             m_xsltArg = new XsltArgumentList();
@@ -2290,7 +2290,7 @@ namespace System.Xml.Tests
 
         //[Variation("Case Sensitivity")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject25()
         {
             MyObject obj = new MyObject(25, _output);
@@ -2316,7 +2316,7 @@ namespace System.Xml.Tests
 
         //[Variation("Object namespace System.Xml.Tests found")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject26()
         {
             MyObject obj = new MyObject(26, _output);
@@ -2341,7 +2341,7 @@ namespace System.Xml.Tests
 
         //[Variation("Maintaining State", Param = "MyObject_KeepingState.txt")]
         [InlineData("MyObject_KeepingState.txt")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject27(object param)
         {
             MyObject obj = new MyObject(27, _output);
@@ -2362,7 +2362,7 @@ namespace System.Xml.Tests
         //[Variation("Deliberately Messing Up the Stylesheet", Param = "MyObject_KillerStrings.txt")]
         [ActiveIssue(9877)]
         [InlineData("MyObject_KillerStrings.txt")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject28(object param)
         {
             MyObject obj = new MyObject(28, _output);
@@ -2385,7 +2385,7 @@ namespace System.Xml.Tests
 
         //[Variation("Function not found in Object")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject29()
         {
             MyObject obj = new MyObject(29, _output);
@@ -2410,7 +2410,7 @@ namespace System.Xml.Tests
 
         //[Variation("Using Default XSLT namespace")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void AddExtObject31()
         {
             MyObject obj = new MyObject(31, _output);
@@ -2425,7 +2425,7 @@ namespace System.Xml.Tests
 
         //[Variation("Extension objects should not be cached during Transform()", Param = "Bug78587")]
         [InlineData("Bug78587")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject32(object param)
         {
             string Baseline1 = Path.Combine("baseline", (string)param) + "a.txt";
@@ -2459,7 +2459,7 @@ namespace System.Xml.Tests
         //[Variation(id = 36, Desc = "Calling extension object from select in xsl:sort", Params = new object[] { "sort.xsl", "sort.txt" })]
         [PlatformSpecific(TestPlatforms.Windows)] // Non Windows is not supported yet
         [InlineData("sort.xsl", "sort.txt")]
-        [Theory]
+        //[Theory]
         public void AddExtObject33_ActiveIssue9997(object param0, object param1)
         {
             AddExtObject33(param0, param1);
@@ -2479,7 +2479,7 @@ namespace System.Xml.Tests
         [InlineData("with-param.xsl", "with-param.txt")]
         //[Variation(id = 40, Desc = "Calling extension object from select in xsl:value-of", Params = new object[] { "value-of.xsl", "value-of.txt" })]
         [InlineData("value-of.xsl", "value-of.txt")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject33(object param0, object param1)
         {
             ExObj obj = new ExObj(0, _output);
@@ -2498,6 +2498,44 @@ namespace System.Xml.Tests
                 Assert.True(false);
         }
 
+        [InlineData("MySortKey.xsl", "MySortKey.xml")]
+        [Theory]
+        public void MySortKeyTest(object param0, object param1)
+        {
+            string xslFile = "TestFiles/TestData/XsltApiV2/MySortKey.xsl";
+            string xmlFile = "TestFiles/TestData/XsltApiV2/baseline/MySortKey.xml";
+
+            string outputFile = "MySortKeyOut.xml";
+            string expected = "MySortKeyExpected.xml";
+            
+            // Load XSL
+            XslCompiledTransform xslt = new XslCompiledTransform();
+            XmlTextReader trTemp = new XmlTextReader(xslFile);
+            try
+            {
+                Console.WriteLine("Loading style sheet as XmlTextReader " + xslFile);
+                xslt.Load(trTemp);
+            }
+            finally
+            {
+                if (trTemp != null)
+                    trTemp.Dispose();
+            }
+            
+            // Now, transform xml using the XSLT and write the output xml to file
+             XmlDocument xmlDocument = new XmlDocument();
+             xmlDocument.Load(xmlFile);
+             IXPathNavigable xd = (IXPathNavigable)xmlDocument;
+            
+            FileStream strmTemp = null;
+            strmTemp = new FileStream(outputFile, FileMode.Create, FileAccess.ReadWrite);
+            xslt.Transform(xd, null, strmTemp);
+
+            strmTemp.Dispose();
+
+            VerifyResult(expected, outputFile);
+        }
+
         //[Variation(id = 41, Desc = "Calling extension function from select in xsl:variable and variable is used for incrementing an integer", Params = new object[] { "variable2.xsl", "variable2.txt" })]
         [InlineData("variable2.xsl", "variable2.txt")]
         //[Variation(id = 42, Desc = "Calling extension function from select in xsl:variable but variable is never used", Params = new object[] { "variable3.xsl", "variable3.txt" })]
@@ -2510,7 +2548,7 @@ namespace System.Xml.Tests
         [InlineData("param3.xsl", "param3.txt")]
         //[Variation(id = 46, Desc = "Calling extension function from select in global xsl:param but parameter is never used", Params = new object[] { "param4.xsl", "param4.txt" })]
         [InlineData("param4.xsl", "param4.txt")]
-        [Theory]
+        ////[Theory]
         public void AddExtObject41(object param0, object param1)
         {
             /*
@@ -2582,7 +2620,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 1, Desc = "Basic Verification Test", Pri = 1, Param = "RemoveParam1.txt")]
         [InlineData("RemoveParam1.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveParam1(object param)
         {
             m_xsltArg = new XsltArgumentList();
@@ -2617,7 +2655,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 2, Desc = "Param name is null", Pri = 1, Param = "RemoveParam2.txt")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void RemoveParam2()
         {
             m_xsltArg = new XsltArgumentList();
@@ -2632,7 +2670,7 @@ namespace System.Xml.Tests
 
         //[Variation("Param name is empty string", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveParam3(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2650,7 +2688,7 @@ namespace System.Xml.Tests
 
         //[Variation("Param name is non-existent", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveParam4(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2668,7 +2706,7 @@ namespace System.Xml.Tests
 
         //[Variation("Invalid Param name", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveParam5(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2686,7 +2724,7 @@ namespace System.Xml.Tests
 
         //[Variation("Very long param name", Param = "showParamLongName.txt")]
         [InlineData("showParamLongName.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveParam6(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2706,7 +2744,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI is null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void RemoveParam7()
         {
             m_xsltArg = new XsltArgumentList();
@@ -2722,7 +2760,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI is empty string", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveParam8(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2742,7 +2780,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI is non-existent", Param = "RemoveParam9.txt")]
         [InlineData("RemoveParam9.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveParam9(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2762,7 +2800,7 @@ namespace System.Xml.Tests
 
         //[Variation("Very long namespace System.Xml.Tests", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveParam10(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2782,7 +2820,7 @@ namespace System.Xml.Tests
 
         //[Variation("Different Data Types", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveParam11(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2987,7 +3025,7 @@ namespace System.Xml.Tests
 
         //[Variation("Case Sensitivity", Param = "RemoveParam12.txt")]
         [InlineData("RemoveParam12.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveParam12(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3010,7 +3048,7 @@ namespace System.Xml.Tests
 
         //[Variation("Whitespace", Param = "RemoveParam13.txt")]
         [InlineData("RemoveParam13.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveParam13(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3056,7 +3094,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Multiple Times", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveParam14(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3078,7 +3116,7 @@ namespace System.Xml.Tests
 
         //[Variation("Using Default XSLT Namespace")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void RemoveParam15()
         {
             m_xsltArg = new XsltArgumentList();
@@ -3108,7 +3146,7 @@ namespace System.Xml.Tests
 
         //[Variation(Desc = "Basic Verification Test", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void RemoveExtObj1()
         {
             MyObject obj = new MyObject(1, _output);
@@ -3133,7 +3171,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI is null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void RemoveExtObj2()
         {
             MyObject obj = new MyObject(2, _output);
@@ -3153,7 +3191,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Multiple Times", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveExtObj3(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3175,7 +3213,7 @@ namespace System.Xml.Tests
 
         //[Variation("Namespace URI is non-existent", Param = "MyObjectDef.txt")]
         [InlineData("myObjectDef.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveExtObj4(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3196,7 +3234,7 @@ namespace System.Xml.Tests
 
         //[Variation("Very long namespace System.Xml.Tests")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void RemoveExtObj5()
         {
             m_xsltArg = new XsltArgumentList();
@@ -3220,7 +3258,7 @@ namespace System.Xml.Tests
 
         //[Variation("Different Data Types", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveExtObj6(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3256,7 +3294,7 @@ namespace System.Xml.Tests
 
         //[Variation("Case Sensitivity", Param = "MyObjectDef.txt")]
         [InlineData("myObjectDef.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveExtObj7(object param)
         {
             MyObject obj = new MyObject(7, _output);
@@ -3281,7 +3319,7 @@ namespace System.Xml.Tests
 
         //[Variation("Whitespace")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void RemoveExtObj8()
         {
             int i = 1;
@@ -3318,7 +3356,7 @@ namespace System.Xml.Tests
 
         //[Variation("Using default XSLT namespace", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void RemoveExtObj9(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3353,7 +3391,7 @@ namespace System.Xml.Tests
 
         //[Variation(Desc = "Basic Verification Test", Pri = 1, Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void Clear1(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3380,7 +3418,7 @@ namespace System.Xml.Tests
 
         //[Variation("Clear with nothing loaded", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void Clear2(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3398,7 +3436,7 @@ namespace System.Xml.Tests
 
         //[Variation("Clear Params", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void Clear3(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3425,7 +3463,7 @@ namespace System.Xml.Tests
 
         //[Variation("Clear Extension Objects")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Clear4()
         {
             MyObject obj = new MyObject(26, _output);
@@ -3457,7 +3495,7 @@ namespace System.Xml.Tests
 
         //[Variation("Clear Many Objects", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void Clear5(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3504,7 +3542,7 @@ namespace System.Xml.Tests
 
         //[Variation("Clear Multiple Times", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void Clear6(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3532,7 +3570,7 @@ namespace System.Xml.Tests
 
         //[Variation("Loading one object, but clearing another", Param = "ClearParam7.txt")]
         [InlineData("ClearParam7.txt")]
-        [Theory]
+        ////[Theory]
         public void Clear7(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3557,7 +3595,7 @@ namespace System.Xml.Tests
 
         //[Variation("Clear after objects have been \"Removed\"", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void Clear8(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3644,7 +3682,7 @@ namespace System.Xml.Tests
         [InlineData("Message9.xsl", "no", "yes", "Message9.txt")]
         //[Variation(id = 10, Desc = "OnQueryEvent Exists - xsl:message with template content and  terminate='yes'", Priority = 1, Params = new object[] { "Message10.xsl", "yes", "yes", "Message10.txt" })]
         [InlineData("Message10.xsl", "yes", "yes", "Message10.txt")]
-        [Theory]
+        ////[Theory]
         public void EventsTests(object param0, object param1, object param2, object param3)
         {
             XslCompiledTransform xslt = new XslCompiledTransform();
@@ -3733,7 +3771,7 @@ namespace System.Xml.Tests
         //[Variation(id = 1, Desc = "Call Current without MoveNext")]
         [ActiveIssue(9873)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void NodeIter1()
         {
             if (_isInProc)
@@ -3767,7 +3805,7 @@ namespace System.Xml.Tests
         //[Variation(id = 2, Desc = "Call Current after MoveNext")]
         [ActiveIssue(9873)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void NodeIter2()
         {
             if (_isInProc)

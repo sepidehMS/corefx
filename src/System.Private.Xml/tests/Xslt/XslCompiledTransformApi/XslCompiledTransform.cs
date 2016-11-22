@@ -150,7 +150,7 @@ namespace System.Xml.Tests
         //BinCompat TODO: Add this test back
         ////[Variation("CompileToType(XmlReader = null)", Pri = 1)]
         //[InlineData()]
-        //[Theory]
+        //////[Theory]
         //public void Var1()
         //{
         //    try
@@ -172,7 +172,7 @@ namespace System.Xml.Tests
         //BinCompat TODO: Add this test back - it might possibly need to be removed - to be investigated
         //[Variation("CompileToType(TypeBuilder= null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var2()
         {
             /*try
@@ -194,7 +194,7 @@ namespace System.Xml.Tests
         //BinCompat TODO: Add this test back
         ////[Variation("CompileToType(AsmPath= No Extension file name)", Pri = 1)]
         //[InlineData()]
-        //[Theory]
+        //////[Theory]
         //public void Var3()
         //{
         //    AppDomain cd = System.Threading.Thread.GetDomain();
@@ -236,7 +236,7 @@ namespace System.Xml.Tests
         //BinCompat TODO: Add this test back
         ////[Variation("CompileToType(Valid case with scripts)", Pri = 1)]
         //[InlineData()]
-        //[Theory]
+        //////[Theory]
         //public void Var4()
         //{
         //    AppDomain cd = System.Threading.Thread.GetDomain();
@@ -284,7 +284,7 @@ namespace System.Xml.Tests
         //BinCompat TODO: Add this test back
         ////[Variation("CompileToType(ScriptPath = null, sytlesheet with no scripts)", Pri = 1)]
         //[InlineData()]
-        //[Theory]
+        //////[Theory]
         //public void Var5()
         //{
         //    AppDomain cd = System.Threading.Thread.GetDomain();
@@ -326,7 +326,7 @@ namespace System.Xml.Tests
         //BinCompat TODO: Add this test back
         //[Variation("CompileToType(ScriptPath = null, stylesheet with scripts)", Pri = 1)]
         //[InlineData()]
-        //[Theory]
+        //////[Theory]
         //public void Var6()
         //{
         //    AppDomain cd = System.Threading.Thread.GetDomain();
@@ -368,7 +368,7 @@ namespace System.Xml.Tests
         //BinCompat TODO: Add this test back
         //    //[Variation("CompileToType(ScriptPath = null, XsltSettings = null)", Pri = 1)]
         //    [InlineData()]
-        //    [Theory]
+        //    ////[Theory]
         //    public void Var7()
         //    {
         //        AppDomain cd = System.Threading.Thread.GetDomain();
@@ -418,7 +418,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load(MethodInfo = null, ByteArray, TypeArray)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var1()
         {
             XslCompiledTransform xslt = new XslCompiledTransform();
@@ -440,7 +440,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load(MethodInfo, ByteArray = null, TypeArray)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var2()
         {
             XslCompiledTransform xslt = new XslCompiledTransform();
@@ -463,7 +463,7 @@ namespace System.Xml.Tests
         //[Variation("Valid Load after error case Load(MethodInfo, ByteArray, TypeArray)", Pri = 1)]
         [ActiveIssue(9988)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var3()
         {
             // BinCompat TODO: rewrite this test so that it does not load xsl from dll
@@ -500,7 +500,7 @@ namespace System.Xml.Tests
         //[Variation("Multiple Loads Load(MethodInfo, ByteArray, TypeArray)", Pri = 1)]
         [ActiveIssue(9988)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var7()
         {
             // BinCompat TODO: rewrite this test so that it does not load xsl from dll
@@ -543,7 +543,7 @@ namespace System.Xml.Tests
         //[Variation("Load(MethodInfo, ByteArray, TypeArray) simple assembly", Pri = 1)]
         [ActiveIssue(9988)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var4()
         {
             // BinCompat TODO: rewrite this test so that it does not load xsl from dll
@@ -570,7 +570,7 @@ namespace System.Xml.Tests
         //[Variation("Load(MethodInfo, ByteArray, TypeArray) assembly with scripts", Pri = 1)]
         [ActiveIssue(9988)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var5()
         {
             // BinCompat TODO: rewrite this test so that it does not load xsl from dll
@@ -597,7 +597,7 @@ namespace System.Xml.Tests
         //[Variation("Load(MethodInfo, ByteArray, TypeArray) old xsltc assembly", Pri = 1)]
         [ActiveIssue(9988)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var6()
         {
             // BinCompat TODO: rewrite this test so that it does not load xsl from dll
@@ -633,7 +633,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load(string = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var0()
         {
             try
@@ -654,7 +654,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load(IXPathNavigable = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var1()
         {
             try
@@ -675,7 +675,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load(XmlReader = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var2()
         {
             try
@@ -696,7 +696,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load(IXPathNavigable = null, XmlResolver = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var3()
         {
             try
@@ -717,7 +717,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load(XmlReader = null, XmlResolver = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var4()
         {
             try
@@ -738,7 +738,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load(IXPathNavigable = null, XmlResolver = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var5()
         {
             try
@@ -759,7 +759,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load(XmlReader = null, XmlResolver = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var6()
         {
             try
@@ -780,7 +780,7 @@ namespace System.Xml.Tests
 
         //[Variation("Transform(IXPathNavigable = null, XsltArgumentList = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var7()
         {
             try
@@ -804,7 +804,7 @@ namespace System.Xml.Tests
 
         //[Variation("Transform(IXPathNavigable = null, XsltArgumentList = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var8()
         {
             try
@@ -828,7 +828,7 @@ namespace System.Xml.Tests
 
         //[Variation("Transform(IXPathNavigable = null, XsltArgumentList = null, TextWriter = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var9()
         {
             try
@@ -851,7 +851,7 @@ namespace System.Xml.Tests
 
         //[Variation("Transform(IXPathNavigable = null, XsltArgumentList = null, TextWriter = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var10()
         {
             try
@@ -874,7 +874,7 @@ namespace System.Xml.Tests
 
         //[Variation("Transform(IXPathNavigable = null, XsltArgumentList = null, Stream = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var11()
         {
             try
@@ -897,7 +897,7 @@ namespace System.Xml.Tests
 
         //[Variation("Transform(IXPathNavigable = null, XsltArgumentList = null, Stream = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var12()
         {
             try
@@ -920,7 +920,7 @@ namespace System.Xml.Tests
 
         //[Variation("Transform(IXPathNavigable = null, XsltArgumentList = null, XmlWriter = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var13()
         {
             try
@@ -943,7 +943,7 @@ namespace System.Xml.Tests
 
         //[Variation("Transform(IXPathNavigable = null, XsltArgumentList = null, XmlWriter = null)", Pri = 1)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Var14()
         {
             try
@@ -991,7 +991,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 1, Desc = "Set XmlResolver property to null, load style sheet with import/include, should not affect transform")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void XmlResolver1()
         {
             try
@@ -1019,7 +1019,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 2, Desc = "Set XmlResolver property to null, load style sheet with document function, should not resolve during load")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void XmlResolver2()
         {
             try
@@ -1049,7 +1049,7 @@ namespace System.Xml.Tests
         //[Variation(id = 3, Desc = "Default XmlResolver, load style sheet with document function, should resolve during transform", Pri = 1, Param = "DefaultResolver.txt")]
         [ActiveIssue(9876)]
         [InlineData("DefaultResolver.txt")]
-        [Theory]
+        ////[Theory]
         public void XmlResolver3(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1073,7 +1073,7 @@ namespace System.Xml.Tests
         /*
                 //[Variation("Set to NULL many times in a loop, then to proper cred.")]
                 [InlineData()]
-                [Theory]
+                ////[Theory]
                 public void XmlResolver6()
                 {
                     // Skip this test for Load(URI)
@@ -1106,7 +1106,7 @@ namespace System.Xml.Tests
         //[Variation(id = 7, Desc = "document() has absolute URI", Pri = 0)]
         [ActiveIssue(9876)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void XmlResolver7()
         {
             // copy file on the local machine (this is now done with createAPItestfiles.js, see Oasys scenario.)
@@ -1154,7 +1154,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 1, Desc = "Call Load with null value")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric1()
         {
             try
@@ -1172,7 +1172,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 2, Desc = "Load with valid, then invalid, then valid again")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric2()
         {
             if (LoadXSL("showParam.xsl") == 1)
@@ -1204,7 +1204,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 3, Desc = "Load an invalid, then a valid and transform", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric3(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1226,7 +1226,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 4, Desc = "Call several overloaded functions", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric4(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1260,7 +1260,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 5, Desc = "Call same overloaded Load() many times then transform", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric5(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1283,7 +1283,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 6, Desc = "Call load with non-existing stylesheet")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric6()
         {
             try
@@ -1300,7 +1300,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 7, Desc = "Verify that style sheet is closed properly after Load - Shared Read Access")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric7()
         {
             FileStream s2;
@@ -1323,7 +1323,7 @@ namespace System.Xml.Tests
         /*
         //[Variation(id =8, Desc ="Verify that style sheet is closed properly after Load - ReadWrite Access")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric8()
         {
             FileStream s2;
@@ -1348,7 +1348,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 9, Desc = "Verify that included files are closed properly after Load - Read Access")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric9()
         {
             FileStream s2;
@@ -1372,7 +1372,7 @@ namespace System.Xml.Tests
         /*
         //[Variation(id =10, Desc ="Verify that included files are closed properly after Load - ReadWrite Access")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric10()
         {
             FileStream s2;
@@ -1397,7 +1397,7 @@ namespace System.Xml.Tests
         //[Variation(id = 11, Desc = "Load stylesheet with entity reference: Bug #68450 ")]
         [ActiveIssue(9877)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric11()
         {
             if (MyDocType().ToString() == "DataDocument")
@@ -1419,7 +1419,7 @@ namespace System.Xml.Tests
 
         //[Variation(id = 12, Desc = "Load with invalid stylesheet and verify that file is closed properly")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric12()
         {
             Stream strmTemp;
@@ -1474,7 +1474,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Load with null source value and null resolver")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric1()
         {
             try
@@ -1492,7 +1492,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Load with null source value and valid resolver")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric2()
         {
             try
@@ -1510,7 +1510,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Load with null XmlResolver, style sheet does not have include/import, URI should throw ArgumentNullException and the rest shouldn't error", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric3(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1536,7 +1536,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Load with null XmlResolver and stylesheet has import/include, URI should throw ArgumentNullException, rest throw XsltException")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric4()
         {
             try
@@ -1565,7 +1565,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Load with null custom resolver and style sheet has import/include, should throw Exception")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric5()
         {
             CustomNullResolver myResolver = new CustomNullResolver(_output);
@@ -1607,7 +1607,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Load with null custom resolver and style sheet has no import/include, should error for URI only", Param = "ShowParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric6(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1645,7 +1645,7 @@ namespace System.Xml.Tests
 
         //[Variation("Style sheet has import/include, call Load first with custom null resolver and then default resolver, should not fail", Param = "XmlResolverTestMain.txt")]
         [InlineData("XmlResolverTestMain.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric7(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1728,7 +1728,7 @@ namespace System.Xml.Tests
 
         //[Variation("Style sheet has import/include, call Load first with default resolver and then with custom null resolver, should fail", Param = "XmlResolverTestMain.txt")]
         [InlineData("XmlResolverTestMain.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric8(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1787,7 +1787,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load with resolver with credentials, then load XSL that does not need cred.")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric9()
         {
             if ((LoadXSL_Resolver("XmlResolver_Main.xsl", GetDefaultCredResolver()) == 1))
@@ -1807,7 +1807,7 @@ namespace System.Xml.Tests
         /* This test doesn't make sense coz loading a stylesheet with null resolver will throw ArgumentNullException
         //[Variation("Call Load() many times with null resolver then perform a transform")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric10()
         {
             for(int i=0; i < 100; i++)
@@ -1827,7 +1827,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Load with null Resolver, file does not exist")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric11()
         {
             try
@@ -1859,7 +1859,7 @@ namespace System.Xml.Tests
          *
         //[Variation("Load non existing stylesheet with null resolver and try to transform")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric12()
         {
             if(LoadXSL_Resolver("showParam.xsl", null) == TEST_PASS)
@@ -1910,7 +1910,7 @@ namespace System.Xml.Tests
 
         //[Variation("Basic check for usage of credentials on resolver, load XSL that needs cred. with correct resolver", Param = "XmlResolverTestMain.txt")]
         [InlineData("XmlResolverTestMain.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadUrlResolver1(object param)
         {
             // XsltResolverTestMain.xsl is placed in IIS virtual directory
@@ -1928,7 +1928,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load XSL that needs cred. with null resolver, should fail", Param = "XmlResolverTestMain.txt")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadUrlResolver2()
         {
             try
@@ -1946,7 +1946,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Load with null source value")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadUrlResolver3()
         {
             try
@@ -1987,7 +1987,7 @@ namespace System.Xml.Tests
         //[Variation("Call Load with null source value, null evidence")]
         [ActiveIssue(9877)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric1()
         {
             /*
@@ -2006,7 +2006,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Load with style sheet that has script, pass null evidence, should throw security exception")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadGeneric2()
         {
             /*
@@ -2028,7 +2028,7 @@ namespace System.Xml.Tests
         //BinCompat TODO: Add this test back
         ////[Variation("Call Load with style sheet that has script, pass correct evidence")]
         //[InlineData()]
-        //[Theory]
+        //////[Theory]
         //public void LoadGeneric3()
         //{
         //    if (_isInProc)
@@ -2064,7 +2064,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Load with an invalid uri")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadUrl1()
         {
             try
@@ -2099,7 +2099,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load file with empty string")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadUrl2()
         {
             try
@@ -2117,7 +2117,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load with \".\"")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadUrl3()
         {
             try
@@ -2134,7 +2134,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load with \"..\"")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadUrl()
         {
             try
@@ -2152,7 +2152,7 @@ namespace System.Xml.Tests
         //[Variation("Load with \"\\\\\"")]
         [PlatformSpecific(TestPlatforms.Windows)] //Not an invalid path on Unix
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadUrl5()
         {
             try
@@ -2172,7 +2172,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Load with style sheet that has script, pass Url which does not have correct evidence, should fail")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadUrl6()
         {
             try
@@ -2189,7 +2189,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Load with style sheet that has script, pass Url which has correct evidence, should pass")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadUrl7()
         {
             try
@@ -2222,7 +2222,7 @@ namespace System.Xml.Tests
 
         //[Variation("Basic Verification Test", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadNavigator1(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2247,7 +2247,7 @@ namespace System.Xml.Tests
 
         //[Variation("Create Navigator and navigate away from root", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadNavigator2(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2270,7 +2270,7 @@ namespace System.Xml.Tests
 
         //[Variation("Basic check for usage of credentials on resolver, load XSL that needs cred. with correct resolver", Param = "XmlResolverTestMain.txt")]
         [InlineData("XmlResolverTestMain.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadNavigator3(object param)
         {
             xslt = new XslCompiledTransform();
@@ -2293,7 +2293,7 @@ namespace System.Xml.Tests
         //[Variation("Regression case for bug 80768")]
         [ActiveIssue(9873)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadNavigator4()
         {
             if (_isInProc)
@@ -2332,7 +2332,7 @@ namespace System.Xml.Tests
 
         //[Variation("Basic Verification Test", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadXmlReader1(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2370,7 +2370,7 @@ namespace System.Xml.Tests
 
         //[Variation("Calling with a closed reader, should throw exception")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadXmlReader2()
         {
             xslt = new XslCompiledTransform();
@@ -2397,7 +2397,7 @@ namespace System.Xml.Tests
 
         //[Variation("Verify Reader isn't closed after Load")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadXmlReader3()
         {
             Boolean fTEST_FAIL = false;
@@ -2434,7 +2434,7 @@ namespace System.Xml.Tests
 
         //[Variation("Verify position of node in Reader is at EOF after Load")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadXmlReader4()
         {
             Boolean fTEST_FAIL = false;
@@ -2470,7 +2470,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load with reader position at EOF, should throw exception")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadXmlReader5()
         {
             Boolean fTEST_FAIL = false;
@@ -2502,7 +2502,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load with NULL reader, should throw System.ArgumentNullException")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void LoadXmlReader6()
         {
             xslt = new XslCompiledTransform();
@@ -2523,7 +2523,7 @@ namespace System.Xml.Tests
 
         //[Variation("Basic check for usage of credentials on resolver, load XSL that needs cred. with correct resolver", Param = "XmlResolverTestMain.txt")]
         [InlineData("XmlResolverTestMain.txt")]
-        [Theory]
+        ////[Theory]
         public void LoadXmlReader7(object param)
         {
             xslt = new XslCompiledTransform();
@@ -2543,7 +2543,7 @@ namespace System.Xml.Tests
 
         //[Variation("bug 380138 NRE during XSLT compilation")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void Bug380138()
         {
             string xsl = @"<?xml version='1.0' encoding='utf-8'?>
@@ -2727,7 +2727,7 @@ namespace System.Xml.Tests
 
         //[Variation("Basic Verification Test", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void TransformGeneric1(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2742,7 +2742,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load and Transform multiple times", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void TransformGeneric2(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2758,7 +2758,7 @@ namespace System.Xml.Tests
 
         //[Variation("Load once, Transform many times", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void TransformGeneric3(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -2780,7 +2780,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Transform without loading")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformGeneric4()
         {
             xslt = new XslCompiledTransform();
@@ -2799,7 +2799,7 @@ namespace System.Xml.Tests
 
         //[Variation("Closing XSL and XML files used in transform, Read access")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformGeneric5()
         {
             FileStream s2;
@@ -2821,7 +2821,7 @@ namespace System.Xml.Tests
         /*
         //[Variation("Closing XSL and XML files used in transform, ReadWrite access")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformGeneric6()
         {
             FileStream s2;
@@ -2843,7 +2843,7 @@ namespace System.Xml.Tests
 
         //[Variation("Bug20003707 - InvalidProgramException for 2.0 stylesheets in forwards-compatible mode")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformGeneric7()
         {
             if (_isInProc)
@@ -2865,7 +2865,7 @@ namespace System.Xml.Tests
 
         //[Variation("Bug382506 - Loading stylesheet from custom navigator with enableDebug = true causes ArgumentOutOfRangeException")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformGeneric8()
         {
             xslt = new XslCompiledTransform();
@@ -2876,7 +2876,7 @@ namespace System.Xml.Tests
 
         //[Variation("Bug378293 - Incorrect error message when an attribute is added to a root node")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformGeneric9()
         {
             if (_isInProc)
@@ -2898,7 +2898,7 @@ namespace System.Xml.Tests
 
         //[Variation("Bug349757 - document() function does not work when stylesheet was loaded from a stream or reader or constructed DOM")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformGeneric10()
         {
             xslt = new XslCompiledTransform();
@@ -2911,7 +2911,7 @@ namespace System.Xml.Tests
 
         //[Variation("Bug369463 - Invalid XPath exception in forward compatibility mode should render lineNumber linePosition")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformGeneric11()
         {
             if (_isInProc)
@@ -2958,7 +2958,7 @@ namespace System.Xml.Tests
 
         //[Variation("Pass null XmlResolver, load style sheet with import/include, should not affect transform")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void XmlResolver1()
         {
             try
@@ -2982,7 +2982,7 @@ namespace System.Xml.Tests
         //[Variation("Pass null XmlResolver, load style sheet with document function, should not resolve during transform", Param = "xmlResolver_document_function.txt")]
         [ActiveIssue(9876)]
         [InlineData("xmlResolver_document_function.txt")]
-        [Theory]
+        ////[Theory]
         public void XmlResolver2(object param)
         {
             // "xmlResolver_document_function.xsl" contains
@@ -3008,7 +3008,7 @@ namespace System.Xml.Tests
         //[Variation("Default XmlResolver, load style sheet with document function, should resolve during transform", Param = "DefaultResolver.txt")]
         [ActiveIssue(9876)]
         [InlineData("DefaultResolver.txt")]
-        [Theory]
+        ////[Theory]
         public void XmlResolver3(object param)
         {
             // "xmlResolver_document_function.xsl" contains
@@ -3033,7 +3033,7 @@ namespace System.Xml.Tests
         //[Variation("document() has absolute URI")]
         [ActiveIssue(9876)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void XmlResolver5()
         {
             // copy file on the local machine
@@ -3075,7 +3075,7 @@ namespace System.Xml.Tests
 
         //[Variation("Pass null resolver but stylesheet doesn't have any include/imports")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void XmlResolver7()
         {
             LoadXSL("Bug382198.xsl");
@@ -3102,7 +3102,7 @@ namespace System.Xml.Tests
 
         //[Variation("Basic Verification Test", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr1(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3119,7 +3119,7 @@ namespace System.Xml.Tests
 
         //[Variation("Input is null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr2()
         {
             if (LoadXSL("showParam.xsl") == 1)
@@ -3137,7 +3137,7 @@ namespace System.Xml.Tests
 
         //[Variation("Output file is null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr3()
         {
             String szFullFilename = FullFilePath("fruits.xml");
@@ -3159,7 +3159,7 @@ namespace System.Xml.Tests
 
         //[Variation("Input is nonexisting file")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr4()
         {
             if (LoadXSL("showParam.xsl") == 1)
@@ -3180,7 +3180,7 @@ namespace System.Xml.Tests
         //[Variation("Output file is invalid")]
         [PlatformSpecific(TestPlatforms.Windows)] //Output file name is valid on Unix
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr5()
         {
             String szFullFilename = FullFilePath("fruits.xml");
@@ -3202,7 +3202,7 @@ namespace System.Xml.Tests
 
         //[Variation("Input is empty string")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr6()
         {
             if (LoadXSL("showParam.xsl") == 1)
@@ -3222,7 +3222,7 @@ namespace System.Xml.Tests
 
         //[Variation("Output file is empty string")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr7()
         {
             String szFullFilename = FullFilePath("fruits.xml");
@@ -3244,7 +3244,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call Transform many times", Param = "showParam.txt")]
         [InlineData("showParam.txt")]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr8(object param)
         {
             string Baseline = Path.Combine("baseline", (string)param);
@@ -3264,7 +3264,7 @@ namespace System.Xml.Tests
 
         //[Variation("Call without loading")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr9()
         {
             xslt = new XslCompiledTransform();
@@ -3284,7 +3284,7 @@ namespace System.Xml.Tests
 
         //[Variation("Output to unreachable destination")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr10()
         {
             if (LoadXSL("showParam.xsl") == 1)
@@ -3305,7 +3305,7 @@ namespace System.Xml.Tests
 
         //[Variation("Input filename is \'.\', \'..\', and \'\\\\\'")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr11()
         {
             int iCount = 0;
@@ -3349,7 +3349,7 @@ namespace System.Xml.Tests
 
         //[Variation("Output filename is \'.\' and \'..\'")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr12()
         {
             String szFullFilename = FullFilePath("fruits.xml");
@@ -3384,7 +3384,7 @@ namespace System.Xml.Tests
         //[Variation("Output filename is \'\\\\\'")]
         [PlatformSpecific(TestPlatforms.Windows)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr12_win()
         {
             String szFullFilename = FullFilePath("fruits.xml");
@@ -3401,7 +3401,7 @@ namespace System.Xml.Tests
 
         //[Variation("Closing files after transform")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr13()
         {
             String szFullFilename = FullFilePath("fruits.xml");
@@ -3434,7 +3434,7 @@ namespace System.Xml.Tests
         /*
         //[Variation("Transform(test.xml, test.xml)")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStr14()
         {
             String szFullFilename = FullFilePath("Bug75295.xml");
@@ -3473,7 +3473,7 @@ namespace System.Xml.Tests
         //[Variation("Pass null XmlResolver to Transform, load style sheet with import/include, should not affect transform")]
         [ActiveIssue(9877)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStrResolver1()
         {
             String szFullFilename = FullFilePath("fruits.xml");
@@ -3503,7 +3503,7 @@ namespace System.Xml.Tests
         //[Variation("Pass null XmlResolver, load style sheet with document function, should not resolve during transform")]
         [ActiveIssue(9876)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void TransformStrStrResolver2()
         {
             // "xmlResolver_document_function.xsl" contains
@@ -3528,7 +3528,7 @@ namespace System.Xml.Tests
         //[Variation("Pass XmlUrlResolver, load style sheet with document function, should resolve during transform", Param = "xmlResolver_document_function.txt")]
         [ActiveIssue(9876)]
         [InlineData("xmlResolver_document_function.txt")]
-        [Theory]
+        ////[Theory]
         public void TransformStrStrResolver3(object param)
         {
             // "xmlResolver_document_function.xsl" contains
@@ -3586,7 +3586,7 @@ namespace System.Xml.Tests
         //[Variation("Import/Include, NullResolver", Pri = 0, Params = new object[] { "XmlResolver_Main.xsl", "fruits.xml", "xmlResolver_main.txt", "NullResolver", false })]
         [InlineData("XmlResolver_Main.xsl", "fruits.xml", "xmlResolver_main.txt", "NullResolver", false, "IXPathNavigable")]
         [InlineData("XmlResolver_Main.xsl", "fruits.xml", "xmlResolver_main.txt", "NullResolver", false, "XmlReader")]
-        [Theory]
+        ////[Theory]
         public void ValidCases_ActiveIssue9876(object param0, object param1, object param2, object param3, object param4, object param5)
         {
             ValidCases(param0, param1, param2, param3, param4, param5);
@@ -3613,7 +3613,7 @@ namespace System.Xml.Tests
         //[Variation("No Import/Include, NullResolver", Pri = 0, Params = new object[] { "Bug382198.xsl", "fruits.xml", "bug382198.txt", "NullResolver", true })]
         [InlineData("Bug382198.xsl", "fruits.xml", "bug382198.txt", "NullResolver", true, "IXPathNavigable")]
         [InlineData("Bug382198.xsl", "fruits.xml", "bug382198.txt", "NullResolver", true, "XmlReader")]
-        [Theory]
+        ////[Theory]
         public void ValidCases(object param0, object param1, object param2, object param3, object param4, object param5)
         {
             string xslFile = FullFilePath(param0 as string);
@@ -3708,7 +3708,7 @@ namespace System.Xml.Tests
         //[Variation("Invalid Arguments: valid, valid, valid, null", Pri = 0, Params = new object[] { 4, true })]
         [InlineData(4, true, "IXPathNavigable")]
         [InlineData(4, true, "XmlReader")]
-        [Theory]
+        ////[Theory]
         public void InValidCases(object param0, object param1, object param2)
         {
             int argumentNumber = (int)param0;
@@ -3767,7 +3767,7 @@ namespace System.Xml.Tests
         //[Variation("Local parameter gets overwritten with global param value", Pri = 1)]
         [ActiveIssue(9877)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void var1()
         {
             m_xsltArg = new XsltArgumentList();
@@ -3782,7 +3782,7 @@ namespace System.Xml.Tests
         //[Variation("Local parameter gets overwritten with global variable value", Pri = 1)]
         [ActiveIssue(9877)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void var2()
         {
             m_xsltArg = new XsltArgumentList();
@@ -3797,7 +3797,7 @@ namespace System.Xml.Tests
         //[Variation("Subclassed XPathNodeIterator returned from an extension object or XsltFunction is not accepted by XPath", Pri = 1)]
         [ActiveIssue(9877)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void var3()
         {
             m_xsltArg = new XsltArgumentList();
@@ -3812,7 +3812,7 @@ namespace System.Xml.Tests
         //[Variation("Iterator using for-each over a variable is not reset correctly while using msxsl:node-set()", Pri = 1)]
         [ActiveIssue(9877)]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void var4()
         {
             if ((LoadXSL("Bug109644.xsl") == 1) && (Transform("foo.xml") == 1) && (CheckResult(417.2501860011) == 1))
@@ -3834,7 +3834,7 @@ namespace System.Xml.Tests
         //BinCompat TODO: Add this test back
         ////[Variation("Bug398968 - Globalization is broken for document() function")]
         //[InlineData()]
-        //[Theory]
+        //////[Theory]
         //public void RegressionTest1()
         //{
         //    // <SQL BU Defect Tracking 410060>
@@ -3859,7 +3859,7 @@ namespace System.Xml.Tests
         //BinCompat TODO: Add this test back
         ////[Variation("Bug410158 - Debug flag on XslCompiledTransform contaminates XsltSettings")]
         //[InlineData()]
-        //[Theory]
+        //////[Theory]
         //public void RegressionTest2()
         //{
         //    // <SQL BU Defect Tracking 410060>
@@ -3916,7 +3916,7 @@ namespace System.Xml.Tests
 
         //[Variation("Bug412703 - Off-by-one errors for XSLT loading error column")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void RegressionTest3()
         {
             try
@@ -3936,7 +3936,7 @@ namespace System.Xml.Tests
 
         //[Variation("Bug423641 - XslCompiledTransform.Load() [retail] throws a NullReferenceException when scripts are prohibited")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void RegressionTest4()
         {
             XslCompiledTransform xslt = new XslCompiledTransform();
@@ -3947,7 +3947,7 @@ namespace System.Xml.Tests
 
         //[Variation("Bug423641 - XslCompiledTransform.Load() [debug] throws a NullReferenceException when scripts are prohibited")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void RegressionTest5()
         {
             XslCompiledTransform xslt = new XslCompiledTransform(true);
@@ -3968,7 +3968,7 @@ namespace System.Xml.Tests
 
         //[Variation("Bug469781 - Replace shouldn't relax original type 'assertion failure'")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void RegressionTest7()
         {
             string xslString = "<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" xmlns:user=\"urn:user\">"
@@ -3997,7 +3997,7 @@ namespace System.Xml.Tests
 
         //[Variation("Bug737816 - Dynamic method will have declaring type == null")]
         [InlineData()]
-        [Theory]
+        ////[Theory]
         public void RegressionTest8()
         {
             try

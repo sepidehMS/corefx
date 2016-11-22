@@ -673,7 +673,7 @@ namespace System.Xml.Tests
                     _output.WriteLine(output);
                 }
 
-                using (StreamWriter sw = new StreamWriter(new FileStream("diff.xml", FileMode.Open, FileAccess.Read)))
+                using (StreamWriter sw = new StreamWriter(new FileStream("diff.xml", FileMode.Create, FileAccess.Write)))
                 {
                     sw.WriteLine("<?xml-stylesheet href='diff.xsl' type='text/xsl'?>");
                     sw.WriteLine(diff.ToXml());

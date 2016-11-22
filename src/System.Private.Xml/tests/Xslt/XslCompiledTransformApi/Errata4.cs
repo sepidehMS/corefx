@@ -145,7 +145,7 @@ namespace System.Xml.Tests
         //[Variation(Priority = 0, Desc = "Crate elment/attribute :: Valid name CharType.NameStartSurrogateLowChar", Params = new object[] { true, CharType.NameStartSurrogateLowChar })]
         //[Variation(Priority = 0, Desc = "Crate elment/attribute :: Valid name CharType.NameSurrogateHighChar", Params = new object[] { true, CharType.NameSurrogateHighChar })]
         //[Variation(Priority = 0, Desc = "Crate elment/attribute :: Valid name CharType.NameSurrogateLowChar", Params = new object[] { true, CharType.NameSurrogateLowChar })]
-        [Theory]
+        ////[Theory]
         public void CreateElementsAndAttributesUsingXsltAndXPath(object param0, object param1)
         {
             bool isValidChar = (bool)param0;
@@ -208,7 +208,7 @@ namespace System.Xml.Tests
         //[Variation(Priority = 0, Desc = "Crate elment/attribute (Inline) :: Valid name CharType.NameStartSurrogateLowChar", Params = new object[] { true, CharType.NameStartSurrogateLowChar })]
         //[Variation(Priority = 0, Desc = "Crate elment/attribute (Inline) :: Valid name CharType.NameSurrogateHighChar", Params = new object[] { true, CharType.NameSurrogateHighChar })]
         //[Variation(Priority = 0, Desc = "Crate elment/attribute (Inline) :: Valid name CharType.NameSurrogateLowChar", Params = new object[] { true, CharType.NameSurrogateLowChar })]
-        [Theory]
+        ////[Theory]
         public void CreateElementsAndAttributesUsingXsltInline(object param0, object param1)
         {
             int numOfRepeat = 300; // from the test case
@@ -291,7 +291,7 @@ namespace System.Xml.Tests
         //[Variation(Priority = 0, Desc = "Valid name CharType.NameStartSurrogateLowChar", Params = new object[] { true, CharType.NameStartSurrogateLowChar })]
         //[Variation(Priority = 0, Desc = "Valid name CharType.NameSurrogateHighChar", Params = new object[] { true, CharType.NameSurrogateHighChar })]
         //[Variation(Priority = 0, Desc = "Valid name CharType.NameSurrogateLowChar", Params = new object[] { true, CharType.NameSurrogateLowChar })]
-        [Theory]
+        ////[Theory]
         public void TestXslTransform(object param0, object param1)
         {
             int numOfRepeat = 300; // from the test case

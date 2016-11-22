@@ -61,7 +61,7 @@ namespace System.Xml.Tests
 
     //     //[Variation(id = 1, Desc = "Default value of TemporaryFiles before load, expected null", Pri = 0)]
     //     [InlineData()]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles1()
     //     {
     //         XslCompiledTransform xslt = new XslCompiledTransform();
@@ -72,7 +72,7 @@ namespace System.Xml.Tests
     //     [InlineData("books.xml", "NoScripts.xsl", false, 2)]
     //     //[Variation(id = 3, Desc = "TemporaryFiles after load in Debug Mode with no script block, expected count = 0", Pri = 0, Params = new object[] { "books.xml", "NoScripts.xsl", true })]
     //     [InlineData("books.xml", "NoScripts.xsl", true, 3)]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles2(object param0, object param1, object param2, object id)
     //     {
     //         if (_isInProc && (int)id == 3)
@@ -87,7 +87,7 @@ namespace System.Xml.Tests
     //     //[Variation(id = 4, Desc = "TemporaryFiles after load in Retail Mode with script block and EnableScript", Pri = 1, Params = new object[] { "books.xml", "TempFiles.xsl", false })]
     //     [ActiveIssue(9873)]
     //     [InlineData("books.xml", "TempFiles.xsl", false)]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles3(object param0, object param1, object param2)
     //     {
     //         Init(param0.ToString(), param1.ToString(), (bool)param2);
@@ -104,7 +104,7 @@ namespace System.Xml.Tests
     //     //[Variation(id = 5, Desc = "TemporaryFiles after load in Debug Mode with script block and EnableScript", Pri = 1, Params = new object[] { "books.xml", "TempFiles.xsl", true })]
     //     [ActiveIssue(9873)]
     //     [InlineData("books.xml", "TempFiles.xsl", true)]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles3AndHalf(object param0, object param1, object param2)
     //     {
     //         Init(param0.ToString(), param1.ToString(), (bool)param2);
@@ -123,7 +123,7 @@ namespace System.Xml.Tests
     //     [InlineData("books.xml", "TempFiles.xsl", false, 6)]
     //     //[Variation(id = 7, Desc = "TemporaryFiles after load in debug mode with script block and default settings", Pri = 1, Params = new object[] { "books.xml", "TempFiles.xsl", true })]
     //     [InlineData("books.xml", "TempFiles.xsl", true, 7)]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles4(object param0, object param1, object param2, object id)
     //     {
     //         if (_isInProc && (int)id == 7)
@@ -139,7 +139,7 @@ namespace System.Xml.Tests
     //     [InlineData("books.xml", "TempFiles.xsl", false, 8)]
     //     //[Variation(id = 9, Desc = "TemporaryFiles after load in debug mode with script block and EnableDocumentFunction", Pri = 1, Params = new object[] { "books.xml", "TempFiles.xsl", true })]
     //     [InlineData("books.xml", "TempFiles.xsl", true, 9)]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles5(object param0, object param1, object param2, object id)
     //     {
     //         if (_isInProc && (int)id == 9)
@@ -154,7 +154,7 @@ namespace System.Xml.Tests
     //     //[Variation(id = 10, Desc = "Verify the existence of TemporaryFiles after load in debug mode with script block", Pri = 1, Params = new object[] { "books.xml", "TempFiles.xsl", true })]
     //     [ActiveIssue(9873)]
     //     [InlineData("books.xml", "TempFiles.xsl", true)]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles6(object param0, object param1, object param2)
     //     {
     //         Init(param0.ToString(), param1.ToString(), (bool)param2);
@@ -175,7 +175,7 @@ namespace System.Xml.Tests
     //     //[Variation(id = 11, Desc = "Verify if the user can delete the TemporaryFiles after load in debug mode with script block", Pri = 1, Params = new object[] { "books.xml", "TempFiles.xsl", true })]
     //     [ActiveIssue(9873)]
     //     [InlineData("books.xml", "TempFiles.xsl", true)]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles7(object param0, object param1, object param2)
     //     {
     //         Init(param0.ToString(), param1.ToString(), (bool)param2);
@@ -197,7 +197,7 @@ namespace System.Xml.Tests
     //     //[Variation(id = 12, Desc = "Verify if the user can rename the TemporaryFiles after load in debug mode with script block", Pri = 1, Params = new object[] { "books.xml", "TempFiles.xsl", true })]
     //     [ActiveIssue(9873)]
     //     [InlineData("books.xml", "TempFiles.xsl", true)]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles8(object param0, object param1, object param2)
     //     {
     //         Init(param0.ToString(), param1.ToString(), (bool)param2);
@@ -223,7 +223,7 @@ namespace System.Xml.Tests
     //     //[Variation(id = 13, Desc = "Verify if the necessary files are generated after load in debug mode with script block", Pri = 1, Params = new object[] { "books.xml", "TempFiles.xsl", true })]
     //     [ActiveIssue(9873)]
     //     [InlineData("books.xml", "TempFiles.xsl", true)]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles9(object param0, object param1, object param2)
     //     {
     //         Init(param0.ToString(), param1.ToString(), (bool)param2);
@@ -255,7 +255,7 @@ namespace System.Xml.Tests
 
     //     //[Variation(id = 14, Desc = "TemporaryFiles after unsuccessful load of an invalid stylesheet in debug mode with script block", Pri = 2, Params = new object[] { "books.xml", "Invalid.xsl", true })]
     //     [InlineData("books.xml", "Invalid.xsl", true)]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles10(object param0, object param1, object param2)
     //     {
     //         TempFileCollection tempFiles = null;
@@ -277,7 +277,7 @@ namespace System.Xml.Tests
     //     //[Variation(id = 15, Desc = "TemporaryFiles after unsuccessful load of a valid stylesheet in debug mode with a missing function in the script block", Pri = 2, Params = new object[] { "books.xml", "InvalidFn.xsl", true })]
     //     [ActiveIssue(9873)]
     //     [InlineData("books.xml", "InvalidFn.xsl", true)]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles11(object param0, object param1, object param2)
     //     {
     //         TempFileCollection tempFiles = null;
@@ -301,7 +301,7 @@ namespace System.Xml.Tests
 
     //     //[Variation(Desc = "Load File from a drive c:", Pri = 2)]
     //     [InlineData()]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles12()
     //     {
     //         if (_isInProc)
@@ -368,7 +368,7 @@ namespace System.Xml.Tests
 
     //     //[Variation(Desc = "Bug 469775 - XSLT V2 : Exception thrown if xsl:preserve-space/xsl:strip-space is used and input document contains entities", Pri = 2)]
     //     [InlineData()]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles13()
     //     {
     //         try
@@ -388,7 +388,7 @@ namespace System.Xml.Tests
 
     //     //[Variation(Desc = "Bug 469770 - XslCompiledTransform failed to load embedded stylesheets when prefixes are defined outside of xsl:stylesheet element", Pri = 2)]
     //     [InlineData()]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles14()
     //     {
     //         try
@@ -426,7 +426,7 @@ namespace System.Xml.Tests
 
     //     //[Variation(Desc = "Bug 482971 - XslCompiledTransform cannot output numeric character reference after long output", Pri = 2)]
     //     [InlineData()]
-    //     [Theory]
+    //     ////[Theory]
     //     public void TempFiles15()
     //     {
     //         try

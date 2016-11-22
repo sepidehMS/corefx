@@ -1,0 +1,17 @@
+<?xml version = "1.0"?> 
+<?xml-stylesheet type = "text/xsl" href = "students.xsl"?> 
+<class>
+   <student rollno = "193"> 
+      <firstname>A</firstname> 
+   </student>
+   <student rollno = "293"> 
+      <firstname>a</firstname>
+   </student>
+   
+   <student rollno = "393"> 
+      <firstname>b</firstname> 
+   </student>
+   <student rollno = "493"> 
+      <firstname>B</firstname>
+   </student>
+</class>

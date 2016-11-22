@@ -8,7 +8,7 @@ xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl exob
 	<xsl:for-each select="exobj:ReturnNodeSet('/books/book')">
 		<!--this sort may not work because the context is defined in sort's select clause but 
 			just testing to see if we can call an extension object from select attribute of xsl:sort-->
-	        <xsl:sort select="exobj:ReturnNodeSet('/books/book')/title" />
+	        <xsl:sort select="exobj:ReturnNodeSet('/books/book')/title" case-order="upper-first" />
 	        <xsl:copy-of select="title" />
 	</xsl:for-each>
     </out>
