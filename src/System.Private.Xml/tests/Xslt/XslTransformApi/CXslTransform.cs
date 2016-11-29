@@ -377,7 +377,7 @@ namespace System.Xml.Tests
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
 
             try
             {
@@ -407,7 +407,7 @@ namespace System.Xml.Tests
         [Theory]
         public void XmlResolver2()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result></result>";
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result></result>";
 
             // "xmlResolver_document_function.xsl" contains
             // <xsl:for-each select="document('xmlResolver_document_function.xml')//elem">
@@ -581,7 +581,7 @@ namespace System.Xml.Tests
         [Theory]
         public void LoadGeneric3()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -595,7 +595,7 @@ namespace System.Xml.Tests
             }
             catch (System.IO.FileNotFoundException)
             {
-                if ((LoadXSL("ShowParam.xsl") == 1) && (Transform("fruits.xml") == 1))
+                if ((LoadXSL("showParam.xsl") == 1) && (Transform("fruits.xml") == 1))
                 {
                     VerifyResult(expected);
                     return;
@@ -610,7 +610,7 @@ namespace System.Xml.Tests
         [Theory]
         public void LoadGeneric4()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -625,7 +625,7 @@ namespace System.Xml.Tests
             if (MyInputType() != InputType.Navigator)
                 LoadXSL("showParamLongName.xsl", InputType.Navigator);
 
-            if ((LoadXSL("ShowParam.xsl") == 0) || (Transform("fruits.xml") == 0))
+            if ((LoadXSL("showParam.xsl") == 0) || (Transform("fruits.xml") == 0))
                 Assert.True(false);
 
             VerifyResult(expected);
@@ -637,7 +637,7 @@ namespace System.Xml.Tests
             if (MyInputType() != InputType.Reader)
                 LoadXSL("showParamLongName.xsl", InputType.Reader);
 
-            if ((LoadXSL("ShowParam.xsl") == 1) && (Transform("fruits.xml") == 1))
+            if ((LoadXSL("showParam.xsl") == 1) && (Transform("fruits.xml") == 1))
             {
                 VerifyResult(expected);
                 return;
@@ -651,7 +651,7 @@ namespace System.Xml.Tests
         [Theory]
         public void LoadGeneric5()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -667,7 +667,7 @@ namespace System.Xml.Tests
                     Assert.True(false);
                 }
             }
-            if ((LoadXSL("ShowParam.xsl") == 1) && (Transform("fruits.xml") == 1))
+            if ((LoadXSL("showParam.xsl") == 1) && (Transform("fruits.xml") == 1))
             {
                 VerifyResult(expected);
                 return;
@@ -699,7 +699,7 @@ namespace System.Xml.Tests
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
 
             FileStream s2;
 
@@ -752,7 +752,7 @@ namespace System.Xml.Tests
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
 
             FileStream s2;
 
@@ -803,7 +803,7 @@ namespace System.Xml.Tests
         [Theory]
         public void LoadGeneric11()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><Book>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><Book>
 			Name
 		</Book>";
 
@@ -922,7 +922,7 @@ namespace System.Xml.Tests
         [Theory]
         public void LoadGeneric3()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -930,7 +930,7 @@ namespace System.Xml.Tests
 		5.No Value Specified
 		6.No Value Specified</result>";
 
-            if (LoadXSL_Resolver("ShowParam.xsl", null) == 1)
+            if (LoadXSL_Resolver("showParam.xsl", null) == 1)
             {
                 if (Transform("fruits.xml") == 1)
                 {
@@ -1005,7 +1005,7 @@ namespace System.Xml.Tests
             //}
 
             CustomNullResolver myResolver = new CustomNullResolver(null);
-            if (LoadXSL_Resolver("ShowParam.xsl", myResolver) == 1)
+            if (LoadXSL_Resolver("showParam.xsl", myResolver) == 1)
             {
                 if ((Transform("fruits.xml") == 1) && (CheckResult(466.5112789241) == 1))
                     return;
@@ -1097,7 +1097,7 @@ namespace System.Xml.Tests
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
 
             if ((LoadXSL_Resolver("XmlResolver_Main.xsl", GetDefaultCredResolver()) == 1))
             {
@@ -1120,7 +1120,7 @@ namespace System.Xml.Tests
         [Theory]
         public void LoadGeneric10()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -1217,7 +1217,7 @@ namespace System.Xml.Tests
         [Theory]
         public void LoadUrlResolver1()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><out>Red50Orange25</out>";
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><out>Red50Orange25</out>";
 
             // XsltResolverTestMain.xsl is placed in IIS virtual directory
             // which requires integrated Windows NT authentication
@@ -1508,7 +1508,7 @@ namespace System.Xml.Tests
         [Theory]
         public void LoadNavigator1()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -1544,7 +1544,7 @@ namespace System.Xml.Tests
         [Theory]
         public void LoadNavigator2()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -1576,7 +1576,7 @@ namespace System.Xml.Tests
         [Theory]
         public void LoadNavigator3()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><out>Red50Orange25</out>";
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><out>Red50Orange25</out>";
 
 #pragma warning disable 0618
             xslt = new XslTransform();
@@ -1644,7 +1644,7 @@ namespace System.Xml.Tests
         [Theory]
         public void LoadXmlReader1()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -1710,7 +1710,7 @@ namespace System.Xml.Tests
             Assert.True(false);
         }
 
-        //[Variation("Verify Reader isn't closed after Load")]
+        //[Variation("Verify Reader isn""t closed after Load")]
         [InlineData()]
         [Theory]
         public void LoadXmlReader3()
@@ -1842,7 +1842,7 @@ namespace System.Xml.Tests
         [Theory]
         public void LoadXmlReader7()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><out>Red50Orange25</out>";
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><out>Red50Orange25</out>";
 
 #pragma warning disable 0618
             xslt = new XslTransform();
@@ -1891,7 +1891,7 @@ namespace System.Xml.Tests
         [Theory]
         public void TransformGeneric1()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -1913,7 +1913,7 @@ namespace System.Xml.Tests
         [Theory]
         public void TransformGeneric2()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -1935,7 +1935,7 @@ namespace System.Xml.Tests
         [Theory]
         public void TransformGeneric3()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -2076,7 +2076,7 @@ namespace System.Xml.Tests
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
 
             try
             {
@@ -2104,7 +2104,7 @@ namespace System.Xml.Tests
         [Theory]
         public void XmlResolver2()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result></result>";
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result></result>";
 
             // "xmlResolver_document_function.xsl" contains
             // <xsl:for-each select="document('xmlResolver_document_function.xml')//elem">
@@ -2218,7 +2218,7 @@ namespace System.Xml.Tests
         [Theory]
         public void TransformStrStr1()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -2367,7 +2367,7 @@ namespace System.Xml.Tests
         [Theory]
         public void TransformStrStr8()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -2621,7 +2621,7 @@ namespace System.Xml.Tests
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
             String szFullFilename = FullFilePath("fruits.xml");
 
             try
@@ -2648,7 +2648,7 @@ namespace System.Xml.Tests
         {
             // "xmlResolver_document_function.xsl" contains
             // <xsl:for-each select="document('xmlResolver_document_function.xml')//elem">
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result></result>";
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result></result>";
             String szFullFilename = FullFilePath("fruits.xml");
 
             if (LoadXSL("xmlResolver_document_function.xsl") == 1)
@@ -2710,7 +2710,7 @@ namespace System.Xml.Tests
         [Theory]
         public void var1()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><out>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><out>
 param1 (correct answer is 'local-param1-arg'): local-param1-arg
 param2 (correct answer is 'local-param2-arg'): local-param2-arg
 </out>";
@@ -2732,7 +2732,7 @@ param2 (correct answer is 'local-param2-arg'): local-param2-arg
         [Theory]
         public void var2()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><out>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><out>
 param1 (correct answer is 'local-param1-arg'): local-param1-arg
 param2 (correct answer is 'local-param2-arg'): local-param2-arg
 </out>";

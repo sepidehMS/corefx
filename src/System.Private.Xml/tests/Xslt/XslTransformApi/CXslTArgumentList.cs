@@ -44,11 +44,11 @@ namespace System.Xml.Tests
 
         private static string s_typeXml = "<order></order>";
 
-        private static string s_typeXsl = @"<xsl:stylesheet version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'>
-  <xsl:param name='param'/>
-  <xsl:template match='/'>
+        private static string s_typeXsl = @"<xsl:stylesheet version=""1.0"" xmlns:xsl=""http://www.w3.org/1999/XSL/Transform"">
+  <xsl:param name=""param""/>
+  <xsl:template match=""/"">
     <order>
-      <param><xsl:value-of select='$param'/></param>
+      <param><xsl:value-of select=""$param""/></param>
     </order>
   </xsl:template>
 </xsl:stylesheet>";
@@ -728,7 +728,7 @@ namespace System.Xml.Tests
     //            Assert.True(false);
     //        }
 
-    //        if((LoadXSL("MyObjectLongNS.xsl") == TEST_PASS) && (Transform_ArgList("fruits.xml") == TEST_PASS) &&
+    //        if((LoadXSL("myObjectLongNS.xsl") == TEST_PASS) && (Transform_ArgList("fruits.xml") == TEST_PASS) &&
     //            (CheckResult(522.0563223871)== TEST_PASS))
     //            return;
     //        else
@@ -996,7 +996,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam1()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test1
 		2.No Value Specified
 		3.No Value Specified
@@ -1064,7 +1064,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam4()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test1</result>";
 
             m_xsltArg = new XsltArgumentList();
@@ -1127,7 +1127,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam7()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test7
 		2.No Value Specified
 		3.No Value Specified
@@ -1158,7 +1158,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam8()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -1211,7 +1211,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam10()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.My Custom Object has a value of 10
 		2.No Value Specified
 		3.No Value Specified
@@ -1258,7 +1258,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam12()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test1
 		2.No Value Specified
 		3.No Value Specified
@@ -1301,7 +1301,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam13()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test1
 		2.Test2
 		3.No Value Specified
@@ -1344,7 +1344,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam14()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test1
 		2.Test2
 		3.No Value Specified
@@ -1411,7 +1411,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam16()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.Test1
 		3.No Value Specified
@@ -1469,7 +1469,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam17()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test  
 		2.Test
 
@@ -1533,7 +1533,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam18()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test1
 		2.Test2
 		3.Test3
@@ -1566,7 +1566,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam19()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.Test1
 		3.No Value Specified
@@ -1607,7 +1607,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddParam20()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj1='urn:http://www.w3.org/1999/XSL/Transform' xmlns:myObj2='urn:tmp' xmlns:myObj3='urn:my-object' xmlns:myObj4='urn:MY-OBJECT'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj1=""urn:http://www.w3.org/1999/XSL/Transform"" xmlns:myObj2=""urn:tmp"" xmlns:myObj3=""urn:my-object"" xmlns:myObj4=""urn:MY-OBJECT"">
 		1.Test1
 		2.Test2
 		3.Test3
@@ -1664,8 +1664,8 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject32()
         {
-            string expected1 = @"<?xml version='1.0' encoding='utf-8'?><out>Param: first</out>";
-            string expected2 = @"<?xml version='1.0' encoding='utf-8'?><out>Param: second</out>";
+            string expected1 = @"<?xml version=""1.0"" encoding=""utf-8""?><out>Param: first</out>";
+            string expected2 = @"<?xml version=""1.0"" encoding=""utf-8""?><out>Param: second</out>";
 
             if (LoadXSL("test_Param.xsl") == 1)
             {
@@ -1935,7 +1935,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject1()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 		1.Test1
 		2.Test2
 		3.Test3</result>";
@@ -1990,7 +1990,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject4()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='http://www.miocrosoft.com/this/is/a/very/long/namespace/uri/to/do/the/api/testing/for/xslt/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""http://www.miocrosoft.com/this/is/a/very/long/namespace/uri/to/do/the/api/testing/for/xslt/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/0123456789/"">
 		1.Test1
 		2.Test2
 		3.Test3</result>";
@@ -2000,7 +2000,7 @@ namespace System.Xml.Tests
 
             m_xsltArg.AddExtensionObject(szLongNS, obj);
 
-            if ((LoadXSL("MyObjectLongNS.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
+            if ((LoadXSL("myObjectLongNS.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(expected);
                 return;
@@ -2014,7 +2014,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject6()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 
 		String  Argument: System.String
 		Int32   Argument: System.Int32
@@ -2129,7 +2129,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject8()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 		1.Test1
 		2.Test2
 		3.Test3</result>";
@@ -2183,7 +2183,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject10()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 
 		Test1
 		Test2: 0</result>";
@@ -2206,7 +2206,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject11()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 		1.Test1
 		2.Test2
 		3.Test3</result>";
@@ -2283,7 +2283,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject14()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 		1.Test1
 		2.Test2
 		3.Test3</result>";
@@ -2371,7 +2371,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject17()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 		Here:End
 		</result>";
 
@@ -2393,7 +2393,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject18()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 		Recursive Function Returning the factorial of five:120</result>";
 
             MyObject obj = new MyObject(18, _output);
@@ -2414,7 +2414,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject19()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 		Overloaded Double: Int Overlaod
 		Overloaded Int: Int Overlaod
 		Overloaded String: String Overlaod</result>";
@@ -2437,7 +2437,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject20()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 		DoNothing Function Test Pass
 		Construtor Function
 		Return Int  Function Test Pass
@@ -2467,7 +2467,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject21()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 
 		String  Argument: Received a string with value: Hello
 		Double  Argument: Received a double with value 3.14
@@ -2492,7 +2492,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject22()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 		Get A String:Hello world
 		Get A Double:22.41276
 		Get A True Boolean:true
@@ -2591,7 +2591,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject27()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 		A:27
 		B:23
 		C:23
@@ -2619,7 +2619,7 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject28()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 
 		Aiming with Gun: &gt;"" $tmp &gt;;'	 
 &amp;
@@ -2682,11 +2682,11 @@ namespace System.Xml.Tests
         [Theory]
         public void AddExtObject32()
         {
-            string expected1 = @"<?xml version='1.0' encoding='utf-8'?><out xmlns:id='id' xmlns:cap='capitalizer'>
+            string expected1 = @"<?xml version=""1.0"" encoding=""utf-8""?><out xmlns:id=""id"" xmlns:cap=""capitalizer"">
 			ID: first
 			Capitalized ID: FIRST</out>";
 
-            string expected2 = @"<?xml version='1.0' encoding='utf-8'?><out xmlns:id='id' xmlns:cap='capitalizer'>
+            string expected2 = @"<?xml version=""1.0"" encoding=""utf-8""?><out xmlns:id=""id"" xmlns:cap=""capitalizer"">
 			ID: second
 			Capitalized ID: SECOND</out>";
 
@@ -2739,7 +2739,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveParam1()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test1
 		2.No Value Specified
 		3.No Value Specified
@@ -2796,7 +2796,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveParam3()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -2821,7 +2821,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveParam4()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -2846,7 +2846,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveParam5()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -2871,7 +2871,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveParam6()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified</result>";
 
             m_xsltArg = new XsltArgumentList();
@@ -2909,7 +2909,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveParam8()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -2936,7 +2936,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveParam9()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test1
 		2.No Value Specified
 		3.No Value Specified
@@ -2963,7 +2963,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveParam10()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -2990,7 +2990,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveParam11()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -3201,7 +3201,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveParam12()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test1
 		2.No Value Specified
 		3.No Value Specified
@@ -3231,7 +3231,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveParam13()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test
 		2.Test
 		3.Test
@@ -3284,7 +3284,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveParam14()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -3386,7 +3386,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveExtObj3()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -3416,7 +3416,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveExtObj4()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 		1.Test1
 		2.Test2
 		3.Test3</result>";
@@ -3465,7 +3465,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveExtObj6()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -3508,7 +3508,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveExtObj7()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result xmlns:myObj='urn:my-object'>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result xmlns:myObj=""urn:my-object"">
 		1.Test1
 		2.Test2
 		3.Test3</result>";
@@ -3573,7 +3573,7 @@ namespace System.Xml.Tests
         [Theory]
         public void RemoveExtObj9()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -3615,7 +3615,7 @@ namespace System.Xml.Tests
         [Theory]
         public void Clear1()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -3649,7 +3649,7 @@ namespace System.Xml.Tests
         [Theory]
         public void Clear2()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -3674,7 +3674,7 @@ namespace System.Xml.Tests
         [Theory]
         public void Clear3()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -3740,7 +3740,7 @@ namespace System.Xml.Tests
         [Theory]
         public void Clear5()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -3794,7 +3794,7 @@ namespace System.Xml.Tests
         [Theory]
         public void Clear6()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
@@ -3829,7 +3829,7 @@ namespace System.Xml.Tests
         [Theory]
         public void Clear7()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.Test1
 		2.No Value Specified
 		3.No Value Specified
@@ -3861,7 +3861,7 @@ namespace System.Xml.Tests
         [Theory]
         public void Clear8()
         {
-            string expected = @"<?xml version='1.0' encoding='utf-8'?><result>
+            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>
 		1.No Value Specified
 		2.No Value Specified
 		3.No Value Specified
