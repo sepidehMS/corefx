@@ -46,3 +46,60 @@
 //        }
 //    }
 //}
+
+using Xunit;
+using Xunit.Abstractions;
+using System;
+using System.Runtime.InteropServices;
+
+namespace System.Xml.Tests
+{
+  public class DumplingTest
+  {
+      [Fact]
+      public void TestAccessViolation()
+      {
+         IntPtr ptr = new IntPtr(123);
+         Marshal.StructureToPtr(123, ptr, true);
+      }
+  }
+}
+
+// BinCompat TODO: Disabling this for now, as this is loading a dll with no strong name
+//namespace System.Xml.Tests
+//{
+//    //[TestCase(Name = "Compile Time Tests", Desc = "This Testcase maps to test variations described in 'CompileTime Variations Functional Tests'")]
+//    public class XsltcTestCompile : XsltcTestCaseBase
+//    {
+//        private ITestOutputHelper _output;
+//        public XsltcTestCompile(ITestOutputHelper output) : base(output)
+//        {
+//            _output = output;
+//        }
+
+//        //[Variation("1", Desc = "Test calling XslCompiledTransform(typeof()) instead of using reflection to load the assembly.", Pri = 1)]
+//        [InlineData()]
+//        [Theory]
+//        public void Var1()
+//        {
+//            var inputXml = new XmlDocument();
+//            inputXml.LoadXml("<foo><bar>Hello, world!</bar></foo>");
+
+//            var xslt = new XslCompiledTransform();
+//            xslt.Load(typeof(TestStylesheet));
+
+//            using (var actualStream = new MemoryStream())
+//            using (var sw = new StreamWriter(actualStream)
+//            {
+//                AutoFlush = true
+//            })
+//            {
+//                xslt.Transform(inputXml, null, sw);
+
+//                CompareOutput("<?xml version=\"1.0\" encoding=\"utf-8\"?>Hello foo!", actualStream);
+
+//                return;
+//            }
+//        }
+//    }
+//}
