@@ -7096,6 +7096,8 @@ namespace System.Xml.Tests
 
             public int writeValue_27()
             {
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+
                 if (CurVariation.Desc.Equals("elem.WriteValue(new DateTimeOffset)"))
                 {
                     Console.WriteLine("elem.WriteValue(new DateTimeOffset)");
