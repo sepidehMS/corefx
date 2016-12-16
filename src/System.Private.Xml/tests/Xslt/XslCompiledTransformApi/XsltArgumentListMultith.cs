@@ -28,7 +28,7 @@ namespace System.Xml.Tests
             Init(null);
         }
 
-        public /*override*/ new void Init(object objParam)
+        public new void Init(object objParam)
         {
             // Get parameter info
             _strPath = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"XsltApiV2\");

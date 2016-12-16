@@ -1846,8 +1846,6 @@ namespace System.Xml.Tests
     //[TestCase(Name = "XsltArgumentList - AddExtensionObject : Navigator, TextWriter", Desc = "NAVIGATOR,TEXTWRITER")]
     public class CArgAddExtObj : XsltApiTestCaseBase2
     {
-        ///private PermissionSet nonePermSet = new PermissionSet(PermissionState.None);
-
         private ITestOutputHelper _output;
         public CArgAddExtObj(ITestOutputHelper output) : base(output)
         {
@@ -1862,9 +1860,9 @@ namespace System.Xml.Tests
             MyObject obj = new MyObject(1, _output);
             m_xsltArg = new XsltArgumentList();
             string Baseline = Path.Combine("baseline", (string)param);
-            ///nonePermSet.PermitOnly();
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("myObjectDef.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -1884,12 +1882,10 @@ namespace System.Xml.Tests
 
             try
             {
-                ///nonePermSet.PermitOnly(); ;
                 m_xsltArg.AddExtensionObject(null, obj);
             }
             catch (System.ArgumentNullException)
             {
-                ///CodeAccessPermission.RevertPermitOnly();
                 return;
             }
             _output.WriteLine("System.ArgumentNullException not generated for null namespace System.Xml.Tests");
@@ -1904,9 +1900,8 @@ namespace System.Xml.Tests
             MyObject obj = new MyObject(3, _output);
             m_xsltArg = new XsltArgumentList();
 
-            ///nonePermSet.PermitOnly(); ;
             m_xsltArg.AddExtensionObject(szEmpty, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             return;
         }
 
@@ -1918,9 +1913,8 @@ namespace System.Xml.Tests
             m_xsltArg = new XsltArgumentList();
             MyObject obj = new MyObject(4, _output);
             string Baseline = Path.Combine("baseline", (string)param);
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szLongNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
 
             if ((LoadXSL("myObjectLongNS.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
@@ -1938,9 +1932,8 @@ namespace System.Xml.Tests
         {
             MyObject obj = new MyObject(5, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szInvalid, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
             return;
         }
 
@@ -1952,7 +1945,7 @@ namespace System.Xml.Tests
             MyObject obj1 = new MyObject(1, _output);
             MyObject obj2 = new MyObject(2, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj1);
             try
             {
@@ -1960,7 +1953,6 @@ namespace System.Xml.Tests
             }
             catch (System.ArgumentException)
             {
-                ///CodeAccessPermission.RevertPermitOnly();
                 return;
             }
             _output.WriteLine("Did not launch exception 'System.ArgumentException' for an item already added");
@@ -1975,7 +1967,7 @@ namespace System.Xml.Tests
             MyObject obj = new MyObject(1, _output);
             m_xsltArg = new XsltArgumentList();
             string Baseline = Path.Combine("baseline", (string)param);
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject("urn:my-object", obj);
 
             retObj = m_xsltArg.GetExtensionObject("urn:my-object");
@@ -1987,7 +1979,7 @@ namespace System.Xml.Tests
             m_xsltArg.AddExtensionObject("URN:MY-OBJECT", obj);
             m_xsltArg.AddExtensionObject("urn:My-Object", obj);
             m_xsltArg.AddExtensionObject("urn-my:object", obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("myObjectDef.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -2007,12 +1999,10 @@ namespace System.Xml.Tests
 
             try
             {
-                ///nonePermSet.PermitOnly(); ;
                 m_xsltArg.AddExtensionObject(szDefaultNS, null);
             }
             catch (System.ArgumentNullException)
             {
-                ///CodeAccessPermission.RevertPermitOnly();
                 return;
             }
             _output.WriteLine("Did not launch exception 'System.ArgumentNullException' for adding a null-valued item");
@@ -2031,9 +2021,9 @@ namespace System.Xml.Tests
 
             MyObject obj = new MyObject(10, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("MyObject_Null.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(expected);
@@ -2052,7 +2042,7 @@ namespace System.Xml.Tests
             m_xsltArg = new XsltArgumentList();
 
             MyObject obj1 = new MyObject(100, _output);
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj1);
 
             for (int i = 1; i < 500; i++)
@@ -2061,7 +2051,6 @@ namespace System.Xml.Tests
                 m_xsltArg.AddExtensionObject(szDefaultNS + i, obj);
             }
 
-            ///CodeAccessPermission.RevertPermitOnly();
             if ((LoadXSL("myObjectDef.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -2086,7 +2075,6 @@ namespace System.Xml.Tests
                 m_xsltArg.AddExtensionObject(szDefaultNS + str, obj);
                 i++;
             }
-            ///CodeAccessPermission.RevertPermitOnly();
 
             try
             {
@@ -2108,7 +2096,7 @@ namespace System.Xml.Tests
         {
             MyObject obj = new MyObject(13, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
             try
             {
@@ -2116,7 +2104,6 @@ namespace System.Xml.Tests
             }
             catch (System.ArgumentException)
             {
-                ///CodeAccessPermission.RevertPermitOnly();
                 return;
             }
             _output.WriteLine("Did not exception for adding an extension object that already exists");
@@ -2131,14 +2118,14 @@ namespace System.Xml.Tests
             string Baseline = Path.Combine("baseline", (string)param);
             MyObject obj = new MyObject(14, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             for (int i = 0; i < 400; i++)
             {
                 m_xsltArg.AddExtensionObject(szDefaultNS, obj);
                 m_xsltArg.RemoveExtensionObject(szDefaultNS);
             }
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("myObjectDef.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -2155,9 +2142,9 @@ namespace System.Xml.Tests
         {
             MyObject obj = new MyObject(15, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szSimple, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             try
             {
                 if ((LoadXSL("myObjectDef.xsl") == 1))
@@ -2178,9 +2165,9 @@ namespace System.Xml.Tests
         {
             MyObject obj = new MyObject(1, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             try
             {
                 LoadXSL("MyObject_PrivateAccess.xsl");
@@ -2220,9 +2207,9 @@ namespace System.Xml.Tests
 
             MyObject obj = new MyObject(17, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("MyObject_ConsoleWrite.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(expected);
@@ -2240,9 +2227,9 @@ namespace System.Xml.Tests
             MyObject obj = new MyObject(18, _output);
             m_xsltArg = new XsltArgumentList();
             string Baseline = Path.Combine("baseline", (string)param);
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("MyObject_Recursion.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -2260,9 +2247,9 @@ namespace System.Xml.Tests
             string Baseline = Path.Combine("baseline", (string)param);
             MyObject obj = new MyObject(20, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("MyObject_FnExists.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -2280,9 +2267,9 @@ namespace System.Xml.Tests
             string Baseline = Path.Combine("baseline", (string)param);
             MyObject obj = new MyObject(1, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("MyObject_Arguments.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -2301,7 +2288,7 @@ namespace System.Xml.Tests
 
             double d = 1;
             int i = 1;
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject("urn:myspace", d);
             try
             {
@@ -2309,7 +2296,6 @@ namespace System.Xml.Tests
             }
             catch (System.ArgumentException)
             {
-                ///CodeAccessPermission.RevertPermitOnly();
                 return;
             }
             _output.WriteLine("Exception not thrown for URI namespace System.Xml.Tests in use");
@@ -2323,9 +2309,9 @@ namespace System.Xml.Tests
         {
             MyObject obj = new MyObject(25, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if (LoadXSL("MyObject_CaseSensitive.xsl") == 1)
             {
                 try
@@ -2349,9 +2335,9 @@ namespace System.Xml.Tests
         {
             MyObject obj = new MyObject(26, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("MyObject_NotFoundNS.xsl") == 1))
             {
                 try
@@ -2375,9 +2361,9 @@ namespace System.Xml.Tests
             MyObject obj = new MyObject(27, _output);
             m_xsltArg = new XsltArgumentList();
             string Baseline = Path.Combine("baseline", (string)param);
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("MyObject_KeepingState.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -2395,9 +2381,9 @@ namespace System.Xml.Tests
             MyObject obj = new MyObject(28, _output);
             m_xsltArg = new XsltArgumentList();
             string Baseline = Path.Combine("baseline", (string)param);
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("MyObject_KillerStrings.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 if (MyOutputType() == OutputType.Writer)
@@ -2417,9 +2403,9 @@ namespace System.Xml.Tests
         {
             MyObject obj = new MyObject(29, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("MyObject_NotFound.xsl") == 1))
             {
                 try
@@ -2442,10 +2428,9 @@ namespace System.Xml.Tests
         {
             MyObject obj = new MyObject(31, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szXslNS, obj);
             retObj = m_xsltArg.GetExtensionObject(szXslNS);
-            ///CodeAccessPermission.RevertPermitOnly();
 
             Assert.Equal(retObj, obj);
         }
@@ -2483,14 +2468,6 @@ namespace System.Xml.Tests
             Assert.True(false);
         }
 
-        //[Variation(id = 36, Desc = "Calling extension object from select in xsl:sort", Params = new object[] { "sort.xsl", "sort.txt" })]
-        [InlineData("sort.xsl", "sort.txt")]
-        [Theory]
-        public void AddExtObject33_ActiveIssue9997(object param0, object param1)
-        {
-            AddExtObject33(param0, param1);
-        }
-
         //[Variation(id = 33, Desc = "Calling extension object from select in xsl:apply-templates", Params = new object[] { "apply-templates.xsl", "apply-templates.txt" })]
         [InlineData("apply-templates.xsl", "apply-templates.txt")]
         //[Variation(id = 34, Desc = "Calling extension object from select in xsl:for-each", Params = new object[] { "for-each.xsl", "for-each.txt" })]
@@ -2505,6 +2482,8 @@ namespace System.Xml.Tests
         [InlineData("with-param.xsl", "with-param.txt")]
         //[Variation(id = 40, Desc = "Calling extension object from select in xsl:value-of", Params = new object[] { "value-of.xsl", "value-of.txt" })]
         [InlineData("value-of.xsl", "value-of.txt")]
+        //[Variation(id = 36, Desc = "Calling extension object from select in xsl:sort", Params = new object[] { "sort.xsl", "sort.txt" })]
+        [InlineData("sort.xsl", "sort.txt")]
         [Theory]
         public void AddExtObject33(object param0, object param1)
         {
@@ -2512,9 +2491,9 @@ namespace System.Xml.Tests
             m_xsltArg = new XsltArgumentList();
             string xslFile = param0.ToString();
             string Baseline = Path.Combine("baseline", param1.ToString());
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject("urn-myobject", obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL(xslFile) == 1) && (Transform_ArgList("ExtData.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -2548,9 +2527,9 @@ namespace System.Xml.Tests
             m_xsltArg = new XsltArgumentList();
             string xslFile = param0.ToString();
             string Baseline = "baseline" + Path.DirectorySeparatorChar + param1.ToString();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject("urn-myobject", obj);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL(xslFile) == 1) && (Transform_ArgList("ExtData.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -3124,8 +3103,6 @@ namespace System.Xml.Tests
     //[TestCase(Name = "XsltArgumentList - RemoveExtensionObject : Navigator, Stream", Desc = "NAVIGATOR,STREAM")]
     public class CArgRemoveExtObj : XsltApiTestCaseBase2
     {
-        ///private PermissionSet nonePermSet = new PermissionSet(PermissionState.None);
-
         private ITestOutputHelper _output;
         public CArgRemoveExtObj(ITestOutputHelper output) : base(output)
         {
@@ -3139,10 +3116,9 @@ namespace System.Xml.Tests
         {
             MyObject obj = new MyObject(1, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
             m_xsltArg.RemoveExtensionObject(szDefaultNS);
-            ///CodeAccessPermission.RevertPermitOnly();
 
             try
             {
@@ -3185,11 +3161,11 @@ namespace System.Xml.Tests
             string Baseline = Path.Combine("baseline", (string)param);
             MyObject obj = new MyObject(10, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
             for (int i = 0; i < 500; i++)
                 m_xsltArg.RemoveExtensionObject(szDefaultNS);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("showParam.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -3207,10 +3183,10 @@ namespace System.Xml.Tests
             string Baseline = Path.Combine("baseline", (string)param);
             MyObject obj = new MyObject(4, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject(szDefaultNS, obj);
             m_xsltArg.RemoveExtensionObject(szSimple);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("myObjectDef.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -3227,10 +3203,10 @@ namespace System.Xml.Tests
         {
             m_xsltArg = new XsltArgumentList();
             MyObject obj = new MyObject(5, _output);
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject("urn:" + szLongNS, obj);
             m_xsltArg.RemoveExtensionObject("urn:" + szLongNS);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             try
             {
                 if ((LoadXSL("myObjectDef.xsl") == 1))
@@ -3252,7 +3228,7 @@ namespace System.Xml.Tests
             string Baseline = Path.Combine("baseline", (string)param);
             MyObject obj = new MyObject(6, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject("urn:my-object", obj);
             m_xsltArg.RemoveExtensionObject("urn:my-object");
 
@@ -3270,7 +3246,7 @@ namespace System.Xml.Tests
 
             m_xsltArg.AddExtensionObject("urn:my-object", false);
             m_xsltArg.RemoveExtensionObject("urn:my-object");
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("showParam.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -3288,14 +3264,14 @@ namespace System.Xml.Tests
             MyObject obj = new MyObject(7, _output);
             m_xsltArg = new XsltArgumentList();
             string Baseline = Path.Combine("baseline", (string)param);
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.AddExtensionObject("urn:my-object", obj);
 
             m_xsltArg.RemoveExtensionObject("URN:MY-OBJECT");
             m_xsltArg.RemoveExtensionObject("urn:My-Object");
             m_xsltArg.RemoveExtensionObject("urn-my:object");
             m_xsltArg.RemoveExtensionObject("urn:my-object ");
-            ///CodeAccessPermission.RevertPermitOnly();
+
             if ((LoadXSL("myObjectDef.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
@@ -3312,7 +3288,7 @@ namespace System.Xml.Tests
         {
             int i = 1;
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             foreach (String str in szWhiteSpace)
             {
                 MyObject obj = new MyObject(i, _output);
@@ -3327,7 +3303,6 @@ namespace System.Xml.Tests
                 }
                 i++;
             }
-            ///CodeAccessPermission.RevertPermitOnly();
 
             try
             {
@@ -3350,9 +3325,9 @@ namespace System.Xml.Tests
             string Baseline = Path.Combine("baseline", (string)param);
             MyObject obj = new MyObject(10, _output);
             m_xsltArg = new XsltArgumentList();
-            ///nonePermSet.PermitOnly(); ;
+
             m_xsltArg.RemoveExtensionObject(szDefaultNS);
-            ///CodeAccessPermission.RevertPermitOnly();
+
             // ensure we can still do a transform
             if ((LoadXSL("showParam.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
             {
@@ -3514,8 +3489,6 @@ namespace System.Xml.Tests
                     Assert.True(false);
                 }
             }
-
-            //  _output.WriteLine(retObj.GetType());
 
             m_xsltArg.Clear();
 
