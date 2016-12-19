@@ -169,7 +169,7 @@ namespace System.Xml.Tests
             {
                 if (DataReader.HasValue)
                 {
-                    if (DataReader.Value.IndexOf('\r') != -1)
+                    if (DataReader.Value.IndexOf(Environment.NewLine) != -1)
                     {
                         CError.WriteLine("#xD found in node {0}, line {1} col {2}", DataReader.NodeType, DataReader.LineNumber, DataReader.LinePosition);
                         return TEST_FAIL;
@@ -210,8 +210,8 @@ namespace System.Xml.Tests
         [Variation("Character entities with Normalization=true")]
         public int TestNormalization16()
         {
-            string strxml = "<e a='a&#xD;\r\n \r&#xA;b&#xD;&#x20;&#x9;&#x41;'/>";
-            string expNormalizedValue = "a\r   \nb\r \tA";
+            string strxml = string.Format("<e a='a&#xD;{0} {0}&#xA;b&#xD;&#x20;&#x9;&#x41;'/>", Environment.NewLine);
+            string expNormalizedValue = string.Format("a{0}   \nb{0} \tA", Environment.NewLine);
 
             ReloadSourceStr(strxml);
             DataReader.Read();
@@ -241,7 +241,7 @@ namespace System.Xml.Tests
 
             ReloadSourceStr(strxml);
             DataReader.PositionOnNodeType(XmlNodeType.Text);
-            CError.Compare(DataReader.Value, "a\r\n\rb", "Wrong end-of-line handling");
+            CError.Compare(DataReader.Value, string.Format("a{0}{0}b", Environment.NewLine), "Wrong end-of-line handling");
             return TEST_PASS;
         }
     }
