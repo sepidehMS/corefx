@@ -4,29 +4,21 @@
 
 using Xunit;
 using Xunit.Abstractions;
-using System;
-using System.CodeDom.Compiler;
 using System.Collections;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.Loader;
-using System.Security;
 using System.Text;
-using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 using XmlCoreTest.Common;
-using System.Collections.Generic;
 
 namespace System.Xml.Tests
 {
     public class ReflectionTestCaseBase : XsltApiTestCaseBase2
     {
-        //protected static readonly MethodInfo methCompileToType = GetStaticMethod(typeof(XslCompiledTransform), "CompileToType");
-
         private ITestOutputHelper _output;
         public ReflectionTestCaseBase(ITestOutputHelper output) : base(output)
         {
@@ -46,19 +38,6 @@ namespace System.Xml.Tests
             Debug.Assert(methInfo != null, "Static method " + type.Name + "." + methName + " not found");
             return methInfo;
         }
-
-        /*protected static CompilerErrorCollection WCompileToType(
-            XmlReader stylesheet,
-            XsltSettings settings,
-            XmlResolver stylesheetResolver,
-            bool debug,
-            TypeBuilder typeBuilder,
-            string scriptAssemblyPath)
-        {
-            return XslCompiledTransform.CompileToType(stylesheet, settings, stylesheetResolver, debug, typeBuilder, scriptAssemblyPath);
-            //return (CompilerErrorCollection)methCompileToType.Invoke(null,
-            //  new object[] { stylesheet, settings, stylesheetResolver, debug, typeBuilder, scriptAssemblyPath });
-        }*/
 
         protected String scriptTestPath = null;
 
@@ -80,21 +59,6 @@ namespace System.Xml.Tests
             }
         }
 
-        //protected TypeBuilder ATypeBuilder
-        //{
-        //    get
-        //    {
-        //        AppDomain cd = System.Threading.Thread.GetDomain();
-        //        AssemblyName an = new AssemblyName();
-        //        an.Name = "HelloClass";
-
-        //        AssemblyBuilder ab = cd.DefineDynamicAssembly(an, AssemblyBuilderAccess.RunAndSave);
-        //        ModuleBuilder mb = ab.DefineDynamicModule("HelloModule", "HelloModule.dll", true);
-        //        TypeBuilder tb = mb.DefineType("Hello", TypeAttributes.Class | TypeAttributes.Public);
-        //        return tb;
-        //    }
-        //}
-
         protected MethodInfo AMethodInfo
         {
             get
@@ -112,299 +76,7 @@ namespace System.Xml.Tests
         protected void WLoad(XslCompiledTransform instance, MethodInfo meth, Byte[] bytes, Type[] types)
         {
             instance.Load(meth, bytes, types);
-            /*
-            Type[] paramTypes = new Type[3] { typeof(MethodInfo), typeof(Byte[]), typeof(Type[]) };
-
-            MethodInfo m = typeof(XslCompiledTransform).GetMethod("Load",
-                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public,
-                null,
-                paramTypes,
-                null);
-
-            m.Invoke(instance, new Object[] { meth, bytes, types });
-            */
         }
-
-        protected void TestWLoad(XslCompiledTransform xslt, String asmPath, String type)
-        {
-            Assembly asm = AssemblyLoadContext.Default.LoadFromAssemblyPath(asmPath);
-            Type t = asm.GetType(type);
-
-            MethodInfo meth = GetStaticMethod(t, "Execute");
-            Byte[] staticData = (Byte[])t.GetTypeInfo().GetField("staticData", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(t);
-            Type[] ebTypes = (Type[])t.GetTypeInfo().GetField("ebTypes", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(t);
-
-            WLoad(xslt, meth, staticData, ebTypes);
-        }
-    }
-
-    //[TestCase(Name = "CompileToType tests", Desc = "This testcase tests XslCompiledTransform private CompileToType method via Reflection. Same method is also exercised by xsltc.exe")]
-    public class CCompileToTypeTest : ReflectionTestCaseBase
-    {
-        private ITestOutputHelper _output;
-        public CCompileToTypeTest(ITestOutputHelper output) : base(output)
-        {
-            _output = output;
-        }
-
-        //BinCompat TODO: Add this test back
-        ////[Variation("CompileToType(XmlReader = null)", Pri = 1)]
-        //[InlineData()]
-        //[Theory]
-        //public void Var1()
-        //{
-        //    try
-        //    {
-        //        WCompileToType((XmlReader)null, XsltSettings.Default, null, false, ATypeBuilder, String.Empty);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        _output.WriteLine(e.ToString());
-
-        //        if (e is ArgumentNullException || e.InnerException is ArgumentNullException)
-        //            return;
-
-        //        _output.WriteLine("Did not throw ArgumentNullException");
-        //    }
-        //    Assert.True(false);
-        //}
-
-        //BinCompat TODO: Add this test back - it might possibly need to be removed - to be investigated
-        //[Variation("CompileToType(TypeBuilder= null)", Pri = 1)]
-        [InlineData()]
-        [Theory]
-        public void Var2()
-        {
-            /*try
-            {
-                WCompileToType(XmlReader.Create(FullFilePath("identity.xsl")), XsltSettings.Default, null, false, null, String.Empty);
-            }
-            catch (Exception e)
-            {
-                _output.WriteLine(e.ToString());
-
-                if (e is ArgumentNullException || e.InnerException is ArgumentNullException)
-                    return;
-
-                _output.WriteLine("Did not throw ArgumentNullException");
-            }
-            Assert.True(false);*/
-        }
-
-        //BinCompat TODO: Add this test back
-        ////[Variation("CompileToType(AsmPath= No Extension file name)", Pri = 1)]
-        //[InlineData()]
-        //[Theory]
-        //public void Var3()
-        //{
-        //    AppDomain cd = System.Threading.Thread.GetDomain();
-        //    AssemblyName an = new AssemblyName();
-        //    an.Name = "HelloClass";
-
-        //    AssemblyBuilder ab = cd.DefineDynamicAssembly(an, AssemblyBuilderAccess.RunAndSave);
-        //    ModuleBuilder mb = ab.DefineDynamicModule("HelloModule", "HelloModule.dll", true);
-        //    TypeBuilder tb = mb.DefineType("Hello", TypeAttributes.Class | TypeAttributes.Public);
-
-        //    try
-        //    {
-        //        String xslPath = ScriptTestPath + "Scripting28.xsl";
-        //        CompilerErrorCollection errors;
-        //        using (XmlReader reader = XmlReader.Create(xslPath))
-        //        {
-        //            errors = WCompileToType(reader, XsltSettings.TrustedXslt, null, false, tb, "ScName");
-        //        }
-
-        //        // Print errors and warnings
-        //        bool hasError = false;
-        //        foreach (CompilerError error in errors)
-        //        {
-        //            _output.WriteLine(error.ToString());
-        //            hasError = true;
-        //        }
-
-        //        if (hasError) Assert.True(false);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        _output.WriteLine(e.ToString());
-        //        Assert.True(false);
-        //    }
-
-        //    return;
-        //}
-
-        //BinCompat TODO: Add this test back
-        ////[Variation("CompileToType(Valid case with scripts)", Pri = 1)]
-        //[InlineData()]
-        //[Theory]
-        //public void Var4()
-        //{
-        //    AppDomain cd = System.Threading.Thread.GetDomain();
-        //    AssemblyName an = new AssemblyName();
-        //    an.Name = "HelloClass4";
-
-        //    AssemblyBuilder ab = cd.DefineDynamicAssembly(an, AssemblyBuilderAccess.RunAndSave);
-        //    ModuleBuilder mb = ab.DefineDynamicModule("HelloModule4", "HelloModule4.dll", true);
-        //    TypeBuilder tb = mb.DefineType("Hello4", TypeAttributes.Class | TypeAttributes.Public);
-
-        //    try
-        //    {
-        //        String xslPath = ScriptTestPath + "Scripting28.xsl";
-        //        CompilerErrorCollection errors;
-        //        using (XmlReader reader = XmlReader.Create(xslPath))
-        //        {
-        //            errors = WCompileToType(reader, XsltSettings.TrustedXslt, null, false, tb, "SomeAsm4.dll");
-        //        }
-
-        //        // Print errors and warnings
-        //        bool hasError = false;
-        //        foreach (CompilerError error in errors)
-        //        {
-        //            _output.WriteLine(error.ToString());
-        //            hasError = true;
-        //        }
-
-        //        if (hasError) Assert.True(false);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        _output.WriteLine(e.ToString());
-        //        Assert.True(false);
-        //    }
-
-        //    return;
-        //}
-
-        // Q>       In CompileToType when scriptAssemblyPath is null, should we really throw ArgumentNullExc
-        //          if the stylesheet does not have any scripts (but the settings are enabled)?
-        //
-        // Anton>   Sergey and I think it\92s acceptable behavior. Implementing the other way will require extra
-        //          code churn in 3 files, which we tried to avoid.
-
-        //BinCompat TODO: Add this test back
-        ////[Variation("CompileToType(ScriptPath = null, sytlesheet with no scripts)", Pri = 1)]
-        //[InlineData()]
-        //[Theory]
-        //public void Var5()
-        //{
-        //    AppDomain cd = System.Threading.Thread.GetDomain();
-        //    AssemblyName an = new AssemblyName();
-        //    an.Name = "HelloClass5";
-
-        //    AssemblyBuilder ab = cd.DefineDynamicAssembly(an, AssemblyBuilderAccess.RunAndSave);
-        //    ModuleBuilder mb = ab.DefineDynamicModule("HelloModule5", "HelloModule5.dll", true);
-        //    TypeBuilder tb = mb.DefineType("Hello5", TypeAttributes.Class | TypeAttributes.Public);
-
-        //    try
-        //    {
-        //        String xslPath = FullFilePath("identity.xsl");
-        //        CompilerErrorCollection errors;
-        //        using (XmlReader reader = XmlReader.Create(xslPath))
-        //        {
-        //            errors = WCompileToType(reader, XsltSettings.TrustedXslt, null, false, tb, null);
-        //        }
-
-        //        // Print errors and warnings
-        //        bool hasError = false;
-        //        foreach (CompilerError error in errors)
-        //        {
-        //            _output.WriteLine(error.ToString());
-        //            hasError = true;
-        //        }
-
-        //        if (hasError) Assert.True(false);
-        //    }
-        //    catch (ArgumentNullException e)
-        //    {
-        //        _output.WriteLine(e.ToString());
-        //        return;
-        //    }
-
-        //    Assert.True(false);
-        //}
-
-        //BinCompat TODO: Add this test back
-        //[Variation("CompileToType(ScriptPath = null, stylesheet with scripts)", Pri = 1)]
-        //[InlineData()]
-        //[Theory]
-        //public void Var6()
-        //{
-        //    AppDomain cd = System.Threading.Thread.GetDomain();
-        //    AssemblyName an = new AssemblyName();
-        //    an.Name = "HelloClass6";
-
-        //    AssemblyBuilder ab = cd.DefineDynamicAssembly(an, AssemblyBuilderAccess.RunAndSave);
-        //    ModuleBuilder mb = ab.DefineDynamicModule("HelloModule6", "HelloModule6.dll", true);
-        //    TypeBuilder tb = mb.DefineType("Hello6", TypeAttributes.Class | TypeAttributes.Public);
-
-        //    try
-        //    {
-        //        String xslPath = ScriptTestPath + "Scripting28.xsl";
-        //        CompilerErrorCollection errors;
-        //        using (XmlReader reader = XmlReader.Create(xslPath))
-        //        {
-        //            errors = WCompileToType(reader, XsltSettings.TrustedXslt, null, false, tb, null);
-        //        }
-
-        //        // Print errors and warnings
-        //        bool hasError = false;
-        //        foreach (CompilerError error in errors)
-        //        {
-        //            _output.WriteLine(error.ToString());
-        //            hasError = true;
-        //        }
-
-        //        if (hasError) Assert.True(false);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        _output.WriteLine(e.ToString());
-        //        return;
-        //    }
-
-        //    Assert.True(false);
-        //}
-
-        //BinCompat TODO: Add this test back
-        //    //[Variation("CompileToType(ScriptPath = null, XsltSettings = null)", Pri = 1)]
-        //    [InlineData()]
-        //    [Theory]
-        //    public void Var7()
-        //    {
-        //        AppDomain cd = System.Threading.Thread.GetDomain();
-        //        AssemblyName an = new AssemblyName();
-        //        an.Name = "HelloClass7";
-
-        //        AssemblyBuilder ab = cd.DefineDynamicAssembly(an, AssemblyBuilderAccess.RunAndSave);
-        //        ModuleBuilder mb = ab.DefineDynamicModule("HelloModule7", "HelloModule7.dll", true);
-        //        TypeBuilder tb = mb.DefineType("Hello7", TypeAttributes.Class | TypeAttributes.Public);
-
-        //        try
-        //        {
-        //            CompilerErrorCollection errors;
-        //            using (XmlReader reader = XmlReader.Create(FullFilePath("identity.xsl")))
-        //            {
-        //                errors = WCompileToType(reader, null, null, false, tb, null);
-        //            }
-
-        //            // Print errors and warnings
-        //            bool hasError = false;
-        //            foreach (CompilerError error in errors)
-        //            {
-        //                _output.WriteLine(error.ToString());
-        //                hasError = true;
-        //            }
-
-        //            if (!hasError) return;
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            _output.WriteLine(e.ToString());
-        //            Assert.True(false);
-        //        }
-
-        //        Assert.True(false);
-        //    }
     }
 
     //[TestCase(Name = "Load(MethodInfo, ByteArray, TypeArray) tests", Desc = "This testcase tests private Load method via Reflection. This method is used by sharepoint")]
@@ -458,167 +130,6 @@ namespace System.Xml.Tests
                 _output.WriteLine("Did not throw ArgumentNullException");
             }
             Assert.True(false);
-        }
-
-        //[Variation("Valid Load after error case Load(MethodInfo, ByteArray, TypeArray)", Pri = 1)]
-        [ActiveIssue(9988)]
-        [InlineData()]
-        [Theory]
-        public void Var3()
-        {
-            // BinCompat TODO: rewrite this test so that it does not load xsl from dll
-            Assert.True(false);
-
-            //XslCompiledTransform xslt = new XslCompiledTransform();
-            //try
-            //{
-            //    //error case
-            //    WLoad(xslt, AMethodInfo, new Byte[5], null);
-            //}
-            //catch (Exception e)
-            //{
-            //    /*
-            //     * Anton> If staticData array is malformed, you end up with weird exceptions.
-            //     * We didn\92t expect this method to be public and didn\92t implement any range/sanity
-            //     * checks in deserialization code path, besides CLR implicit range checks for array indices.
-            //     * You have found one such place, but there are dozens of them. Fixing all of them will cause
-            //     * code churn in many files and another round of [code review/test sign-off/approval] process.
-            //     * Right now it works according to the \93Garbage In, Garbage Out\94 principle.
-            //     *
-            //     */
-            //    _output.WriteLine(e.ToString());
-            //}
-
-            //String asmPath = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"xsltc\precompiled\bftBaseLine.dll");
-            //String type = "bftBaseLine";
-            //String xml = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"xsltc\precompiled\sft1.xml");
-            //TestWLoad(xslt, Path.GetFullPath(asmPath), type);
-            //xslt.Transform(xml, "errout.txt");
-            //return;
-        }
-
-        //[Variation("Multiple Loads Load(MethodInfo, ByteArray, TypeArray)", Pri = 1)]
-        [ActiveIssue(9988)]
-        [InlineData()]
-        [Theory]
-        public void Var7()
-        {
-            // BinCompat TODO: rewrite this test so that it does not load xsl from dll
-            Assert.True(false);
-
-            /*XslCompiledTransform xslt = new XslCompiledTransform();
-
-            String asmPath = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"xsltc\precompiled\bftBaseLine.dll");
-            String type = "bftBaseLine";
-            String xml = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"xsltc\precompiled\sft1.xml");
-
-            Assembly asm = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.GetFullPath(asmPath));
-            Type t = asm.GetType(type);
-
-            MethodInfo meth = GetStaticMethod(t, "Execute");
-            Byte[] staticData = (Byte[])t.GetTypeInfo().GetField("staticData", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(t);
-            Type[] ebTypes = (Type[])t.GetTypeInfo().GetField("ebTypes", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(t);
-
-            asmPath = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"xsltc\precompiled\Scripting28.dll");
-            type = "Scripting28";
-
-            asm = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.GetFullPath(asmPath));
-            t = asm.GetType(type);
-
-            MethodInfo meth2 = GetStaticMethod(t, "Execute");
-            Byte[] staticData2 = (Byte[])t.GetTypeInfo().GetField("staticData", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(t);
-            Type[] ebTypes2 = (Type[])t.GetTypeInfo().GetField("ebTypes", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetValue(t);
-
-            for (int i = 0; i < 100; i++)
-            {
-                WLoad(xslt, meth, staticData, ebTypes);
-                WLoad(xslt, meth2, staticData2, ebTypes2);
-                xslt.Transform(xml, "out.txt");
-                xslt.Transform(xml, "out1.txt");
-            }
-
-            return;*/
-        }
-
-        //[Variation("Load(MethodInfo, ByteArray, TypeArray) simple assembly", Pri = 1)]
-        [ActiveIssue(9988)]
-        [InlineData()]
-        [Theory]
-        public void Var4()
-        {
-            // BinCompat TODO: rewrite this test so that it does not load xsl from dll
-            Assert.True(false);
-
-            /*XslCompiledTransform xslt = new XslCompiledTransform();
-            String asmPath = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"xsltc\precompiled\bftBaseLine.dll");
-            String type = "bftBaseLine";
-            String xml = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"xsltc\precompiled\sft1.xml");
-
-            try
-            {
-                TestWLoad(xslt, Path.GetFullPath(asmPath), type);
-                xslt.Transform(xml, "out.txt");
-                return;
-            }
-            catch (Exception e)
-            {
-                _output.WriteLine(e.ToString());
-            }
-            Assert.True(false);*/
-        }
-
-        //[Variation("Load(MethodInfo, ByteArray, TypeArray) assembly with scripts", Pri = 1)]
-        [ActiveIssue(9988)]
-        [InlineData()]
-        [Theory]
-        public void Var5()
-        {
-            // BinCompat TODO: rewrite this test so that it does not load xsl from dll
-            Assert.True(false);
-
-            /*XslCompiledTransform xslt = new XslCompiledTransform();
-            String asmPath = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"xsltc\precompiled\Scripting28.dll");
-            String type = "Scripting28";
-            String xml = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"xsltc\precompiled\sft1.xml");
-
-            try
-            {
-                TestWLoad(xslt, Path.GetFullPath(asmPath), type);
-                xslt.Transform(xml, "out.txt");
-                return;
-            }
-            catch (Exception e)
-            {
-                _output.WriteLine(e.ToString());
-            }
-            Assert.True(false);*/
-        }
-
-        //[Variation("Load(MethodInfo, ByteArray, TypeArray) old xsltc assembly", Pri = 1)]
-        [ActiveIssue(9988)]
-        [InlineData()]
-        [Theory]
-        public void Var6()
-        {
-            // BinCompat TODO: rewrite this test so that it does not load xsl from dll
-            Assert.True(false);
-
-            /*XslCompiledTransform xslt = new XslCompiledTransform();
-            String asmPath = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"xsltc\precompiled\CTT1.dll");
-            String type = "CCT1";
-            String xml = Path.Combine(@"TestFiles\", FilePathUtil.GetTestDataPath(), @"xsltc\precompiled\sft1.xml");
-
-            try
-            {
-                TestWLoad(xslt, Path.GetFullPath(asmPath), type);
-                xslt.Transform(xml, "out.txt");
-                return;
-            }
-            catch (Exception e)
-            {
-                _output.WriteLine(e.ToString());
-            }
-            Assert.True(false);*/
         }
     }
 
@@ -1074,41 +585,7 @@ namespace System.Xml.Tests
             Assert.True(false);
         }
 
-        /*
-                //[Variation("Set to NULL many times in a loop, then to proper cred.")]
-                [InlineData()]
-                [Theory]
-                public void XmlResolver6()
-                {
-                    // Skip this test for Load(URI)
-                    // Reason: When style sheet URI = Intranet zone, XmlSecureResolver does not resolve document function
-
-                    if(LoadXSL("xmlResolver_cred.xsl") == TEST_PASS)
-                    {
-                        for(int i=0; i<100; i++)
-                            xslt.XmlResolver = null;
-
-                        for(int i=0; i<100; i++)
-                            xslt.XmlResolver = GetDefaultCredResolver();
-
-                        if ((Transform("fruits.xml") == TEST_PASS) && (CheckResult(377.8217373898) == TEST_PASS))
-                            return;
-                        else
-                        {
-                            _output.WriteLine("Failed to use XmlResolver property to resolve document function");
-                            Assert.True(false);
-                        }
-                    }
-                    else
-                    {
-                        _output.WriteLine("Failed to load style sheet!");
-                        Assert.True(false);
-                    }
-                }
-        */
-
         //[Variation(id = 7, Desc = "document() has absolute URI", Pri = 0)]
-        [ActiveIssue(14071)]
         [InlineData()]
         [Theory]
         public void XmlResolver7()
@@ -1116,6 +593,26 @@ namespace System.Xml.Tests
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
             string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result>123</result>";
+
+            // copy file on the local machine
+            try
+            {
+                string tempPath = Path.GetTempPath();
+                string testFile = Path.Combine(tempPath, "xmlResolver_document_function.xml");
+                if (File.Exists(testFile))
+                {
+                    File.SetAttributes(testFile, FileAttributes.Normal);
+                    File.Delete(testFile);
+                }
+                string xmlFile = FullFilePath("xmlResolver_document_function.xml");
+                File.Copy(xmlFile, testFile, true);
+            }
+            catch (Exception e)
+            {
+                _output.WriteLine(e.ToString());
+                _output.WriteLine("Could not copy file to local. Some other issues prevented this test from running");
+                return; //TEST_SKIPPED;
+            }
 
             // copy file on the local machine (this is now done with createAPItestfiles.js, see Oasys scenario.)
             if (LoadXSL("xmlResolver_document_function_absolute_uri.xsl") == 1)
@@ -1174,7 +671,6 @@ namespace System.Xml.Tests
             }
             catch (System.ArgumentException)
             {
-                // System.Xml.XmlUrlResolver.ResolveUri(Uri baseUri, String relativeUri) throws System.ArgumentException here for null
                 return;
             }
             _output.WriteLine("Exception not generated for null parameter name");
@@ -1333,32 +829,6 @@ namespace System.Xml.Tests
             Assert.True(false);
         }
 
-        /*
-        //[Variation(id =8, Desc ="Verify that style sheet is closed properly after Load - ReadWrite Access")]
-        [InlineData()]
-        [Theory]
-        public void LoadGeneric8()
-        {
-            FileStream s2;
-
-            // check immediately after load and after transform
-
-            if(LoadXSL("XmlResolver_Main.xsl") == TEST_PASS)
-            {
-                s2 = new FileStream(FullFilePath("XmlResolver_Main.xsl"), FileMode.Open, FileAccess.ReadWrite);
-                s2.Dispose();
-                if((Transform("fruits.xml") == TEST_PASS) && (CheckResult(428.8541842246)== TEST_PASS))
-                {
-                    s2 = new FileStream(FullFilePath("XmlResolver_Main.xsl"), FileMode.Open, FileAccess.ReadWrite);
-                    s2.Dispose();
-                    return;
-                }
-            }
-            _output.WriteLine("Appeared to not close style sheet file properly after loading.");
-            Assert.True(false);
-        }
-        */
-
         //[Variation(id = 9, Desc = "Verify that included files are closed properly after Load - Read Access")]
         [InlineData()]
         [Theory]
@@ -1383,31 +853,6 @@ namespace System.Xml.Tests
             _output.WriteLine("Appeared to not close file properly after loading.");
             Assert.True(false);
         }
-
-        /*
-        //[Variation(id =10, Desc ="Verify that included files are closed properly after Load - ReadWrite Access")]
-        [InlineData()]
-        [Theory]
-        public void LoadGeneric10()
-        {
-            FileStream s2;
-
-            // check immediately after load and after transform
-            if(LoadXSL("XmlResolver_Main.xsl") == TEST_PASS)
-            {
-                s2 = new FileStream(FullFilePath("XmlResolver_sub.xsl"), FileMode.Open, FileAccess.ReadWrite);
-                s2.Dispose();
-                if((Transform("fruits.xml") == TEST_PASS) && (CheckResult(428.8541842246)== TEST_PASS))
-                {
-                    s2 = new FileStream(FullFilePath("XmlResolver_Include.xsl"), FileMode.Open, FileAccess.ReadWrite);
-                    s2.Dispose();
-                    return;
-                }
-            }
-            _output.WriteLine("Appeared to not close file properly after loading.");
-            Assert.True(false);
-        }
-        */
 
         //[Variation(id = 11, Desc = "Load stylesheet with entity reference: Bug #68450 ")]
         [InlineData()]
@@ -1833,27 +1278,6 @@ namespace System.Xml.Tests
             Assert.True(false);
         }
 
-        /* This test doesn't make sense coz loading a stylesheet with null resolver will throw ArgumentNullException
-        //[Variation("Call Load() many times with null resolver then perform a transform")]
-        [InlineData()]
-        [Theory]
-        public void LoadGeneric10()
-        {
-            for(int i=0; i < 100; i++)
-            {
-                if(LoadXSL_Resolver("showParam.xsl", null) != TEST_PASS)
-                {
-                    _output.WriteLine("Failed to load stylesheet showParam.xsl on the {0} attempt", i);
-                    Assert.True(false);
-                }
-            }
-            if((LoadXSL_Resolver("showParam.xsl", null) == TEST_PASS) && (Transform("fruits.xml") == TEST_PASS)
-                && (VerifyResult(Baseline, _strOutFile)== TEST_PASS))
-                return;
-            Assert.True(false);
-        }
-        */
-
         //[Variation("Call Load with null Resolver, file does not exist")]
         [InlineData()]
         [Theory]
@@ -1882,43 +1306,6 @@ namespace System.Xml.Tests
                 }
             }
         }
-
-        /* This test doesn't make sense anymore coz passing null resolver throws ArgumentNullException
-         * right on the first Load on showParam.xsl
-         *
-        //[Variation("Load non existing stylesheet with null resolver and try to transform")]
-        [InlineData()]
-        [Theory]
-        public void LoadGeneric12()
-        {
-            if(LoadXSL_Resolver("showParam.xsl", null) == TEST_PASS)
-            {
-                try
-                {
-                    LoadXSL_Resolver("IDontExist.xsl", null);
-                }
-                catch(System.IO.FileNotFoundException)
-                {
-                    //no stylesheet loaded, should throw error
-                    try
-                    {
-                        Transform("fruits.xml");
-                    }
-                    catch(System.InvalidOperationException e2)
-                    {
-                        return CheckExpectedError(e2, "system.xml", "Xslt_NoStylesheetLoaded", new string[] { "IDontExist.xsl" });
-                    }
-                }
-                _output.WriteLine("Exception not generated for non-existent file parameter name");
-            }
-            else
-            {
-                _output.WriteLine("Errors loading initial file");
-                Assert.True(false);
-            }
-            Assert.True(false);
-        }
-        */
     }
 
     /***********************************************************/
@@ -1992,71 +1379,6 @@ namespace System.Xml.Tests
         }
     }
 
-    /****************************************************************************************/
-    /*          XslCompiledTransform.Load(Reader/Navigator,XmlResolver,Evidence) - Integrity        */
-    /****************************************************************************************/
-
-    //[TestCase(Name = "XslCompiledTransform.Load(,XmlResolver,Evidence) : Reader, Reader", Desc = "READER,READER")]
-    //[TestCase(Name = "XslCompiledTransform.Load(,XmlResolver,Evidence) : Reader, Stream", Desc = "READER,STREAM")]
-    //[TestCase(Name = "XslCompiledTransform.Load(,XmlResolver,Evidence) : Reader, Writer", Desc = "READER,WRITER")]
-    //[TestCase(Name = "XslCompiledTransform.Load(,XmlResolver,Evidence) : Reader, TextWriter", Desc = "READER,TEXTWRITER")]
-    //[TestCase(Name = "XslCompiledTransform.Load(,XmlResolver,Evidence) : Navigator, Reader", Desc = "NAVIGATOR,READER")]
-    //[TestCase(Name = "XslCompiledTransform.Load(,XmlResolver,Evidence) : Navigator, Stream", Desc = "NAVIGATOR,STREAM")]
-    //[TestCase(Name = "XslCompiledTransform.Load(,XmlResolver,Evidence) : Navigator, Writer", Desc = "NAVIGATOR,WRITER")]
-    //[TestCase(Name = "XslCompiledTransform.Load(,XmlResolver,Evidence) : Navigator, TextWriter", Desc = "NAVIGATOR,TEXTWRITER")]
-    public class CLoadReaderResolverEvidenceTest : XsltApiTestCaseBase2
-    {
-        private ITestOutputHelper _output;
-        public CLoadReaderResolverEvidenceTest(ITestOutputHelper output) : base(output)
-        {
-            _output = output;
-        }
-
-        //[Variation("Call Load with style sheet that has script, pass null evidence, should throw security exception")]
-        [InlineData()]
-        [Theory]
-        public void LoadGeneric2()
-        {
-            /*
-            try
-            {
-                LoadXSL_Resolver_Evidence("scripting_unsafe_object.xsl", new XmlUrlResolver(), null);
-            }
-            catch(System.Security.Policy.PolicyException e)
-            {
-                _output.WriteLine(e.ToString());
-                return;
-            }
-            _output.WriteLine("Did not throw a security exception for null evidence!");
-            Assert.True(false);
-            */
-            return; //TEST_SKIPPED;
-        }
-
-        //BinCompat TODO: Add this test back
-        ////[Variation("Call Load with style sheet that has script, pass correct evidence")]
-        //[InlineData()]
-        //[Theory]
-        //public void LoadGeneric3()
-        //{
-        //    if (_isInProc)
-        //        return; //TEST_SKIPPED;
-
-        //    Evidence evidence = new Evidence();
-        //    evidence.AddHost(new Zone(SecurityZone.MyComputer));
-        //    try
-        //    {
-        //        LoadXSL_Resolver_Evidence("scripting_unsafe_object.xsl", new XmlUrlResolver(), evidence);
-        //    }
-        //    catch (System.Security.Policy.PolicyException)
-        //    {
-        //        _output.WriteLine("Should not throw a security exception for correct evidence!");
-        //        Assert.True(false);
-        //    }
-        //    return;
-        //}
-    }
-
     /***********************************************************/
     /*          XslCompiledTransform.Load(Url)                         */
     /***********************************************************/
@@ -2116,7 +1438,6 @@ namespace System.Xml.Tests
             }
             catch (System.ArgumentException)
             {
-                // System.Xml.XmlUrlResolver.ResolveUri(Uri baseUri, String relativeUri) throws ArgumentException
                 return;
             }
             _output.WriteLine("Exception not generated for an empty string filename");
@@ -2169,50 +1490,11 @@ namespace System.Xml.Tests
             }
             catch (System.ArgumentException)
             {
-                // System.Xml.XmlUrlResolver.ResolveUri(Uri baseUri, String relativeUri) throws ArgumentException
                 return;
             }
             _output.WriteLine("Exception not generated for non-existent file parameter name");
             Assert.True(false);
         }
-
-        /*
-
-        //[Variation("Call Load with style sheet that has script, pass Url which does not have correct evidence, should fail")]
-        [InlineData()]
-        [Theory]
-        public void LoadUrl6()
-        {
-            try
-            {
-                LoadXSL_Resolver(FullHttpPath("XmlResolver/scripting_unsafe_object.xsl"), GetDefaultCredResolver());
-            }
-            catch(System.Security.Policy.PolicyException)
-            {
-                return;
-            }
-            _output.WriteLine("Should throw a security exception for incorrect evidence!");
-            Assert.True(false);
-        }
-
-        //[Variation("Call Load with style sheet that has script, pass Url which has correct evidence, should pass")]
-        [InlineData()]
-        [Theory]
-        public void LoadUrl7()
-        {
-            try
-            {
-                LoadXSL("scripting_unsafe_object.xsl");
-            }
-            catch(System.Security.Policy.PolicyException)
-            {
-                _output.WriteLine("Should not throw a security exception for correct evidence!");
-                Assert.True(false);
-            }
-            return;
-        }
-
-        */
     }
 
     /***********************************************************/
@@ -2284,7 +1566,6 @@ namespace System.Xml.Tests
             xslt = new XslCompiledTransform();
             string Baseline = Path.Combine("baseline", (string)param);
             XmlReader xrLoad = XmlReader.Create(FullFilePath(Path.Combine("XmlResolver", "XmlResolverTestMain.xsl")));
-            //xrLoad.XmlResolver = GetDefaultCredResolver();
 
             XPathDocument xdTemp = new XPathDocument(xrLoad, XmlSpace.Preserve);
             XPathNavigator xP = ((IXPathNavigable)xdTemp).CreateNavigator();
@@ -2299,28 +1580,29 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Regression case for bug 80768")]
-        [ActiveIssue(9873)]
         [InlineData()]
         [Theory]
         public void LoadNavigator4()
         {
-            if (_isInProc)
-                return; //TEST_SKIPPED;
+            var e = Assert.ThrowsAny<XsltException>(() =>
+            {
+                string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><out>You are safe</out>";
 
-            string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><out>You are safe</out>";
+                xslt = new XslCompiledTransform();
+                XmlReader xrLoad = XmlReader.Create(FullFilePath("Bug80768.xsl"));
+                XPathDocument xd = new XPathDocument(xrLoad, XmlSpace.Preserve);
 
-            xslt = new XslCompiledTransform();
-            XmlReader xrLoad = XmlReader.Create(FullFilePath("Bug80768.xsl"));
-            XPathDocument xd = new XPathDocument(xrLoad, XmlSpace.Preserve);
+                xslt.Load(xd, XsltSettings.TrustedXslt, new XmlUrlResolver());
 
-            xslt.Load(xd, XsltSettings.TrustedXslt, new XmlUrlResolver());
+                FileStream fs = new FileStream(_strOutFile, FileMode.Create, FileAccess.ReadWrite);
+                XPathNavigator xn = new MyNavigator(FullFilePath("foo.xml"));
+                xslt.Transform(xn, null, fs);
+                fs.Dispose();
 
-            FileStream fs = new FileStream(_strOutFile, FileMode.Create, FileAccess.ReadWrite);
-            XPathNavigator xn = new MyNavigator(FullFilePath("foo.xml"));
-            xslt.Transform(xn, null, fs);
-            fs.Dispose();
+                VerifyResult(expected);
+            });
 
-            VerifyResult(expected);
+            Assert.Equal("Compiling JScript/CSharp scripts is not supported", e.InnerException.Message);
         }
     }
 
@@ -2536,7 +1818,7 @@ namespace System.Xml.Tests
             xslt = new XslCompiledTransform();
             string Baseline = Path.Combine("baseline", (string)param);
             XmlReader xrLoad = XmlReader.Create(FullFilePath(Path.Combine("XmlResolver", "XmlResolverTestMain.xsl")));
-            //xrLoad.XmlResolver = GetDefaultCredResolver();
+
             xslt.Load(xrLoad, XsltSettings.TrustedXslt, GetDefaultCredResolver());
             xrLoad.Dispose();
 
@@ -2825,37 +2107,11 @@ namespace System.Xml.Tests
             Assert.True(false);
         }
 
-        /*
-        //[Variation("Closing XSL and XML files used in transform, ReadWrite access")]
-        [InlineData()]
-        [Theory]
-        public void TransformGeneric6()
-        {
-            FileStream s2;
-
-            if((LoadXSL("showParam.xsl") == TEST_PASS) && (Transform("fruits.xml") == TEST_PASS))
-            {
-                s2 = new FileStream(FullFilePath("showParam.xsl"), FileMode.Open, FileAccess.ReadWrite);
-                s2.Dispose();
-
-                s2 = new FileStream(FullFilePath("fruits.xml"), FileMode.Open, FileAccess.ReadWrite);
-                s2.Dispose();
-
-                return;
-            }
-            _output.WriteLine("Encountered errors performing transform and could not verify if files were closed");
-            Assert.True(false);
-        }
-        */
-
         //[Variation("Bug20003707 - InvalidProgramException for 2.0 stylesheets in forwards-compatible mode")]
         [InlineData()]
         [Theory]
         public void TransformGeneric7()
         {
-            if (_isInProc)
-                return; //TEST_SKIPPED;
-
             try
             {
                 LoadXSL("ForwardComp.xsl");
@@ -2886,9 +2142,6 @@ namespace System.Xml.Tests
         [Theory]
         public void TransformGeneric9()
         {
-            if (_isInProc)
-                return; //TEST_SKIPPED;
-
             try
             {
                 LoadXSL("RootNodeAtt.xsl");
@@ -2921,9 +2174,6 @@ namespace System.Xml.Tests
         [Theory]
         public void TransformGeneric11()
         {
-            if (_isInProc)
-                return; //TEST_SKIPPED;
-
             try
             {
                 LoadXSL("Bug369463.xsl");
@@ -3048,7 +2298,6 @@ namespace System.Xml.Tests
         }
 
         //[Variation("document() has absolute URI")]
-        [ActiveIssue(14071)]
         [InlineData()]
         [Theory]
         public void XmlResolver5()
@@ -3060,8 +2309,8 @@ namespace System.Xml.Tests
             // copy file on the local machine
             try
             {
-                string curDir = Directory.GetCurrentDirectory();
-                string testFile = Path.Combine(curDir, "xmlResolver_document_function.xml");
+                string tempPath = Path.GetTempPath();
+                string testFile = Path.Combine(tempPath, "xmlResolver_document_function.xml");
                 if (File.Exists(testFile))
                 {
                     File.SetAttributes(testFile, FileAttributes.Normal);
@@ -3454,29 +2703,6 @@ namespace System.Xml.Tests
             }
             Assert.True(false);
         }
-
-        /*
-        //[Variation("Transform(test.xml, test.xml)")]
-        [InlineData()]
-        [Theory]
-        public void TransformStrStr14()
-        {
-            String szFullFilename = FullFilePath("Bug75295.xml");
-
-            // Copy this file to current directory
-            File.Delete("out.xml");
-            File.Copy(szFullFilename, "out.xml");
-
-            if(LoadXSL("Bug75295.xsl") == TEST_PASS)
-            {
-                xslt.Transform("out.xml", "out.xml");
-
-                if (CheckResult(270.5223692973) == TEST_PASS)
-                    return;
-            }
-            Assert.True(false);
-        }
-        */
     }
 
     /***********************************************************/
@@ -3612,7 +2838,7 @@ namespace System.Xml.Tests
         [InlineData("XmlResolver_Main.xsl", "fruits.xml", "xmlResolver_main.txt", "NullResolver", false, "IXPathNavigable")]
         [InlineData("XmlResolver_Main.xsl", "fruits.xml", "xmlResolver_main.txt", "NullResolver", false, "XmlReader")]
         [Theory]
-        public void ValidCases_ActiveIssue9876(object param0, object param1, object param2, object param3, object param4, object param5)
+        public void ValidCases_ExternalURI(object param0, object param1, object param2, object param3, object param4, object param5)
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
@@ -3882,88 +3108,27 @@ param2 (correct answer is 'local-param2-arg'): local-param2-arg
             _output = output;
         }
 
-        //BinCompat TODO: Add this test back
-        ////[Variation("Bug398968 - Globalization is broken for document() function")]
-        //[InlineData()]
-        //[Theory]
-        //public void RegressionTest1()
-        //{
-        //    // <SQL BU Defect Tracking 410060>
-        //    if (_isInProc)
-        //        return; //TEST_SKIPPED;
-        //    // </SQL BU Defect Tracking 410060>
+        //[Variation("Bug398968 - Globalization is broken for document() function")]
+        [InlineData()]
+        [Theory]
+        public void RegressionTest1()
+        {
+            // <SQL BU Defect Tracking 410060>
+            // </SQL BU Defect Tracking 410060>
 
-        //    string testFile = "Stra\u00DFe.xml";
+            string testFile = Path.Combine("TestFiles", FilePathUtil.GetTestDataPath(), "XsltApiV2", "Stra\u00DFe.xml");
 
-        //    // Create the file.
-        //    using (FileStream fs = File.Open(testFile, FileMode.Open))
-        //    {
-        //        Byte[] info = new UTF8Encoding(true).GetBytes("<PASSED/>");
-        //        fs.Write(info, 0, info.Length);
-        //    }
+            // Create the file.
+            using (FileStream fs = File.Open(testFile, FileMode.Open))
+            {
+                Byte[] info = new UTF8Encoding(true).GetBytes("<PASSED  />");
+                fs.Write(info, 0, info.Length);
+            }
 
-        //    LoadXSL("398968repro.xsl");
-        //    Transform("data.xml");
-        //    return;
-        //}
-
-        //BinCompat TODO: Add this test back
-        ////[Variation("Bug410158 - Debug flag on XslCompiledTransform contaminates XsltSettings")]
-        //[InlineData()]
-        //[Theory]
-        //public void RegressionTest2()
-        //{
-        //    // <SQL BU Defect Tracking 410060>
-        //    // This test uses Reflection, which doenst work inproc
-        //    if (_isInProc)
-        //        return; //TEST_SKIPPED;
-        //    // </SQL BU Defect Tracking 410060>
-
-        //    string stylesheet = "<xsl:stylesheet version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'/>";
-        //    XsltSettings settings = new XsltSettings();
-        //    XmlResolver resolver = new XmlUrlResolver();
-
-        //    int debuggableCnt1 = 0;
-        //    foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
-        //    {
-        //        string asmName = asm.GetName().Name;
-        //        if (asmName.StartsWith("System.Xml.Xsl.CompiledQuery.", StringComparison.Ordinal))
-        //        {
-        //            IEnumerable<Attribute> debuggableAttrs = asm.GetCustomAttributes(typeof(DebuggableAttribute));
-        //            if (debuggableAttrs.Count() > 0 && ((DebuggableAttribute)debuggableAttrs.First()).IsJITTrackingEnabled)
-        //            {
-        //                debuggableCnt1++;
-        //            }
-        //        }
-        //    }
-        //    _output.WriteLine("Number of debuggable XSLT stylesheets loaded (before load): " + debuggableCnt1);
-
-        //    XslCompiledTransform xct1 = new XslCompiledTransform(true);
-        //    xct1.Load(XmlReader.Create(new StringReader(stylesheet)), settings, resolver);
-
-        //    XslCompiledTransform xct2 = new XslCompiledTransform(false);
-        //    xct2.Load(XmlReader.Create(new StringReader(stylesheet)), settings, resolver);
-
-        //    int debuggableCnt2 = 0;
-        //    foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
-        //    {
-        //        string asmName = asm.GetName().Name;
-        //        if (asmName.StartsWith("System.Xml.Xsl.CompiledQuery.", StringComparison.Ordinal))
-        //        {
-        //            IEnumerable<Attribute> debuggableAttrs = asm.GetCustomAttributes(typeof(DebuggableAttribute));
-        //            if (debuggableAttrs.Count() > 0 && ((DebuggableAttribute)debuggableAttrs.First()).IsJITTrackingEnabled)
-        //            {
-        //                debuggableCnt2++;
-        //            }
-        //        }
-        //    }
-        //    _output.WriteLine("Number of debuggable XSLT stylesheets loaded (after load): " + debuggableCnt2);
-
-        //    if (debuggableCnt2 - debuggableCnt1 == 1)
-        //        return;
-        //    else
-        //        Assert.True(false);
-        //}
+            LoadXSL("398968repro.xsl");
+            Transform("data.xml");
+            return;
+        }
 
         //[Variation("Bug412703 - Off-by-one errors for XSLT loading error column")]
         [InlineData()]
@@ -4006,16 +3171,6 @@ param2 (correct answer is 'local-param2-arg'): local-param2-arg
             xslt.Load(FullFilePath("XSLTFilewithscript.xslt"), XsltSettings.Default, new XmlUrlResolver());
             return;
         }
-
-        // TODO: DENY is deprecated
-        ////[Variation("Bug429365 & SRZ070601000889 - XslCompiledTransform.Transform() fails on x64 when caller does not have UnmanagedCode privilege")]
-        //[InlineData()]
-        //public int RegressionTest6()
-        //{
-        //    // Should not throw
-        //    ExecuteTransform();
-        //    return;
-        //}
 
         //[Variation("Bug469781 - Replace shouldn't relax original type 'assertion failure'")]
         [InlineData()]
@@ -4080,20 +3235,6 @@ param2 (correct answer is 'local-param2-arg'): local-param2-arg
 
             Assert.True(false);
         }
-
-        //[SecurityPermission(SecurityAction.Deny, UnmanagedCode = true)]
-        //private void ExecuteTransform()
-        //{
-        //    XslCompiledTransform xslCompiledTransform = new XslCompiledTransform();
-        //    xslCompiledTransform.Load(FullFilePath("xslt_sortnames.xsl"));
-
-        //    MemoryStream ms = new MemoryStream();
-        //    StreamReader stmRead = new StreamReader(ms, true);
-        //    xslCompiledTransform.Transform(FullFilePath("xslt_names.xml"), null, ms);
-        //    ms.Seek(0, new SeekOrigin());
-        //    string foo = stmRead.ReadToEnd();
-        //    _output.WriteLine(foo);
-        //}
     }
 
     internal class MyArrayIterator : XPathNodeIterator

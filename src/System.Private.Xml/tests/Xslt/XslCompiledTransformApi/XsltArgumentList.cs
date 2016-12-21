@@ -4,16 +4,11 @@
 
 using Xunit;
 using Xunit.Abstractions;
-using System;
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Globalization;
 using System.IO;
-using System.Security;
-using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
-using XmlCoreTest.Common;
 
 namespace System.Xml.Tests
 {
@@ -3730,62 +3725,63 @@ namespace System.Xml.Tests
         }
 
         //[Variation(id = 1, Desc = "Call Current without MoveNext")]
-        [ActiveIssue(9873)]
         [InlineData()]
         [Theory]
         public void NodeIter1()
         {
-            if (_isInProc)
-                return; //TEST_SKIPPED;
-
-            XslCompiledTransform xslt = new XslCompiledTransform();
-
-            XsltArgumentList xslArg = new XsltArgumentList();
-            XmlUrlResolver ur = new XmlUrlResolver();
-            Uri uriSource = ur.ResolveUri(null, FullFilePath("sample.xsd"));
-            xslArg.AddParam("sourceUri", String.Empty, uriSource.ToString());
-
-            xslt.Load(FullFilePath("xsd2cs1.xsl"), new XsltSettings(true, true), new XmlUrlResolver());
-
-            XPathDocument doc = new XPathDocument(FullFilePath("sample.xsd"));
-            StringWriter sw = new StringWriter();
-            try
+            var e = Assert.ThrowsAny<XsltException>(() =>
             {
-                xslt.Transform(doc, xslArg, sw);
-                sw.Dispose();
-                _output.WriteLine("No exception is thrown when .Current is called before .MoveNext on XPathNodeIterator");
-                Assert.True(false);
-            }
-            catch (System.InvalidOperationException ex)
-            {
-                _output.WriteLine(ex.ToString());
-                return;
-            }
+                XslCompiledTransform xslt = new XslCompiledTransform();
+
+                XsltArgumentList xslArg = new XsltArgumentList();
+                XmlUrlResolver ur = new XmlUrlResolver();
+                Uri uriSource = ur.ResolveUri(null, FullFilePath("sample.xsd"));
+                xslArg.AddParam("sourceUri", String.Empty, uriSource.ToString());
+
+                xslt.Load(FullFilePath("xsd2cs1.xsl"), new XsltSettings(true, true), new XmlUrlResolver());
+                XPathDocument doc = new XPathDocument(FullFilePath("sample.xsd"));
+                StringWriter sw = new StringWriter();
+                try
+                {
+                    xslt.Transform(doc, xslArg, sw);
+                    sw.Dispose();
+                    _output.WriteLine("No exception is thrown when .Current is called before .MoveNext on XPathNodeIterator");
+                    Assert.True(false);
+                }
+                catch (System.InvalidOperationException ex)
+                {
+                    _output.WriteLine(ex.ToString());
+                    return;
+                }
+            });
+
+            Assert.Equal("Compiling JScript/CSharp scripts is not supported", e.InnerException.Message);
         }
 
         //[Variation(id = 2, Desc = "Call Current after MoveNext")]
-        [ActiveIssue(9873)]
         [InlineData()]
         [Theory]
         public void NodeIter2()
         {
-            if (_isInProc)
-                return; //TEST_SKIPPED;
+            var e = Assert.ThrowsAny<XsltException>(() =>
+            {
+                XslCompiledTransform xslt = new XslCompiledTransform();
 
-            XslCompiledTransform xslt = new XslCompiledTransform();
+                XsltArgumentList xslArg = new XsltArgumentList();
+                XmlUrlResolver ur = new XmlUrlResolver();
+                Uri uriSource = ur.ResolveUri(null, FullFilePath("sample.xsd"));
+                xslArg.AddParam("sourceUri", String.Empty, uriSource.ToString());
 
-            XsltArgumentList xslArg = new XsltArgumentList();
-            XmlUrlResolver ur = new XmlUrlResolver();
-            Uri uriSource = ur.ResolveUri(null, FullFilePath("sample.xsd"));
-            xslArg.AddParam("sourceUri", String.Empty, uriSource.ToString());
+                xslt.Load(FullFilePath("xsd2cs2.xsl"), new XsltSettings(true, true), new XmlUrlResolver());
 
-            xslt.Load(FullFilePath("xsd2cs2.xsl"), new XsltSettings(true, true), new XmlUrlResolver());
+                XPathDocument doc = new XPathDocument(FullFilePath("sample.xsd"));
+                StringWriter sw = new StringWriter();
+                xslt.Transform(doc, xslArg, sw);
+                sw.Dispose();
+                return;
+            });
 
-            XPathDocument doc = new XPathDocument(FullFilePath("sample.xsd"));
-            StringWriter sw = new StringWriter();
-            xslt.Transform(doc, xslArg, sw);
-            sw.Dispose();
-            return;
+            Assert.Equal("Compiling JScript/CSharp scripts is not supported", e.InnerException.Message);
         }
     }
 }

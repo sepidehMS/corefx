@@ -4,10 +4,7 @@
 
 using Xunit;
 using Xunit.Abstractions;
-using System;
-using System.CodeDom.Compiler;
 using System.IO;
-using System.Xml;
 using System.Xml.Xsl;
 
 namespace System.Xml.Tests
@@ -28,9 +25,6 @@ namespace System.Xml.Tests
         [Theory]
         public void TempFiles1()
         {
-            if (_isInProc)
-                return; //Test_SKIPPED;
-
             string childFile = Path.Combine(Directory.GetCurrentDirectory(), "child.xsl");
 
             string parentString = "<?xml version=\"1.0\"?>"

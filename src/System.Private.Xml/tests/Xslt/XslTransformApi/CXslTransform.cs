@@ -4,11 +4,8 @@
 
 using Xunit;
 using Xunit.Abstractions;
-using System;
 using System.Collections;
 using System.IO;
-using System.Security;
-using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 
@@ -455,7 +452,6 @@ namespace System.Xml.Tests
         }
 
         //[Variation("document() has absolute URI")]
-        [ActiveIssue(14071)]
         [InlineData()]
         [Theory(Skip = "When style sheet URI = Intranet zone, XmlSecureResolver does not resolve document function")]
         public void XmlResolver7()
@@ -470,12 +466,13 @@ namespace System.Xml.Tests
 
             try
             {
-                if (!Directory.Exists("c:\\temp"))
+                string tempDir = Path.GetTempPath();
+                if (!Directory.Exists(tempDir))
                 {
-                    Directory.CreateDirectory("c:\\temp");
+                    Directory.CreateDirectory(tempDir);
                 }
                 string xmlFile = FullFilePath("xmlResolver_document_function.xml");
-                File.Copy(xmlFile, @"c:\temp\xmlResolver_document_function.xml", true);
+                File.Copy(xmlFile, Path.Combine(tempDir, "xmlResolver_document_function.xml"), true);
             }
             catch (Exception e)
             {
@@ -2151,7 +2148,6 @@ namespace System.Xml.Tests
         }
 
         //[Variation("document() has absolute URI")]
-        [ActiveIssue(14071)]
         [InlineData()]
         [Theory(Skip = "When style sheet URI = Intranet zone, XmlSecureResolver does not resolve document function")]
         public void XmlResolver5()
@@ -2166,12 +2162,13 @@ namespace System.Xml.Tests
 
             try
             {
-                if (!Directory.Exists("c:\\temp"))
+                string tempDir = Path.GetTempPath();
+                if (!Directory.Exists(tempDir))
                 {
-                    Directory.CreateDirectory("c:\\temp");
+                    Directory.CreateDirectory(tempDir);
                 }
                 string xmlFile = FullFilePath("xmlResolver_document_function.xml");
-                File.Copy(xmlFile, @"c:\temp\xmlResolver_document_function.xml", true);
+                File.Copy(xmlFile, Path.Combine(tempDir, "xmlResolver_document_function.xml"), true);
             }
             catch (Exception e)
             {

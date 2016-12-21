@@ -4,13 +4,11 @@
 
 using Xunit;
 using Xunit.Abstractions;
-using System;
 using System.Collections.Generic;
-//using System.Dynamic;
 using System.IO;
-using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
+using System.Dynamic;
 
 namespace System.Xml.Tests
 {
@@ -73,7 +71,7 @@ namespace System.Xml.Tests
         //[Variation(Desc = "Tuple.XsltArgumentList.AddParam/AddExtensionObject", Param = 1)]
         [InlineData(1)]
         //[Variation(Desc = "DynamicObject.XsltArgumentList.AddParam/AddExtensionObject", Param = 2)]
-        //[InlineData(2)]
+        [InlineData(2)]
         //[Variation(Desc = "Guid.XsltArgumentList.AddParam/AddExtensionObject", Param = 3)]
         [InlineData(3)]
         //[Variation(Desc = "Dictionary.XsltArgumentList.AddParam/AddExtensionObject", Param = 4)]
@@ -87,7 +85,7 @@ namespace System.Xml.Tests
             switch (param)
             {
                 case 1: t = Tuple.Create(1, "Melitta", 7.5); break;
-                //case 2: t = new TestDynamicObject(); break;
+                case 2: t = new TestDynamicObject(); break;
                 case 3: t = new Guid(); break;
                 case 4: t = new Dictionary<string, object>(); break;
             }
@@ -111,13 +109,13 @@ namespace System.Xml.Tests
             return;
         }
 
-        //public class TestDynamicObject : DynamicObject
-        //{
-        //    public dynamic GetDynamicObject()
-        //    {
-        //        return new Dictionary<string, object>();
-        //    }
-        //}
+        public class TestDynamicObject : DynamicObject
+        {
+            public dynamic GetDynamicObject()
+            {
+                return new Dictionary<string, object>();
+            }
+        }
 
         //[Variation("Param name is null")]
         [InlineData()]
@@ -276,29 +274,6 @@ namespace System.Xml.Tests
                 Assert.True(false);
             return;
         }
-
-        /*
-         * This test is no more valid.
-         * MDAC Bug # 88407 fix now allows ANY characters in URI
-        //[Variation("Invalid Namespace URI")]
-        [InlineData()]
-        [Theory]
-        public void GetParam11()
-        {
-            m_xsltArg = new XsltArgumentList();
-
-            try
-            {
-                m_xsltArg.AddParam("myArg1", szInvalid, "Test11");
-            }
-            catch (System.UriFormatException)
-            {
-                return;
-            }
-            _output.WriteLine("Did not throw System.UriFormatException for invalid namespace System.Xml.Tests");
-            Assert.True(false);
-        }
-        */
 
         //[Variation("Different Data Types")]
         [InlineData()]
@@ -613,361 +588,6 @@ namespace System.Xml.Tests
     }
 
     /***********************************************************/
-    /*      XsltArgumentList.GetExtensionObject                */
-    /***********************************************************/
-
-    // TODO: Fix security issue
-    ////[TestCase(Name="XsltArgumentList - GetExtensionObject", Desc="XsltArgumentList.GetExtensionObject")]
-
-    //public class CArgGetExtObj : XsltApiTestCaseBase
-    //{
-    //    //[Variation(Desc="Basic Verification Test",Pri=0)]
-    //    [InlineData()]
-    //    public int GetExtObject1()
-    //    {
-    //        MyObject obj = new MyObject(1);
-    //        m_xsltArg = new XsltArgumentList();
-
-    //        m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-    //        retObj = m_xsltArg.GetExtensionObject(szDefaultNS);
-
-    //        _output.WriteLine("Retrieved value: {0}", ((MyObject)retObj).MyValue());
-    //        if(((MyObject)retObj).MyValue() != obj.MyValue())
-    //        {
-    //            _output.WriteLine("Set and retrieved value appear to be different");
-    //            Assert.True(false);
-    //        }
-
-    //        if((LoadXSL("myObjectDef.xsl") == TEST_PASS) && (Transform_ArgList("fruits.xml") == TEST_PASS) &&
-    //            (CheckResult(430.402026847)== TEST_PASS))
-    //            return;
-    //        else
-    //            Assert.True(false);
-    //    }
-
-    //    //[Variation("Namespace URI = null")]
-    //    [InlineData()]
-    //    public int GetExtObject2()
-    //    {
-    //        m_xsltArg = new XsltArgumentList();
-
-    //        try
-    //        {
-    //            m_xsltArg.GetExtensionObject(null);
-    //        }
-    //        catch(System.ArgumentNullException)
-    //        {
-    //            return;
-    //        }
-    //        _output.WriteLine("ArgumentNullException not thrown for null namespace System.Xml.Tests");
-    //        return;
-    //    }
-
-    //    //[Variation("Namespace URI is empty string")]
-    //    [InlineData()]
-    //    public int GetExtObject3()
-    //    {
-    //        m_xsltArg = new XsltArgumentList();
-
-    //        try
-    //        {
-    //            retObj = m_xsltArg.GetExtensionObject(szEmpty);
-    //        }
-    //        catch(Exception e)
-    //        {
-    //            _output.WriteLine(e.ToString());
-    //            Assert.True(false);
-    //        }
-
-    //        if((LoadXSL("showParam.xsl") == TEST_PASS) && (Transform_ArgList("fruits.xml") == TEST_PASS) &&
-    //            (CheckResult(466.5112789241)== TEST_PASS))
-    //            return;
-    //        else
-    //            Assert.True(false);
-    //    }
-
-    //    //[Variation("Namespace URI non-existent")]
-    //    [InlineData()]
-    //    public int GetExtObject4()
-    //    {
-    //        m_xsltArg = new XsltArgumentList();
-
-    //        retObj = m_xsltArg.GetExtensionObject(szDefaultNS);
-
-    //        if(retObj != null)
-    //        {
-    //            _output.WriteLine("Did not return a NULL value for a non-existent URI");
-    //            Assert.True(false);
-    //        }
-    //        try
-    //        {
-    //            if((LoadXSL("myObjectDef.xsl") == TEST_PASS))
-    //                Transform_ArgList("fruits.xml");
-    //        }
-    //        catch(System.Xml.Xsl.XsltException)
-    //        {
-    //            return;
-    //        }
-    //        _output.WriteLine("Did not throw exception for an invalid transform");
-    //        Assert.True(false);
-    //    }
-
-    //    //[Variation("Very long namespace System.Xml.Tests")]
-    //    [InlineData()]
-    //    public int GetExtObject5()
-    //    {
-    //        m_xsltArg = new XsltArgumentList();
-    //        MyObject obj = new MyObject(5);
-
-    //        m_xsltArg.AddExtensionObject(szLongNS, obj);
-    //        retObj = m_xsltArg.GetExtensionObject(szLongNS);
-
-    //        if(((MyObject)retObj).MyValue() != obj.MyValue())
-    //        {
-    //            _output.WriteLine("Set and retrieved value appear to be different");
-    //            Assert.True(false);
-    //        }
-
-    //        if((LoadXSL("MyObjectLongNS.xsl") == TEST_PASS) && (Transform_ArgList("fruits.xml") == TEST_PASS) &&
-    //            (CheckResult(522.0563223871)== TEST_PASS))
-    //            return;
-    //        else
-    //            Assert.True(false);
-    //    }
-
-    //    /*
-    //     * This test is no more valid.
-    //     * MDAC Bug # 88407 fix now allows ANY characters in URI
-    //    //[Variation("Invalid namespace System.Xml.Tests")]
-    //    [InlineData()]
-    //    public int GetExtObject6()
-    //    {
-    //        m_xsltArg = new XsltArgumentList();
-    //        MyObject obj = new MyObject(6);
-
-    //        try
-    //        {
-    //            m_xsltArg.AddExtensionObject(szInvalid, obj);
-    //        }
-    //        catch (System.UriFormatException)
-    //        {
-    //            return;
-    //        }
-    //        _output.WriteLine("Did not throw System.UriFormatException for invalid namespace System.Xml.Tests");
-    //        Assert.True(false);
-    //    }
-    //    */
-
-    //    //[Variation("Different Data Types")]
-    //    [InlineData()]
-    //    public int GetExtObject7()
-    //    {
-    //        m_xsltArg = new XsltArgumentList();
-    //        String obj = "0.00";
-
-    //        // string
-    //        m_xsltArg.AddExtensionObject("myArg1", obj);
-    //        retObj = m_xsltArg.GetExtensionObject("myArg1");
-    //        _output.WriteLine("Added Value:{0}\nRetrieved Value: {1}", "0.00", retObj);
-    //        if( retObj.ToString() != "0.00")
-    //        {
-    //            _output.WriteLine("Failed to add/get a value for {0} of type {1}", "0.00", "string");
-    //            _output.WriteLine("Retrieved: {0}  ", retObj);
-    //            Assert.True(false);
-    //        }
-
-    //        int i = 8;
-
-    //        m_xsltArg.AddExtensionObject("myArg2", i);
-    //        retObj = m_xsltArg.GetExtensionObject("myArg2");
-    //        _output.WriteLine("Added Value:{0}\nRetrieved Value:{1}", i, retObj);
-    //        if(!i.Equals(retObj))
-    //        {
-    //            _output.WriteLine("Failed to add/get a value for {0} with conversion from int to double", i);
-    //            _output.WriteLine("Retrieved: {0}", retObj.ToString());
-    //            Assert.True(false);
-    //        }
-
-    //        //must also be same instance!!!
-    //        if(i != (int)retObj)
-    //            Assert.True(false);
-
-    //        Boolean bF = (1==0);
-
-    //        m_xsltArg.AddExtensionObject("myArg3", bF);
-    //        retObj = m_xsltArg.GetExtensionObject("myArg3");
-    //        _output.WriteLine("Added Value:{0}\nRetrieved Value: {1}", bF.ToString(), retObj);
-    //        if( !bF.Equals(retObj))
-    //        {
-    //            _output.WriteLine("Failed to add/get a value for {0} of type {1}", bF.ToString(), "boolean");
-    //            _output.WriteLine("Retrieved: {0}  ", retObj);
-    //            Assert.True(false);
-    //        }
-
-    //        Boolean bT = (1==1);
-
-    //        m_xsltArg.AddExtensionObject("myArg4", bT);
-    //        retObj = m_xsltArg.GetExtensionObject("myArg4");
-    //        _output.WriteLine("Added Value:{0}\nRetrieved Value: {1}", bT.ToString(), retObj);
-    //        if( !bT.Equals(retObj))
-    //        {
-    //            _output.WriteLine("Failed to add/get a value for {0} of type {1}", bT.ToString(), "boolean");
-    //            _output.WriteLine("Retrieved: {0}  ", retObj);
-    //            Assert.True(false);
-    //        }
-    //        return;
-    //    }
-
-    //    //[Variation("Case sensitivity")]
-    //    [InlineData()]
-    //    public int GetExtObject8()
-    //    {
-    //        MyObject obj = new MyObject(8);
-    //        m_xsltArg = new XsltArgumentList();
-
-    //        m_xsltArg.AddExtensionObject("urn:my-object", obj);
-
-    //        retObj = m_xsltArg.GetExtensionObject("urn:my-object");
-    //        if(((MyObject)retObj).MyValue() != obj.MyValue())
-    //        {
-    //            _output.WriteLine("Set and retrieved value appear to be different");
-    //            Assert.True(false);
-    //        }
-
-    //        retObj = m_xsltArg.GetExtensionObject("URN:MY-OBJECT");
-    //        if(retObj != null)
-    //        {
-    //            _output.WriteLine("Set and retrieved value appear to be different for URN:MY-OBJECT");
-    //            Assert.True(false);
-    //        }
-
-    //        retObj = m_xsltArg.GetExtensionObject("urn:My-Object");
-    //        if(retObj != null)
-    //        {
-    //            _output.WriteLine("Set and retrieved value appear to be different for urn:My-Object");
-    //            Assert.True(false);
-    //        }
-
-    //        retObj = m_xsltArg.GetExtensionObject("urn-my:object");
-    //        if(retObj != null)
-    //        {
-    //            _output.WriteLine("Set and retrieved value appear to be different for urn-my:object");
-    //            Assert.True(false);
-    //        }
-
-    //        if((LoadXSL("myObjectDef.xsl") == TEST_PASS) && (Transform_ArgList("fruits.xml") == TEST_PASS) &&
-    //            (CheckResult(430.402026847)== TEST_PASS))
-    //            return;
-    //        else
-    //            Assert.True(false);
-    //    }
-
-    //    //[Variation("Whitespace")]
-    //    [InlineData()]
-    //    public int GetExtObject9()
-    //    {
-    //        int i=1;
-    //        m_xsltArg = new XsltArgumentList();
-
-    //        foreach(String str in szWhiteSpace)
-    //        {
-    //            MyObject obj = new MyObject(i);
-
-    //            m_xsltArg.AddExtensionObject(szDefaultNS + str, obj);
-    //            retObj = m_xsltArg.GetExtensionObject(szDefaultNS + str);
-    //            if(((MyObject)retObj).MyValue() != i)
-    //            {
-    //                _output.WriteLine("Error processing {0} test for whitespace arg", i);
-    //                Assert.True(false);
-    //            }
-    //            i++;
-    //        }
-
-    //        try
-    //        {
-    //            if((LoadXSL("myObjectDef.xsl") == TEST_PASS))
-    //                Transform_ArgList("fruits.xml");
-    //        }
-    //        catch(System.Xml.Xsl.XsltException)
-    //        {
-    //            return;
-    //        }
-    //        _output.WriteLine("Did not throw expected exception: System.Xml.Xsl.XsltException");
-    //        Assert.True(false);
-    //    }
-
-    //    //[Variation("Call after object has been removed")]
-    //    [InlineData()]
-    //    public int GetExtObject10()
-    //    {
-    //        MyObject obj = new MyObject(10);
-    //        m_xsltArg = new XsltArgumentList();
-
-    //        m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-    //        m_xsltArg.RemoveExtensionObject(szDefaultNS);
-    //        retObj = m_xsltArg.GetExtensionObject(szDefaultNS);
-
-    //        if(retObj != null)
-    //        {
-    //            _output.WriteLine("Did not retrieve a NULL value for a non-existent object returned");
-    //            Assert.True(false);
-    //        }
-
-    //        try
-    //        {
-    //            if((LoadXSL("myObjectDef.xsl") == TEST_PASS))
-    //                Transform_ArgList("fruits.xml");
-    //        }
-    //        catch(System.Xml.Xsl.XsltException)
-    //        {
-    //            return;
-    //        }
-    //        _output.WriteLine("Did not throw expected exception: System.Xml.Xsl.XsltException");
-    //        Assert.True(false);
-    //    }
-
-    //    //[Variation("Call multiple times")]
-    //    [InlineData()]
-    //    public int GetExtObject11()
-    //    {
-    //        MyObject obj = new MyObject(11);
-    //        m_xsltArg = new XsltArgumentList();
-
-    //        m_xsltArg.AddExtensionObject(szDefaultNS, obj);
-
-    //        for(int i=0; i < 500; i++)
-    //        {
-    //            retObj = m_xsltArg.GetExtensionObject(szDefaultNS);
-    //            if(((MyObject)retObj).MyValue() != obj.MyValue())
-    //            {
-    //                _output.WriteLine("Set and retrieved value appear to be different after {i} tries", i);
-    //                Assert.True(false);
-    //            }
-    //        }
-    //        if((LoadXSL("myObjectDef.xsl") == TEST_PASS) && (Transform_ArgList("fruits.xml") == TEST_PASS) &&
-    //            (CheckResult(430.402026847)== TEST_PASS))
-    //            return;
-    //        else
-    //            Assert.True(false);
-    //    }
-
-    //    //[Variation("Using XSL Namespace")]
-    //    [InlineData()]
-    //    public int GetExtObject12()
-    //    {
-    //        m_xsltArg = new XsltArgumentList();
-
-    //        retObj = m_xsltArg.GetExtensionObject(szDefaultNS);
-    //        if(retObj != null)
-    //        {
-    //            _output.WriteLine("Did not retrieve null value when using namespace {0}", szXslNS);
-    //            Assert.True(false);
-    //        }
-    //        return;
-    //    }
-    //}
-
-    /***********************************************************/
     /*               XsltArgumentList.AddParam                 */
     /***********************************************************/
 
@@ -1182,29 +802,6 @@ namespace System.Xml.Tests
             else
                 Assert.True(false);
         }
-
-        /*
-         * This test is no more valid.
-         * MDAC Bug # 88407 fix now allows ANY characters in URI
-        //[Variation("Invalid Namespace URI")]
-        [InlineData()]
-        [Theory]
-        public void AddParam9()
-        {
-            m_xsltArg = new XsltArgumentList();
-
-            try
-            {
-                m_xsltArg.AddParam("myArg1", szInvalid, "Test1");
-            }
-            catch (System.UriFormatException)
-            {
-                return;
-            }
-            _output.WriteLine("Did not throw System.UriFormatException for invalid namespace System.Xml.Tests");
-            Assert.True(false);
-        }
-        */
 
         //[Variation("Objects as different Data Types")]
         [InlineData()]

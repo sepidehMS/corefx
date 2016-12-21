@@ -4,11 +4,8 @@
 
 using Xunit;
 using Xunit.Abstractions;
-using System;
 using System.IO;
-using System.Net;
 using System.Text;
-using System.Xml;
 using System.Xml.XmlDiff;
 using System.Xml.XPath;
 using System.Xml.Xsl;
@@ -132,7 +129,6 @@ namespace System.Xml.Tests
         public XmlUrlResolver GetDefaultCredResolver()
         {
             XmlUrlResolver myDefaultCredResolver = new XmlUrlResolver();
-            //myDefaultCredResolver.Credentials = CredentialCache.DefaultCredentials;
 
             return myDefaultCredResolver;
         }
@@ -491,97 +487,6 @@ namespace System.Xml.Tests
             }
             return 1;
         }
-
-        // --------------------------------------------------------------------------------------------------------------
-        //  LoadXSL_Resolver_Evidence
-        //  -------------------------------------------------------------------------------------------------------------
-        /*public int LoadXSL_Resolver_Evidence(String _strXslFile, XmlResolver xr, Evidence e)
-        {
-            _strXslFile = FullFilePath(_strXslFile);
-#pragma warning disable 0618
-            xslt = new XslTransform();
-#pragma warning restore 0618
-
-            switch (_nInput)
-            {
-                case InputType.Reader:
-                    switch (_readerType)
-                    {
-                        case ReaderType.XmlTextReader:
-                            XmlTextReader trTemp = new XmlTextReader(_strXslFile);
-                            try
-                            {
-                                _output.WriteLine("Loading style sheet as XmlTextReader {0}", _strXslFile);
-                                xslt.Load(trTemp, xr, e);
-                            }
-                            catch (Exception ex)
-                            {
-                                throw (ex);
-                            }
-                            finally
-                            {
-                                if (trTemp != null)
-                                    trTemp.Dispose();
-                            }
-                            break;
-
-                        case ReaderType.XmlNodeReader:
-                            XmlDocument docTemp = new XmlDocument();
-                            docTemp.Load(_strXslFile);
-                            XmlNodeReader nrTemp = new XmlNodeReader(docTemp);
-                            try
-                            {
-                                _output.WriteLine("Loading style sheet as XmlNodeReader {0}", _strXslFile);
-                                xslt.Load(nrTemp, xr, e);
-                            }
-                            catch (Exception ex)
-                            {
-                                throw (ex);
-                            }
-                            finally
-                            {
-                                if (nrTemp != null)
-                                    nrTemp.Dispose();
-                            }
-                            break;
-
-                        case ReaderType.XmlValidatingReader:
-                        default:
-#pragma warning disable 0618
-                            XmlValidatingReader vrTemp = new XmlValidatingReader(new XmlTextReader(_strXslFile));
-#pragma warning restore 0618
-                            vrTemp.ValidationType = ValidationType.None;
-                            vrTemp.EntityHandling = EntityHandling.ExpandEntities;
-                            try
-                            {
-                                _output.WriteLine("Loading style sheet as XmlValidatingReader {0}", _strXslFile);
-                                xslt.Load(vrTemp, xr, e);
-                            }
-                            catch (Exception ex)
-                            {
-                                throw (ex);
-                            }
-                            finally
-                            {
-                                if (vrTemp != null)
-                                    vrTemp.Dispose();
-                            }
-                            break;
-                    }
-                    break;
-
-                case InputType.Navigator:
-#pragma warning disable 0618
-                    XmlValidatingReader xrLoad = new XmlValidatingReader(new XmlTextReader(_strXslFile));
-#pragma warning restore 0618
-                    XPathDocument xdTemp = new XPathDocument(xrLoad, XmlSpace.Preserve);
-                    xrLoad.Dispose();
-                    _output.WriteLine("Loading style sheet as Navigator {0}", _strXslFile);
-                    xslt.Load(xdTemp.CreateNavigator(), xr, e);
-                    break;
-            }
-            return 1;
-        }*/
 
         //VerifyResult
         public void VerifyResult(string expectedValue)
