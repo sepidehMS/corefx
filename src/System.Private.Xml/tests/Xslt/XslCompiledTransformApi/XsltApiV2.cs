@@ -54,12 +54,7 @@ namespace System.Xml.Tests
         private string _strPath;                           // Path of the data files
 
         private string _httpPath;                          // Http Path of the data files
-        private XslInputType _nInputXsl;                         // reader, url, or navigator
-        private XmlInputType _nInputXml = XmlInputType.Reader;   // reader, url, or navigator
         private bool _fTrace;                            // Should we write out the results of the transform?
-        private OutputType _nOutput;                           // Type of XSL Transform to do
-        private NavType _navType;                           // Data document type
-        private ReaderType _readerType;                        // Reader type
 
         // Other global variables
         protected string _strOutFile = "out.xml";        // File to create when using write transforms
@@ -88,31 +83,6 @@ namespace System.Xml.Tests
             string xslString = doc.OuterXml.Replace("ABSOLUTE_URI", targetFile);
             doc.LoadXml(xslString);
             doc.Save(xslFile);
-        }
-
-        public XslInputType MyXslInputType()
-        {
-            return _nInputXsl;
-        }
-
-        public XmlInputType MyXmlInputType()
-        {
-            return _nInputXml;
-        }
-
-        public OutputType MyOutputType()
-        {
-            return _nOutput;
-        }
-
-        public NavType MyDocType()
-        {
-            return _navType;
-        }
-
-        public ReaderType MyReaderType()
-        {
-            return _readerType;
         }
 
         public OutputType GetOutputType(String s)
@@ -188,21 +158,10 @@ namespace System.Xml.Tests
             }
         }
 
-        public String InitStringValue(String str)
-        {
-            return String.Empty;
-        }
-
         public void Init(object objParam)
         {
-            // Get input and transform type from attribute
-            _nInputXsl = GetXslInputType(String.Empty);
-            _nOutput = GetOutputType(String.Empty);
-
             // Get parameter info from runtime variables passed to LTM
             _fTrace = false;
-            _navType = GetDocType(InitStringValue("doctype"));
-            _readerType = GetReaderType(InitStringValue("readertype"));
 
             //This is a temporary fix to restore the baselines. Refer to Test bug #
             _strPath = Path.Combine("TestFiles", FilePathUtil.GetTestDataPath(), "XsltApiV2");
@@ -299,17 +258,12 @@ namespace System.Xml.Tests
         // --------------------------------------------------------------------------------------------------------------
         //  LoadXSL
         //  -------------------------------------------------------------------------------------------------------------
-        public int LoadXSL(String _strXslFile)
+        public int LoadXSL(string _strXslFile, XslInputType xslInputType, ReaderType readerType)
         {
-            return LoadXSL(_strXslFile, _nInputXsl, new XmlUrlResolver());
+            return LoadXSL(_strXslFile, xslInputType, readerType, new XmlUrlResolver());
         }
 
-        public int LoadXSL(String _strXslFile, XmlResolver xr)
-        {
-            return LoadXSL(_strXslFile, _nInputXsl, xr);
-        }
-
-        public int LoadXSL(String _strXslFile, XslInputType xslInputType, XmlResolver xr)
+        public int LoadXSL(string _strXslFile, XslInputType xslInputType, ReaderType readerType, XmlResolver xr)
         {
             _strXslFile = FullFilePath(_strXslFile);
             xslt = new XslCompiledTransform();
@@ -324,7 +278,7 @@ namespace System.Xml.Tests
                     break;
 
                 case XslInputType.Reader:
-                    switch (_readerType)
+                    switch (readerType)
                     {
                         case ReaderType.XmlTextReader:
                             XmlTextReader trTemp = new XmlTextReader(_strXslFile);
@@ -398,12 +352,12 @@ namespace System.Xml.Tests
         // --------------------------------------------------------------------------------------------------------------
         //  LoadXSL_Resolver
         //  -------------------------------------------------------------------------------------------------------------
-        public int LoadXSL_Resolver(String _strXslFile, XmlResolver xr)
+        public int LoadXSL_Resolver(string _strXslFile, XslInputType xslInputType, ReaderType readerType, XmlResolver xr)
         {
             _strXslFile = FullFilePath(_strXslFile);
             xslt = new XslCompiledTransform();
             XmlReaderSettings xrs = null;
-            switch (_nInputXsl)
+            switch (xslInputType)
             {
                 case XslInputType.URI:
                     _output.WriteLine("Loading style sheet as URI " + _strXslFile);
@@ -411,7 +365,7 @@ namespace System.Xml.Tests
                     break;
 
                 case XslInputType.Reader:
-                    switch (_readerType)
+                    switch (readerType)
                     {
                         case ReaderType.XmlTextReader:
                             XmlTextReader trTemp = new XmlTextReader(_strXslFile);
@@ -567,23 +521,23 @@ namespace System.Xml.Tests
         //  Transform
         //  -------------------------------------------------------------------------------------------------------------
 
-        public int Transform(String szXmlFile)
+        public int Transform(string szXmlFile, OutputType outputType, NavType navType)
         {
             // Default value of errorCase is false
-            return (Transform(szXmlFile, false));
+            return (Transform(szXmlFile, outputType, navType, false));
         }
 
-        public int Transform(String szXmlFile, bool errorCase)
+        public int Transform(String szXmlFile, OutputType outputType, NavType navType, bool errorCase)
         {
             szXmlFile = FullFilePath(szXmlFile);
 
             _output.WriteLine("Loading XML " + szXmlFile);
-            IXPathNavigable xd = LoadXML(szXmlFile, _navType);
+            IXPathNavigable xd = LoadXML(szXmlFile, navType);
 
             _output.WriteLine("Executing transform");
             xrXSLT = null;
             Stream strmTemp = null;
-            switch (_nOutput)
+            switch (outputType)
             {
                 case OutputType.Stream:
                     try
@@ -636,23 +590,23 @@ namespace System.Xml.Tests
         //  Transform_ArgList
         //  -------------------------------------------------------------------------------------------------------------
 
-        public int Transform_ArgList(String szXmlFile)
+        public int Transform_ArgList(string szXmlFile, OutputType outputType, NavType navType)
         {
             // Default value of errorCase is false
-            return (Transform_ArgList(szXmlFile, false));
+            return (Transform_ArgList(szXmlFile, outputType, navType, false));
         }
 
-        public int Transform_ArgList(String szXmlFile, bool errorCase)
+        public int Transform_ArgList(string szXmlFile, OutputType outputType, NavType navType, bool errorCase)
         {
             szXmlFile = FullFilePath(szXmlFile);
 
             _output.WriteLine("Loading XML " + szXmlFile);
-            IXPathNavigable xd = LoadXML(szXmlFile, _navType);
+            IXPathNavigable xd = LoadXML(szXmlFile, navType);
 
             _output.WriteLine("Executing transform");
             xrXSLT = null;
             Stream strmTemp = null;
-            switch (_nOutput)
+            switch (outputType)
             {
                 case OutputType.Stream:
                     try
@@ -705,24 +659,24 @@ namespace System.Xml.Tests
         //  TransformResolver
         //  -------------------------------------------------------------------------------------------------------------
 
-        public int TransformResolver(String szXmlFile, XmlResolver xr)
+        public int TransformResolver(string szXmlFile, OutputType outputType, NavType navType, XmlResolver xr)
         {
             // Default value of errorCase is false
-            return (TransformResolver(szXmlFile, xr, false));
+            return (TransformResolver(szXmlFile, outputType, navType, xr, false));
         }
 
-        public int TransformResolver(String szXmlFile, XmlResolver xr, bool errorCase)
+        public int TransformResolver(string szXmlFile, OutputType outputType, NavType navType, XmlResolver xr, bool errorCase)
         {
             szXmlFile = FullFilePath(szXmlFile);
 
             _output.WriteLine("Loading XML " + szXmlFile);
-            IXPathNavigable xd = LoadXML(szXmlFile, _navType);
+            IXPathNavigable xd = LoadXML(szXmlFile, navType);
 
             _output.WriteLine("Executing transform");
             xrXSLT = null;
             Stream strmTemp = null;
 
-            switch (_nOutput)
+            switch (outputType)
             {
                 case OutputType.Stream:
                     try
@@ -772,12 +726,12 @@ namespace System.Xml.Tests
         // --------------------------------------------------------------------------------------------------------------
         //  CheckResult
         //  -------------------------------------------------------------------------------------------------------------
-        public int CheckResult(double szExpResult)
+        public int CheckResult(double szExpResult, OutputType outputType)
         {
             double checksumActual;
             CXsltChecksum check = new CXsltChecksum(_fTrace, _output);
 
-            if (_nOutput == OutputType.URI)
+            if (outputType == OutputType.URI)
                 checksumActual = check.Calc(xrXSLT);
             else
                 checksumActual = check.Calc(_strOutFile);
@@ -788,41 +742,6 @@ namespace System.Xml.Tests
                 _output.WriteLine("Actual checksum: {0}, Expected: {1}", checksumActual, szExpResult);
             }
             if (szExpResult != checksumActual)
-                return 0;
-
-            return 1;
-        }
-
-        public int CheckResult(string expResult)
-        {
-            double actChecksum, expChecksum;
-            CXsltChecksum check = new CXsltChecksum(_fTrace, _output);
-
-            // Let's make sure we use the same checksum calculating function for
-            // actual and expected so we know we are comparing apples to apples.
-            if (_nOutput == OutputType.URI)
-            {
-                expChecksum = check.Calc(XmlReader.Create(new StringReader(expResult)));
-                actChecksum = check.Calc(xrXSLT);
-            }
-            else
-            {
-                using (StreamWriter sw = new StreamWriter(new FileStream(Path.Combine(Directory.GetCurrentDirectory(), "expectdchecksum.xml"), FileMode.Create, FileAccess.Write)))
-                {
-                    sw.Write(expResult);
-                }
-                expChecksum = check.Calc("expectdchecksum.xml");
-                actChecksum = check.Calc(_strOutFile);
-            }
-
-            if (expChecksum != actChecksum || _fTrace)
-            {
-                _output.WriteLine("Act Xml: {0}", check.Xml);
-                _output.WriteLine("Exp Xml: {0}", expResult);
-                _output.WriteLine("Actual checksum: {0}, Expected: {1}", actChecksum, expChecksum);
-            }
-
-            if (expChecksum != actChecksum)
                 return 0;
 
             return 1;

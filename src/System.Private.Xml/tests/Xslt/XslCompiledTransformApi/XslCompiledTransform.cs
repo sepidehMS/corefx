@@ -502,15 +502,16 @@ namespace System.Xml.Tests
 
             _output = output;
         }
-
         //[Variation(id = 1, Desc = "Set XmlResolver property to null, load style sheet with import/include, should not affect transform")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void XmlResolver1()
+        public void XmlResolver1(XslInputType xslInputType, ReaderType readerType)
         {
             try
             {
-                LoadXSL("XmlResolver_Main.xsl", null);
+                LoadXSL("XmlResolver_Main.xsl", xslInputType, readerType, null);
                 Assert.True(false);
             }
             catch (XsltException e1)
@@ -521,24 +522,26 @@ namespace System.Xml.Tests
             catch (ArgumentNullException e2)
             {
                 _output.WriteLine(e2.Message);
-                if (MyXslInputType() == XslInputType.URI)
+                if (xslInputType == XslInputType.URI)
                     return;
                 else
                 {
-                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + xslInputType + "'");
                     Assert.True(false);
                 }
             }
         }
 
         //[Variation(id = 2, Desc = "Set XmlResolver property to null, load style sheet with document function, should not resolve during load")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void XmlResolver2()
+        public void XmlResolver2(XslInputType xslInputType, ReaderType readerType)
         {
             try
             {
-                LoadXSL("XmlResolver_Main.xsl", null);
+                LoadXSL("XmlResolver_Main.xsl", xslInputType, readerType, null);
                 _output.WriteLine("No exception was thrown");
                 Assert.True(false);
             }
@@ -550,28 +553,36 @@ namespace System.Xml.Tests
             catch (ArgumentNullException e2)
             {
                 _output.WriteLine(e2.Message);
-                if (MyXslInputType() == XslInputType.URI)
+                if (xslInputType == XslInputType.URI)
                     return;
                 else
                 {
-                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + xslInputType + "'");
                     Assert.True(false);
                 }
             }
         }
 
         //[Variation(id = 3, Desc = "Default XmlResolver, load style sheet with document function, should resolve during transform", Pri = 1, Param = "DefaultResolver.txt")]
-        [InlineData("DefaultResolver.txt")]
+        [InlineData("DefaultResolver.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void XmlResolver3(object param)
+        public void XmlResolver3(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
             string Baseline = Path.Combine("baseline", (string)param);
 
-            if (LoadXSL("xmlResolver_document_function.xsl") == 1)
+            if (LoadXSL("xmlResolver_document_function.xsl", xslInputType, readerType) == 1)
             {
-                if (Transform("fruits.xml") == 1)
+                if (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1)
                 {
                     VerifyResult(Baseline, _strOutFile);
                     return;
@@ -586,9 +597,17 @@ namespace System.Xml.Tests
         }
 
         //[Variation(id = 7, Desc = "document() has absolute URI", Pri = 0)]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void XmlResolver7()
+        public void XmlResolver7(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
@@ -615,9 +634,9 @@ namespace System.Xml.Tests
             }
 
             // copy file on the local machine (this is now done with createAPItestfiles.js, see Oasys scenario.)
-            if (LoadXSL("xmlResolver_document_function_absolute_uri.xsl") == 1)
+            if (LoadXSL("xmlResolver_document_function_absolute_uri.xsl", xslInputType, readerType) == 1)
             {
-                if (Transform("fruits.xml") == 1)
+                if (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1)
                 {
                     VerifyResult(expected);
                     return;
@@ -661,13 +680,15 @@ namespace System.Xml.Tests
         }
 
         //[Variation(id = 1, Desc = "Call Load with null value")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadGeneric1()
+        public void LoadGeneric1(XslInputType xslInputType, ReaderType readerType)
         {
             try
             {
-                LoadXSL(null);
+                LoadXSL(null, xslInputType, readerType);
             }
             catch (System.ArgumentException)
             {
@@ -678,21 +699,29 @@ namespace System.Xml.Tests
         }
 
         //[Variation(id = 2, Desc = "Load with valid, then invalid, then valid again")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadGeneric2()
+        public void LoadGeneric2(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 try
                 {
-                    LoadXSL("IDontExist.xsl");
+                    LoadXSL("IDontExist.xsl", xslInputType, readerType);
                 }
                 catch (System.IO.FileNotFoundException)
                 {
                     try
                     {
-                        Transform("fruits.xml");
+                        Transform((string) "fruits.xml", (OutputType) outputType, navType);
                     }
                     catch (System.InvalidOperationException e)
                     {
@@ -710,18 +739,26 @@ namespace System.Xml.Tests
         }
 
         //[Variation(id = 3, Desc = "Load an invalid, then a valid and transform", Param = "showParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadGeneric3(object param)
+        public void LoadGeneric3(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
             try
             {
-                LoadXSL("IDontExist.xsl");
+                LoadXSL("IDontExist.xsl", xslInputType, readerType);
             }
             catch (System.IO.FileNotFoundException)
             {
-                if ((LoadXSL("showParam.xsl") == 1) && (Transform("fruits.xml") == 1))
+                if ((LoadXSL("showParam.xsl", xslInputType, readerType) == 1) && (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1))
                 {
                     VerifyResult(Baseline, _strOutFile);
                     return;
@@ -732,31 +769,39 @@ namespace System.Xml.Tests
         }
 
         //[Variation(id = 4, Desc = "Call several overloaded functions", Param = "showParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadGeneric4(object param)
+        public void LoadGeneric4(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
-            if (MyXslInputType() != XslInputType.Reader)
-                LoadXSL("showParamLongName.xsl", XslInputType.Reader, new XmlUrlResolver());
-            if (MyXslInputType() != XslInputType.URI)
-                LoadXSL("showParamLongName.xsl", XslInputType.URI, new XmlUrlResolver());
-            if (MyXslInputType() != XslInputType.Navigator)
-                LoadXSL("showParamLongName.xsl", XslInputType.Navigator, new XmlUrlResolver());
+            if (xslInputType != XslInputType.Reader)
+                LoadXSL("showParamLongName.xsl", XslInputType.Reader, readerType, new XmlUrlResolver());
+            if (xslInputType != XslInputType.URI)
+                LoadXSL("showParamLongName.xsl", XslInputType.URI, readerType, new XmlUrlResolver());
+            if (xslInputType != XslInputType.Navigator)
+                LoadXSL("showParamLongName.xsl", XslInputType.Navigator, readerType, new XmlUrlResolver());
 
-            if ((LoadXSL("showParam.xsl") == 0) || (Transform("fruits.xml") == 0))
+            if ((LoadXSL("showParam.xsl", xslInputType, readerType) == 0) || (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 0))
                 Assert.True(false);
 
             VerifyResult(Baseline, _strOutFile);
 
-            if (MyXslInputType() != XslInputType.Navigator)
-                LoadXSL("showParamLongName.xsl", XslInputType.Navigator, new XmlUrlResolver());
-            if (MyXslInputType() != XslInputType.URI)
-                LoadXSL("showParamLongName.xsl", XslInputType.URI, new XmlUrlResolver());
-            if (MyXslInputType() != XslInputType.Reader)
-                LoadXSL("showParamLongName.xsl", XslInputType.Reader, new XmlUrlResolver());
+            if (xslInputType != XslInputType.Navigator)
+                LoadXSL("showParamLongName.xsl", XslInputType.Navigator, readerType, new XmlUrlResolver());
+            if (xslInputType != XslInputType.URI)
+                LoadXSL("showParamLongName.xsl", XslInputType.URI, readerType, new XmlUrlResolver());
+            if (xslInputType != XslInputType.Reader)
+                LoadXSL("showParamLongName.xsl", XslInputType.Reader, readerType, new XmlUrlResolver());
 
-            if ((LoadXSL("showParam.xsl") == 1) && (Transform("fruits.xml") == 1))
+            if ((LoadXSL("showParam.xsl", xslInputType, readerType) == 1) && (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
                 return;
@@ -766,20 +811,28 @@ namespace System.Xml.Tests
         }
 
         //[Variation(id = 5, Desc = "Call same overloaded Load() many times then transform", Param = "showParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadGeneric5(object param)
+        public void LoadGeneric5(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
             for (int i = 0; i < 100; i++)
             {
-                if (LoadXSL("showParam.xsl") != 1)
+                if (LoadXSL("showParam.xsl", xslInputType, readerType) != 1)
                 {
                     _output.WriteLine("Failed to load stylesheet showParam.xsl on the {0} attempt", i);
                     Assert.True(false);
                 }
             }
-            if ((LoadXSL("showParam.xsl") == 1) && (Transform("fruits.xml") == 1))
+            if ((LoadXSL("showParam.xsl", xslInputType, readerType) == 1) && (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
                 return;
@@ -789,13 +842,15 @@ namespace System.Xml.Tests
         }
 
         //[Variation(id = 6, Desc = "Call load with non-existing stylesheet")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadGeneric6()
+        public void LoadGeneric6(XslInputType xslInputType, ReaderType readerType)
         {
             try
             {
-                LoadXSL("IDontExist.xsl");
+                LoadXSL("IDontExist.xsl", xslInputType, readerType);
             }
             catch (System.IO.FileNotFoundException)
             {
@@ -806,19 +861,27 @@ namespace System.Xml.Tests
         }
 
         //[Variation(id = 7, Desc = "Verify that style sheet is closed properly after Load - Shared Read Access")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadGeneric7()
+        public void LoadGeneric7(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             FileStream s2;
             string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
 
             // check immediately after load and after transform
-            if (LoadXSL("XmlResolver_Main.xsl") == 1)
+            if (LoadXSL("XmlResolver_Main.xsl", xslInputType, readerType) == 1)
             {
                 s2 = new FileStream(FullFilePath("XmlResolver_Main.xsl"), FileMode.Open, FileAccess.Read, FileShare.Read);
                 s2.Dispose();
-                if (Transform("fruits.xml") == 1)
+                if (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1)
                 {
                     VerifyResult(expected);
                     s2 = new FileStream(FullFilePath("XmlResolver_Main.xsl"), FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -830,19 +893,27 @@ namespace System.Xml.Tests
         }
 
         //[Variation(id = 9, Desc = "Verify that included files are closed properly after Load - Read Access")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadGeneric9()
+        public void LoadGeneric9(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             FileStream s2;
             string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
 
             // check immediately after load and after transform
-            if (LoadXSL("XmlResolver_Main.xsl") == 1)
+            if (LoadXSL("XmlResolver_Main.xsl", xslInputType, readerType) == 1)
             {
                 s2 = new FileStream(FullFilePath("XmlResolver_Sub.xsl"), FileMode.Open, FileAccess.Read);
                 s2.Dispose();
-                if (Transform("fruits.xml") == 1)
+                if (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1)
                 {
                     VerifyResult(expected);
                     s2 = new FileStream(FullFilePath("XmlResolver_Include.xsl"), FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -855,11 +926,19 @@ namespace System.Xml.Tests
         }
 
         //[Variation(id = 11, Desc = "Load stylesheet with entity reference: Bug #68450 ")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadGeneric11()
+        public void LoadGeneric11(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
-            if (MyDocType().ToString() == "DataDocument")
+            if (navType.ToString() == "DataDocument")
                 // Skip the test for DataDocument
                 return;
             else
@@ -868,12 +947,12 @@ namespace System.Xml.Tests
 			Name
 		</Book>";
 
-                if (LoadXSL("books_entity_ref.xsl", XslInputType.Reader, new XmlUrlResolver()) != 1)
+                if (LoadXSL("books_entity_ref.xsl", XslInputType.Reader, readerType, new XmlUrlResolver()) != 1)
                 {
                     _output.WriteLine("Failed to load stylesheet books_entity_ref.xsl");
                     Assert.True(false);
                 }
-                if ((LoadXSL("books_entity_ref.xsl") == 1) && (Transform("books_entity_ref.xml") == 1))
+                if ((LoadXSL("books_entity_ref.xsl", xslInputType, readerType) == 1) && (Transform((string) "books_entity_ref.xml", (OutputType) outputType, navType) == 1))
                 {
                     VerifyResult(expected);
                     return;
@@ -883,15 +962,17 @@ namespace System.Xml.Tests
         }
 
         //[Variation(id = 12, Desc = "Load with invalid stylesheet and verify that file is closed properly")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadGeneric12()
+        public void LoadGeneric12(XslInputType xslInputType, ReaderType readerType)
         {
             Stream strmTemp;
 
             try
             {
-                int i = LoadXSL("xslt_error.xsl");
+                int i = LoadXSL("xslt_error.xsl", xslInputType, readerType);
             }
             catch (XsltException)
             {
@@ -938,13 +1019,15 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Call Load with null source value and null resolver")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadGeneric1()
+        public void LoadGeneric1(XslInputType xslInputType, ReaderType readerType)
         {
             try
             {
-                LoadXSL_Resolver(null, null);
+                LoadXSL_Resolver(null, xslInputType, readerType, null);
             }
             catch (System.ArgumentNullException e)
             {
@@ -956,13 +1039,15 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Call Load with null source value and valid resolver")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadGeneric2()
+        public void LoadGeneric2(XslInputType xslInputType, ReaderType readerType)
         {
             try
             {
-                LoadXSL_Resolver(null, new XmlUrlResolver());
+                LoadXSL_Resolver(null, xslInputType, readerType, new XmlUrlResolver());
             }
             catch (System.ArgumentNullException e)
             {
@@ -974,39 +1059,49 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Call Load with null XmlResolver, style sheet does not have include/import, URI should throw ArgumentNullException and the rest shouldn't error", Param = "showParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadGeneric3(object param)
+        public void LoadGeneric3(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
             try
             {
-                LoadXSL_Resolver("showParam.xsl", null);
-                Transform("fruits.xml");
+                LoadXSL_Resolver("showParam.xsl", xslInputType, readerType, null);
+                Transform((string) "fruits.xml", (OutputType) outputType, navType);
                 VerifyResult(Baseline, _strOutFile);
                 return;
             }
             catch (ArgumentNullException e)
             {
                 _output.WriteLine(e.ToString());
-                if (MyXslInputType() == XslInputType.URI)
+                if (xslInputType == XslInputType.URI)
                     return;
                 else
                 {
-                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + xslInputType + "'");
                     Assert.True(false);
                 }
             }
         }
 
         //[Variation("Call Load with null XmlResolver and stylesheet has import/include, URI should throw ArgumentNullException, rest throw XsltException")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadGeneric4()
+        public void LoadGeneric4(XslInputType xslInputType, ReaderType readerType)
         {
             try
             {
-                LoadXSL_Resolver("XmlResolver_Main.xsl", null);
+                LoadXSL_Resolver("XmlResolver_Main.xsl", xslInputType, readerType, null);
                 _output.WriteLine("No exception was thrown when a null resolver is passed");
                 Assert.True(false);
             }
@@ -1018,26 +1113,28 @@ namespace System.Xml.Tests
             catch (ArgumentNullException e2)
             {
                 _output.WriteLine(e2.Message);
-                if (MyXslInputType() == XslInputType.URI)
+                if (xslInputType == XslInputType.URI)
                     return;
                 else
                 {
-                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + xslInputType + "'");
                     Assert.True(false);
                 }
             }
         }
 
         //[Variation("Call Load with null custom resolver and style sheet has import/include, should throw Exception")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadGeneric5()
+        public void LoadGeneric5(XslInputType xslInputType, ReaderType readerType)
         {
             CustomNullResolver myResolver = new CustomNullResolver(_output);
 
             try
             {
-                LoadXSL_Resolver("XmlResolver_Main.xsl", myResolver);
+                LoadXSL_Resolver("XmlResolver_Main.xsl", xslInputType, readerType, myResolver);
                 _output.WriteLine("No exception is thrown");
                 Assert.True(false);
             }
@@ -1049,69 +1146,85 @@ namespace System.Xml.Tests
             catch (ArgumentNullException e2)
             {
                 _output.WriteLine(e2.Message);
-                if (MyXslInputType() == XslInputType.URI)
+                if (xslInputType == XslInputType.URI)
                     return;
                 else
                 {
-                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + xslInputType + "'");
                     Assert.True(false);
                 }
             }
             catch (XmlException e3)
             {
                 _output.WriteLine(e3.Message);
-                if (MyXslInputType() == XslInputType.URI)
+                if (xslInputType == XslInputType.URI)
                     return;
                 else
                 {
-                    _output.WriteLine("XmlException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                    _output.WriteLine("XmlException is not supposed to be thrown for the input type '" + xslInputType + "'");
                     Assert.True(false);
                 }
             }
         }
 
         //[Variation("Call Load with null custom resolver and style sheet has no import/include, should error for URI only", Param = "ShowParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadGeneric6(object param)
+        public void LoadGeneric6(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
             CustomNullResolver myResolver = new CustomNullResolver(_output);
             try
             {
-                LoadXSL_Resolver("showParam.xsl", myResolver);
-                Transform("fruits.xml");
+                LoadXSL_Resolver("showParam.xsl", xslInputType, readerType, myResolver);
+                Transform((string) "fruits.xml", (OutputType) outputType, navType);
                 VerifyResult(Baseline, _strOutFile);
                 return;
             }
             catch (ArgumentNullException e)
             {
                 _output.WriteLine(e.ToString());
-                if (MyXslInputType() == XslInputType.URI)
+                if (xslInputType == XslInputType.URI)
                     return;
                 else
                 {
-                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + xslInputType + "'");
                     Assert.True(false);
                 }
             }
             catch (XsltException e3)
             {
                 _output.WriteLine(e3.Message);
-                if (MyXslInputType() == XslInputType.URI)
+                if (xslInputType == XslInputType.URI)
                     return;
                 else
                 {
-                    _output.WriteLine("XmlException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                    _output.WriteLine("XmlException is not supposed to be thrown for the input type '" + xslInputType + "'");
                     Assert.True(false);
                 }
             }
         }
 
         //[Variation("Style sheet has import/include, call Load first with custom null resolver and then default resolver, should not fail", Param = "XmlResolverTestMain.txt")]
-        [InlineData("XmlResolverTestMain.txt")]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadGeneric7(object param)
+        public void LoadGeneric7(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
 
@@ -1120,7 +1233,7 @@ namespace System.Xml.Tests
 
             try
             {
-                LoadXSL_Resolver("XmlResolver_Main.xsl", myResolver);
+                LoadXSL_Resolver("XmlResolver_Main.xsl", xslInputType, readerType, myResolver);
             }
             //For input types != URI
             catch (System.Xml.Xsl.XsltException e1)
@@ -1136,9 +1249,9 @@ namespace System.Xml.Tests
                     CheckExpectedError(e1, "System.Xml", "Xslt_CannotLoadStylesheet", new string[] { new Uri(Uri.UriSchemeFile + Uri.SchemeDelimiter + Path.GetFullPath(FullFilePath("XmlResolver_Main.xsl"))).ToString(), "null" });
                 }
 
-                if (LoadXSL("XmlResolver_Main.xsl") == 1)
+                if (LoadXSL("XmlResolver_Main.xsl", xslInputType, readerType) == 1)
                 {
-                    if (Transform("fruits.xml") == 1)
+                    if (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1)
                     {
                         VerifyResult(expected);
                         return;
@@ -1165,9 +1278,9 @@ namespace System.Xml.Tests
                     CheckExpectedError(e2, "System.Xml", "Xslt_CannotLoadStylesheet", new string[] { new Uri(Uri.UriSchemeFile + Uri.SchemeDelimiter + Path.GetFullPath(FullFilePath("XmlResolver_Main.xsl"))).ToString(), "null" });
                 }
 
-                if (LoadXSL("XmlResolver_Main.xsl") == 1)
+                if (LoadXSL("XmlResolver_Main.xsl", xslInputType, readerType) == 1)
                 {
-                    if (Transform("fruits.xml") == 1)
+                    if (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1)
                     {
                         VerifyResult(Baseline, _strOutFile);
                         return;
@@ -1184,11 +1297,11 @@ namespace System.Xml.Tests
             catch (XmlException e3)
             {
                 _output.WriteLine(e3.Message);
-                if (MyXslInputType() == XslInputType.URI)
+                if (xslInputType == XslInputType.URI)
                     return;
                 else
                 {
-                    _output.WriteLine("XmlException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                    _output.WriteLine("XmlException is not supposed to be thrown for the input type '" + xslInputType + "'");
                     Assert.True(false);
                 }
             }
@@ -1197,18 +1310,26 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Style sheet has import/include, call Load first with default resolver and then with custom null resolver, should fail", Param = "XmlResolverTestMain.txt")]
-        [InlineData("XmlResolverTestMain.txt")]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadGeneric8(object param)
+        public void LoadGeneric8(object param, XslInputType xslInputType, ReaderType readerType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
             CustomNullResolver myResolver = new CustomNullResolver(_output);
 
-            if ((LoadXSL("XmlResolver_Main.xsl") == 1))
+            if ((LoadXSL("XmlResolver_Main.xsl", xslInputType, readerType) == 1))
             {
                 try
                 {
-                    LoadXSL_Resolver("XmlResolver_Main.xsl", myResolver);
+                    LoadXSL_Resolver("XmlResolver_Main.xsl", xslInputType, readerType, myResolver);
                 }
                 catch (System.Xml.Xsl.XsltException e1)
                 {
@@ -1229,22 +1350,22 @@ namespace System.Xml.Tests
                 catch (ArgumentNullException e2)
                 {
                     _output.WriteLine(e2.Message);
-                    if (MyXslInputType() == XslInputType.URI)
+                    if (xslInputType == XslInputType.URI)
                         return;
                     else
                     {
-                        _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                        _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + xslInputType + "'");
                         Assert.True(false);
                     }
                 }
                 catch (XmlException e3)
                 {
                     _output.WriteLine(e3.Message);
-                    if (MyXslInputType() == XslInputType.URI)
+                    if (xslInputType == XslInputType.URI)
                         return;
                     else
                     {
-                        _output.WriteLine("XmlException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                        _output.WriteLine("XmlException is not supposed to be thrown for the input type '" + xslInputType + "'");
                         Assert.True(false);
                     }
                 }
@@ -1256,15 +1377,23 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Load with resolver with credentials, then load XSL that does not need cred.")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadGeneric9()
+        public void LoadGeneric9(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
 
-            if ((LoadXSL_Resolver("XmlResolver_Main.xsl", GetDefaultCredResolver()) == 1))
+            if ((LoadXSL_Resolver("XmlResolver_Main.xsl", xslInputType, readerType, GetDefaultCredResolver()) == 1))
             {
-                if ((LoadXSL("XmlResolver_Main.xsl") == 1) && (Transform("fruits.xml") == 1))
+                if ((LoadXSL("XmlResolver_Main.xsl", xslInputType, readerType) == 1) && (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1))
                 {
                     VerifyResult(expected);
                     return;
@@ -1279,13 +1408,15 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Call Load with null Resolver, file does not exist")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadGeneric11()
+        public void LoadGeneric11(XslInputType xslInputType, ReaderType readerType)
         {
             try
             {
-                LoadXSL_Resolver("IDontExist.xsl", null);
+                LoadXSL_Resolver("IDontExist.xsl", xslInputType, readerType, null);
                 _output.WriteLine("No exception was thrown");
                 Assert.True(false);
             }
@@ -1297,11 +1428,11 @@ namespace System.Xml.Tests
             catch (ArgumentNullException e2)
             {
                 _output.WriteLine(e2.Message);
-                if (MyXslInputType() == XslInputType.URI)
+                if (xslInputType == XslInputType.URI)
                     return;
                 else
                 {
-                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + xslInputType + "'");
                     Assert.True(false);
                 }
             }
@@ -1325,15 +1456,17 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Basic check for usage of credentials on resolver, load XSL that needs cred. with correct resolver", Param = "XmlResolverTestMain.txt")]
-        [InlineData("XmlResolverTestMain.txt")]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("XmlResolverTestMain.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadUrlResolver1(object param)
+        public void LoadUrlResolver1(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             // XsltResolverTestMain.xsl is placed in IIS virtual directory
             // which requires integrated Windows NT authentication
             string Baseline = Path.Combine("baseline", (string)param);
-            if ((LoadXSL_Resolver(Path.Combine("XmlResolver", "XmlResolverTestMain.xsl"), GetDefaultCredResolver()) == 1) &&
-                (Transform("fruits.xml") == 1))
+            if ((LoadXSL_Resolver(Path.Combine("XmlResolver", "XmlResolverTestMain.xsl"), xslInputType, readerType, GetDefaultCredResolver()) == 1) &&
+                (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
                 return;
@@ -1343,13 +1476,13 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Load XSL that needs cred. with null resolver, should fail", Param = "XmlResolverTestMain.txt")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadUrlResolver2()
+        public void LoadUrlResolver2(XslInputType xslInputType, ReaderType readerType)
         {
             try
             {
-                LoadXSL_Resolver(Path.Combine("XmlResolver", "XmlResolverTestMain.xsl"), null);
+                LoadXSL_Resolver(Path.Combine("XmlResolver", "XmlResolverTestMain.xsl"), xslInputType, readerType, null);
             }
             catch (XsltException e)
             {
@@ -1361,13 +1494,13 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Call Load with null source value")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadUrlResolver3()
+        public void LoadUrlResolver3(XslInputType xslInputType, ReaderType readerType)
         {
             try
             {
-                LoadXSL_Resolver(null, new XmlUrlResolver());
+                LoadXSL_Resolver(null, xslInputType, readerType, new XmlUrlResolver());
             }
             catch (ArgumentNullException e)
             {
@@ -1393,20 +1526,20 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Call Load with an invalid uri")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadUrl1()
+        public void LoadUrl1(XslInputType xslInputType, ReaderType readerType)
         {
             try
             {
-                LoadXSL("IDontExist.xsl", XslInputType.URI, new XmlUrlResolver());
+                LoadXSL("IDontExist.xsl", XslInputType.URI, readerType, new XmlUrlResolver());
                 _output.WriteLine("No exception was thrown");
                 Assert.True(false);
             }
             catch (FileNotFoundException e1)
             {
                 _output.WriteLine(e1.Message);
-                if (MyXslInputType() == XslInputType.URI)
+                if (xslInputType == XslInputType.URI)
                     return;
                 else
                 {
@@ -1417,24 +1550,24 @@ namespace System.Xml.Tests
             catch (ArgumentNullException e2)
             {
                 _output.WriteLine(e2.Message);
-                if (MyXslInputType() == XslInputType.URI)
+                if (xslInputType == XslInputType.URI)
                     return;
                 else
                 {
-                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + MyXslInputType() + "'");
+                    _output.WriteLine("ArgumentNullException is not supposed to be thrown for the input type '" + xslInputType + "'");
                     Assert.True(false);
                 }
             }
         }
 
         //[Variation("Load file with empty string")]
-        [InlineData()]
+        [InlineData(ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadUrl2()
+        public void LoadUrl2(ReaderType readerType)
         {
             try
             {
-                LoadXSL(szEmpty, XslInputType.URI, new XmlUrlResolver());
+                LoadXSL(szEmpty, XslInputType.URI, readerType, new XmlUrlResolver());
             }
             catch (System.ArgumentException)
             {
@@ -1445,13 +1578,13 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Load with \".\"")]
-        [InlineData()]
+        [InlineData(ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadUrl3()
+        public void LoadUrl3(ReaderType readerType)
         {
             try
             {
-                LoadXSL(".", XslInputType.URI, new XmlUrlResolver());
+                LoadXSL(".", XslInputType.URI, readerType, new XmlUrlResolver());
             }
             catch (System.UnauthorizedAccessException)
             {
@@ -1462,13 +1595,13 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Load with \"..\"")]
-        [InlineData()]
+        [InlineData(ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadUrl()
+        public void LoadUrl(ReaderType readerType)
         {
             try
             {
-                LoadXSL("..", XslInputType.URI, new XmlUrlResolver());
+                LoadXSL("..", XslInputType.URI, readerType, new XmlUrlResolver());
             }
             catch (System.UnauthorizedAccessException)
             {
@@ -1480,13 +1613,13 @@ namespace System.Xml.Tests
 
         //[Variation("Load with \"\\\\\"")]
         [PlatformSpecific(TestPlatforms.Windows)] //Not an invalid path on Unix
-        [InlineData()]
+        [InlineData(ReaderType.XmlValidatingReader)]
         [Theory]
-        public void LoadUrl5()
+        public void LoadUrl5(ReaderType readerType)
         {
             try
             {
-                LoadXSL("\\\\", XslInputType.URI, new XmlUrlResolver());
+                LoadXSL("\\\\", XslInputType.URI, readerType, new XmlUrlResolver());
             }
             catch (System.ArgumentException)
             {
@@ -1511,9 +1644,9 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Basic Verification Test", Param = "showParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadNavigator1(object param)
+        public void LoadNavigator1(object param, OutputType outputType, NavType navType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
             xslt = new XslCompiledTransform();
@@ -1527,7 +1660,7 @@ namespace System.Xml.Tests
             xrLoad.Dispose();
             xslt.Load(xdTemp);
 
-            if (Transform("fruits.xml") == 1)
+            if (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1)
             {
                 VerifyResult(Baseline, _strOutFile);
                 return;
@@ -1536,9 +1669,9 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Create Navigator and navigate away from root", Param = "showParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadNavigator2(object param)
+        public void LoadNavigator2(object param, OutputType outputType, NavType navType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
             xslt = new XslCompiledTransform();
@@ -1550,7 +1683,7 @@ namespace System.Xml.Tests
             xP.MoveToNext();
             xslt.Load(xP);
 
-            if (Transform("fruits.xml") == 1)
+            if (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1)
             {
                 VerifyResult(Baseline, _strOutFile);
                 return;
@@ -1559,9 +1692,9 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Basic check for usage of credentials on resolver, load XSL that needs cred. with correct resolver", Param = "XmlResolverTestMain.txt")]
-        [InlineData("XmlResolverTestMain.txt")]
+        [InlineData("XmlResolverTestMain.txt", OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void LoadNavigator3(object param)
+        public void LoadNavigator3(object param, OutputType outputType, NavType navType)
         {
             xslt = new XslCompiledTransform();
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1571,7 +1704,7 @@ namespace System.Xml.Tests
             XPathNavigator xP = ((IXPathNavigable)xdTemp).CreateNavigator();
 
             xslt.Load(xP, XsltSettings.TrustedXslt, GetDefaultCredResolver());
-            if (Transform("fruits.xml") == 1)
+            if (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1)
             {
                 VerifyResult(Baseline, _strOutFile);
                 return;
@@ -1620,9 +1753,9 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Basic Verification Test", Param = "showParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", OutputType.Stream, NavType.XPathDocument)]
         [Theory]
-        public void LoadXmlReader1(object param)
+        public void LoadXmlReader1(object param, OutputType outputType, NavType navType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
             Boolean fTEST_FAIL = false;
@@ -1649,7 +1782,7 @@ namespace System.Xml.Tests
             }
             if (fTEST_FAIL)
                 Assert.True(false);
-            if (Transform("fruits.xml") == 1)
+            if (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1)
             {
                 VerifyResult(Baseline, _strOutFile);
                 return;
@@ -1811,9 +1944,9 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Basic check for usage of credentials on resolver, load XSL that needs cred. with correct resolver", Param = "XmlResolverTestMain.txt")]
-        [InlineData("XmlResolverTestMain.txt")]
+        [InlineData("XmlResolverTestMain.txt", OutputType.Stream, NavType.XPathDocument)]
         [Theory]
-        public void LoadXmlReader7(object param)
+        public void LoadXmlReader7(object param, OutputType outputType, NavType navType)
         {
             xslt = new XslCompiledTransform();
             string Baseline = Path.Combine("baseline", (string)param);
@@ -1822,7 +1955,7 @@ namespace System.Xml.Tests
             xslt.Load(xrLoad, XsltSettings.TrustedXslt, GetDefaultCredResolver());
             xrLoad.Dispose();
 
-            if (Transform("fruits.xml") == 1)
+            if (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1)
             {
                 VerifyResult(Baseline, _strOutFile);
                 return;
@@ -2015,12 +2148,20 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Basic Verification Test", Param = "showParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void TransformGeneric1(object param)
+        public void TransformGeneric1(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
-            if ((LoadXSL("showParam.xsl") == 1) && (Transform("fruits.xml") == 1))
+            if ((LoadXSL("showParam.xsl", xslInputType, readerType) == 1) && (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1))
             {
                 VerifyResult(Baseline, _strOutFile);
                 return;
@@ -2030,14 +2171,22 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Load and Transform multiple times", Param = "showParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void TransformGeneric2(object param)
+        public void TransformGeneric2(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
             for (int i = 0; i < 5; i++)
             {
-                if ((LoadXSL("showParam.xsl") != 1) || (Transform("fruits.xml") != 1))
+                if ((LoadXSL("showParam.xsl", xslInputType, readerType) != 1) || (Transform((string) "fruits.xml", (OutputType) outputType, navType) != 1))
                     Assert.True(false);
 
                 VerifyResult(Baseline, _strOutFile);
@@ -2046,16 +2195,24 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Load once, Transform many times", Param = "showParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void TransformGeneric3(object param)
+        public void TransformGeneric3(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 for (int i = 0; i < 100; i++)
                 {
-                    if (Transform("fruits.xml") != 1)
+                    if (Transform((string) "fruits.xml", (OutputType) outputType, navType) != 1)
                     {
                         _output.WriteLine("Test failed to transform after {0} iterations", i);
                         Assert.True(false);
@@ -2068,14 +2225,16 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Call Transform without loading")]
-        [InlineData()]
+        [InlineData(OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void TransformGeneric4()
+        public void TransformGeneric4(OutputType outputType, NavType navType)
         {
             xslt = new XslCompiledTransform();
             try
             {
-                Transform("fruits.xml");
+                Transform((string) "fruits.xml", (OutputType) outputType, navType);
             }
             catch (System.InvalidOperationException e)
             {
@@ -2087,13 +2246,21 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Closing XSL and XML files used in transform, Read access")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void TransformGeneric5()
+        public void TransformGeneric5(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             FileStream s2;
 
-            if ((LoadXSL("showParam.xsl") == 1) && (Transform("fruits.xml") == 1))
+            if ((LoadXSL("showParam.xsl", xslInputType, readerType) == 1) && (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1))
             {
                 s2 = new FileStream(FullFilePath("showParam.xsl"), FileMode.Open, FileAccess.Read);
                 s2.Dispose();
@@ -2108,14 +2275,22 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Bug20003707 - InvalidProgramException for 2.0 stylesheets in forwards-compatible mode")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void TransformGeneric7()
+        public void TransformGeneric7(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             try
             {
-                LoadXSL("ForwardComp.xsl");
-                Transform("data.xml");
+                LoadXSL("ForwardComp.xsl", xslInputType, readerType);
+                Transform((string) "data.xml", (OutputType) outputType, navType);
             }
             catch (XsltException e)
             {
@@ -2138,14 +2313,22 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Bug378293 - Incorrect error message when an attribute is added to a root node")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void TransformGeneric9()
+        public void TransformGeneric9(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             try
             {
-                LoadXSL("RootNodeAtt.xsl");
-                Transform("data.xml");
+                LoadXSL("RootNodeAtt.xsl", xslInputType, readerType);
+                Transform((string) "data.xml", (OutputType) outputType, navType);
             }
             catch (XsltException e)
             {
@@ -2170,14 +2353,22 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Bug369463 - Invalid XPath exception in forward compatibility mode should render lineNumber linePosition")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void TransformGeneric11()
+        public void TransformGeneric11(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             try
             {
-                LoadXSL("Bug369463.xsl");
-                Transform("data.xml");
+                LoadXSL("Bug369463.xsl", xslInputType, readerType);
+                Transform((string) "data.xml", (OutputType) outputType, navType);
             }
             catch (XsltException e)
             {
@@ -2217,17 +2408,25 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Pass null XmlResolver, load style sheet with import/include, should not affect transform")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void XmlResolver1()
+        public void XmlResolver1(XslInputType xslInputType , ReaderType readerType, OutputType outputType, NavType navType)
         {
             string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><result><fruit>Apple</fruit><fruit>orange</fruit></result>";
 
             try
             {
-                if (LoadXSL("XmlResolver_Main.xsl") == 1)
+                if (LoadXSL("XmlResolver_Main.xsl", xslInputType, readerType) == 1)
                 {
-                    if (TransformResolver("fruits.xml", null) == 1)
+                    if (TransformResolver("fruits.xml", outputType, navType, null) == 1)
                     {
                         VerifyResult(expected);
                         return;
@@ -2245,9 +2444,17 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Pass null XmlResolver, load style sheet with document function, should not resolve during transform", Param = "xmlResolver_document_function.txt")]
-        [InlineData("xmlResolver_document_function.txt")]
+        [InlineData("xmlResolver_document_function.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("xmlResolver_document_function.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("xmlResolver_document_function.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("xmlResolver_document_function.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("xmlResolver_document_function.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("xmlResolver_document_function.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("xmlResolver_document_function.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("xmlResolver_document_function.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("xmlResolver_document_function.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void XmlResolver2(object param)
+        public void XmlResolver2(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
@@ -2255,9 +2462,9 @@ namespace System.Xml.Tests
             // <xsl:for-each select="document('xmlResolver_document_function.xml')//elem">
             string Baseline = Path.Combine("baseline", (string)param);
 
-            if (LoadXSL("xmlResolver_document_function.xsl") == 1)
+            if (LoadXSL("xmlResolver_document_function.xsl", xslInputType, readerType) == 1)
             {
-                if (TransformResolver("fruits.xml", null) == 1)
+                if (TransformResolver("fruits.xml", outputType, navType, null) == 1)
                 {
                     VerifyResult(Baseline, _strOutFile);
                     return;
@@ -2272,18 +2479,26 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Default XmlResolver, load style sheet with document function, should resolve during transform", Param = "DefaultResolver.txt")]
-        [InlineData("DefaultResolver.txt")]
+        [InlineData("DefaultResolver.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData("DefaultResolver.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void XmlResolver3(object param)
+        public void XmlResolver3(object param, XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
             // "xmlResolver_document_function.xsl" contains
             // <xsl:for-each select="document('xmlResolver_document_function.xml')//elem">
             string Baseline = Path.Combine("baseline", (string)param);
-            if (LoadXSL("xmlResolver_document_function.xsl") == 1)
+            if (LoadXSL("xmlResolver_document_function.xsl", xslInputType, readerType) == 1)
             {
-                if (Transform("fruits.xml") == 1)
+                if (Transform((string) "fruits.xml", (OutputType) outputType, navType) == 1)
                 {
                     VerifyResult(Baseline, _strOutFile);
                     return;
@@ -2298,9 +2513,17 @@ namespace System.Xml.Tests
         }
 
         //[Variation("document() has absolute URI")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void XmlResolver5()
+        public void XmlResolver5(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
@@ -2326,9 +2549,9 @@ namespace System.Xml.Tests
                 return; //TEST_SKIPPED;
             }
 
-            if (LoadXSL("xmlResolver_document_function_absolute_uri.xsl") == 1)
+            if (LoadXSL("xmlResolver_document_function_absolute_uri.xsl", xslInputType, readerType) == 1)
             {
-                if (TransformResolver("fruits.xml", new XmlUrlResolver()) == 1)
+                if (TransformResolver("fruits.xml", outputType, navType, new XmlUrlResolver()) == 1)
                 {
                     VerifyResult(expected);
                     return;
@@ -2347,13 +2570,21 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Pass null resolver but stylesheet doesn't have any include/imports")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.Writer, NavType.XPathDocument)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void XmlResolver7()
+        public void XmlResolver7(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
-            LoadXSL("Bug382198.xsl");
+            LoadXSL("Bug382198.xsl", xslInputType, readerType);
             // Pass null
-            TransformResolver("fruits.xml", null);
+            TransformResolver("fruits.xml", outputType, navType, null);
             return;
         }
     }
@@ -2374,14 +2605,16 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Basic Verification Test", Param = "showParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr1(object param)
+        public void TransformStrStr1(object param, XslInputType xslInputType, ReaderType readerType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
             String szFullFilename = FullFilePath("fruits.xml");
 
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 xslt.Transform(szFullFilename, _strOutFile);
                 VerifyResult(Baseline, _strOutFile);
@@ -2391,11 +2624,13 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Input is null")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr2()
+        public void TransformStrStr2(XslInputType xslInputType, ReaderType readerType)
         {
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 try
                 {
@@ -2409,13 +2644,15 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Output file is null")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr3()
+        public void TransformStrStr3(XslInputType xslInputType, ReaderType readerType)
         {
             String szFullFilename = FullFilePath("fruits.xml");
 
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 try
                 {
@@ -2431,11 +2668,13 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Input is nonexisting file")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr4()
+        public void TransformStrStr4(XslInputType xslInputType, ReaderType readerType)
         {
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 try
                 {
@@ -2452,13 +2691,15 @@ namespace System.Xml.Tests
 
         //[Variation("Output file is invalid")]
         [PlatformSpecific(TestPlatforms.Windows)] //Output file name is valid on Unix
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr5()
+        public void TransformStrStr5(XslInputType xslInputType, ReaderType readerType)
         {
             String szFullFilename = FullFilePath("fruits.xml");
 
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 try
                 {
@@ -2474,11 +2715,13 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Input is empty string")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr6()
+        public void TransformStrStr6(XslInputType xslInputType, ReaderType readerType)
         {
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 try
                 {
@@ -2494,13 +2737,15 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Output file is empty string")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr7()
+        public void TransformStrStr7(XslInputType xslInputType, ReaderType readerType)
         {
             String szFullFilename = FullFilePath("fruits.xml");
 
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 try
                 {
@@ -2516,16 +2761,18 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Call Transform many times", Param = "showParam.txt")]
-        [InlineData("showParam.txt")]
+        [InlineData("showParam.txt", XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData("showParam.txt", XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData("showParam.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr8(object param)
+        public void TransformStrStr8(object param, XslInputType xslInputType, ReaderType readerType)
         {
             string Baseline = Path.Combine("baseline", (string)param);
             String szFullFilename = FullFilePath("fruits.xml");
 
             for (int i = 0; i < 50; i++)
             {
-                if (LoadXSL("showParam.xsl") == 1)
+                if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
                 {
                     xslt.Transform(szFullFilename, _strOutFile);
                     VerifyResult(Baseline, _strOutFile);
@@ -2556,11 +2803,13 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Output to unreachable destination")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr10()
+        public void TransformStrStr10(XslInputType xslInputType, ReaderType readerType)
         {
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 try
                 {
@@ -2577,12 +2826,14 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Input filename is \'.\', \'..\', and \'\\\\\'")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr11()
+        public void TransformStrStr11(XslInputType xslInputType, ReaderType readerType)
         {
             int iCount = 0;
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 SetExpectedError("Xml_ResolveUrl");
                 try
@@ -2621,13 +2872,15 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Output filename is \'.\' and \'..\'")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr12()
+        public void TransformStrStr12(XslInputType xslInputType, ReaderType readerType)
         {
             String szFullFilename = FullFilePath("fruits.xml");
             int iCount = 0;
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 try
                 {
@@ -2656,13 +2909,15 @@ namespace System.Xml.Tests
 
         //[Variation("Output filename is \'\\\\\'")]
         [PlatformSpecific(TestPlatforms.Windows)]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr12_win()
+        public void TransformStrStr12_win(XslInputType xslInputType, ReaderType readerType)
         {
             String szFullFilename = FullFilePath("fruits.xml");
 
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                     Assert.Throws<System.ArgumentException>(() => xslt.Transform(szFullFilename, "\\\\"));
                     return;
@@ -2673,14 +2928,16 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Closing files after transform")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStr13()
+        public void TransformStrStr13(XslInputType xslInputType, ReaderType readerType)
         {
             String szFullFilename = FullFilePath("fruits.xml");
             Stream strmTemp;
 
-            if (LoadXSL("showParam.xsl") == 1)
+            if (LoadXSL("showParam.xsl", xslInputType, readerType) == 1)
             {
                 xslt.Transform(szFullFilename, _strOutFile);
                 StreamReader fs = null;
@@ -2724,9 +2981,11 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Pass null XmlResolver to Transform, load style sheet with import/include, should not affect transform")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStrResolver1()
+        public void TransformStrStrResolver1(XslInputType xslInputType, ReaderType readerType)
         {
             String szFullFilename = FullFilePath("fruits.xml");
             string expected = @"<result>
@@ -2734,7 +2993,7 @@ namespace System.Xml.Tests
   <fruit>orange</fruit>
 </result>";
 
-            if (LoadXSL("XmlResolver_Main.xsl", new XmlUrlResolver()) == 1)
+            if (LoadXSL("XmlResolver_Main.xsl", xslInputType, readerType, new XmlUrlResolver()) == 1)
             {
                 XmlTextReader xr = new XmlTextReader(szFullFilename);
                 XmlTextWriter xw = new XmlTextWriter("out.xml", Encoding.Unicode);
@@ -2748,9 +3007,11 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Pass null XmlResolver, load style sheet with document function, should not resolve during transform")]
-        [InlineData()]
+        [InlineData(XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStrResolver2()
+        public void TransformStrStrResolver2(XslInputType xslInputType, ReaderType readerType)
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
@@ -2761,7 +3022,7 @@ namespace System.Xml.Tests
 
             String szFullFilename = FullFilePath("fruits.xml");
 
-            if (LoadXSL("xmlResolver_document_function.xsl") == 1)
+            if (LoadXSL("xmlResolver_document_function.xsl", xslInputType, readerType) == 1)
             {
                 xslt.Transform(szFullFilename, "out.xml");
                 VerifyResult(expected);
@@ -2774,9 +3035,11 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Pass XmlUrlResolver, load style sheet with document function, should resolve during transform", Param = "xmlResolver_document_function.txt")]
-        [InlineData("xmlResolver_document_function.txt")]
+        [InlineData("xmlResolver_document_function.txt", XslInputType.Reader, ReaderType.XmlValidatingReader)]
+        [InlineData("xmlResolver_document_function.txt", XslInputType.URI, ReaderType.XmlValidatingReader)]
+        [InlineData("xmlResolver_document_function.txt", XslInputType.Navigator, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void TransformStrStrResolver3(object param)
+        public void TransformStrStrResolver3(object param, XslInputType xslInputType, ReaderType readerType)
         {
             AppContext.SetSwitch("Switch.System.Xml.DontProhibitDefaultResolver", true);
 
@@ -2786,7 +3049,7 @@ namespace System.Xml.Tests
             String szFullFilename = FullFilePath("fruits.xml");
             string Baseline = Path.Combine("baseline", (string)param);
 
-            if (LoadXSL("xmlResolver_document_function.xsl") == 1)
+            if (LoadXSL("xmlResolver_document_function.xsl", xslInputType, readerType) == 1)
             {
                 xslt.Transform(szFullFilename, "out.xml");
                 VerifyResult(Baseline, _strOutFile);
@@ -3018,9 +3281,9 @@ namespace System.Xml.Tests
         }
 
         //[Variation("Local parameter gets overwritten with global param value", Pri = 1)]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void var1()
+        public void var1(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><out>
 param1 (correct answer is 'local-param1-arg'): local-param1-arg
@@ -3029,7 +3292,7 @@ param2 (correct answer is 'local-param2-arg'): local-param2-arg
             m_xsltArg = new XsltArgumentList();
             m_xsltArg.AddParam("param1", string.Empty, "global-param1-arg");
 
-            if ((LoadXSL("paramScope.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
+            if ((LoadXSL("paramScope.xsl", xslInputType, readerType) == 1) && (Transform_ArgList("fruits.xml", outputType, navType) == 1))
             {
                 VerifyResult(expected);
                 return;
@@ -3039,9 +3302,9 @@ param2 (correct answer is 'local-param2-arg'): local-param2-arg
         }
 
         //[Variation("Local parameter gets overwritten with global variable value", Pri = 1)]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void var2()
+        public void var2(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><out>
 param1 (correct answer is 'local-param1-arg'): local-param1-arg
@@ -3050,7 +3313,7 @@ param2 (correct answer is 'local-param2-arg'): local-param2-arg
             m_xsltArg = new XsltArgumentList();
             m_xsltArg.AddParam("param1", string.Empty, "global-param1-arg");
 
-            if ((LoadXSL("varScope.xsl") == 1) && (Transform_ArgList("fruits.xml") == 1))
+            if ((LoadXSL("varScope.xsl", xslInputType, readerType) == 1) && (Transform_ArgList("fruits.xml", outputType, navType) == 1))
             {
                 VerifyResult(expected);
                 return;
@@ -3060,16 +3323,16 @@ param2 (correct answer is 'local-param2-arg'): local-param2-arg
         }
 
         //[Variation("Subclassed XPathNodeIterator returned from an extension object or XsltFunction is not accepted by XPath", Pri = 1)]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void var3()
+        public void var3(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string expected = @"<?xml version=""1.0"" encoding=""utf-8""?><distinct-countries>France, Spain, Austria, Germany</distinct-countries>";
 
             m_xsltArg = new XsltArgumentList();
             m_xsltArg.AddExtensionObject("http://foo.com", new MyXsltExtension());
 
-            if ((LoadXSL("Bug111075.xsl") == 1) && (Transform_ArgList("Bug111075.xml") == 1))
+            if ((LoadXSL("Bug111075.xsl", xslInputType, readerType) == 1) && (Transform_ArgList("Bug111075.xml", outputType, navType) == 1))
             {
                 VerifyResult(expected);
                 return;
@@ -3079,9 +3342,9 @@ param2 (correct answer is 'local-param2-arg'): local-param2-arg
         }
 
         //[Variation("Iterator using for-each over a variable is not reset correctly while using msxsl:node-set()", Pri = 1)]
-        [InlineData()]
+        [InlineData(XslInputType.Navigator, ReaderType.XmlValidatingReader, OutputType.TextWriter, NavType.XPathDocument)]
         [Theory]
-        public void var4()
+        public void var4(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             string expected = @"<?xml version=""1.0"" encoding=""utf-8""?>
 		Node Count: {3}
@@ -3090,7 +3353,7 @@ param2 (correct answer is 'local-param2-arg'): local-param2-arg
 		Correct Output: (1)(2)(3)
 		Incorrect Output: [1][2][3]";
 
-            if ((LoadXSL("Bug109644.xsl") == 1) && (Transform("foo.xml") == 1))
+            if ((LoadXSL("Bug109644.xsl", xslInputType, readerType) == 1) && (Transform((string) "foo.xml", (OutputType) outputType, navType) == 1))
             {
                 Assert.Equal(expected, File.ReadAllText("out.xml"), ignoreLineEndingDifferences:true);
             }
@@ -3109,9 +3372,9 @@ param2 (correct answer is 'local-param2-arg'): local-param2-arg
         }
 
         //[Variation("Bug398968 - Globalization is broken for document() function")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader, OutputType.Stream, NavType.XPathDocument)]
         [Theory]
-        public void RegressionTest1()
+        public void RegressionTest1(XslInputType xslInputType, ReaderType readerType, OutputType outputType, NavType navType)
         {
             // <SQL BU Defect Tracking 410060>
             // </SQL BU Defect Tracking 410060>
@@ -3125,19 +3388,19 @@ param2 (correct answer is 'local-param2-arg'): local-param2-arg
                 fs.Write(info, 0, info.Length);
             }
 
-            LoadXSL("398968repro.xsl");
-            Transform("data.xml");
+            LoadXSL("398968repro.xsl", xslInputType, readerType);
+            Transform((string) "data.xml", (OutputType) outputType, navType);
             return;
         }
 
         //[Variation("Bug412703 - Off-by-one errors for XSLT loading error column")]
-        [InlineData()]
+        [InlineData(XslInputType.URI, ReaderType.XmlValidatingReader)]
         [Theory]
-        public void RegressionTest3()
+        public void RegressionTest3(XslInputType xslInputType, ReaderType readerType)
         {
             try
             {
-                LoadXSL("bug370868.xsl");
+                LoadXSL("bug370868.xsl", xslInputType, readerType);
             }
             catch (System.Xml.Xsl.XsltException e)
             {
