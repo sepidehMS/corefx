@@ -100,7 +100,7 @@ namespace System.Security.Cryptography.Rsa.Tests
             }
         }
 
-        [SkipOnTargetFramework(TargetFrameworkMonikers.NetFramework, "dotnet/corefx #19238")] 
+        //[SkipOnTargetFramework(TargetFrameworkMonikers.NetFramework, "dotnet/corefx #19238")] 
         [Fact]
         public static void UnusualExponentImportExport()
         {

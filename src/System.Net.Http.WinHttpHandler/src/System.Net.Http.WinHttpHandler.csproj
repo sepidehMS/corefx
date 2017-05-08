@@ -7,6 +7,7 @@
     <OutputType>Library</OutputType>
     <AssemblyName>System.Net.Http.WinHttpHandler</AssemblyName>
     <GeneratePlatformNotSupportedAssembly Condition="'$(TargetGroup)' == 'netstandard' AND '$(TargetsWindows)' != 'true'">true</GeneratePlatformNotSupportedAssembly>
+    <GeneratePlatformNotSupportedAssemblyMessage Condition="'$(TargetGroup)' == 'netstandard' AND '$(TargetsWindows)' != 'true'">SR.PlatformNotSupported_WinHttpHandler</GeneratePlatformNotSupportedAssemblyMessage>
     <!-- Although we have a NS configuration, the actual UWP implementation is a shim over WinRT: so just validate against OneCore -->
     <UWPCompatible>false</UWPCompatible>
   </PropertyGroup>
